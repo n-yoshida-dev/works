@@ -2,7 +2,7 @@
 // ページ側にロジックを持たせず、ここに集めておく（Phase 2 で自動生成に置き換えるときの境界）。
 import { getCollection, getEntry, type CollectionEntry } from 'astro:content';
 import { highlightLine } from './outline';
-import { VIBE_CODING_NOTE } from './project-summary';
+import { VIBE_CODING_NOTE, publicRepoUrl } from './project-summary';
 
 export type Project = CollectionEntry<'projects'>;
 export type System = CollectionEntry<'systems'>;
@@ -73,14 +73,6 @@ export function absoluteUrl(path: string, site: URL | undefined): string {
   return new URL(path, site ?? 'http://localhost:4321').toString();
 }
 
-/**
- * 訪問者に見せてよいリポジトリの URL。Private のリポジトリは開くと GitHub の 404 になるので出さない
- * （載せるのは存在と目的まで）。frontmatter の repo は検算（T11 の check:repos）のために残す
- */
-export function publicRepoUrl(d: Project['data']): string | undefined {
-  return d.visibility === 'private' ? undefined : d.repo;
-}
-
 /** 公開状態の日本語ラベル */
 export const visibilityLabel: Record<Project['data']['visibility'], string> = {
   public: 'Public',
@@ -105,8 +97,8 @@ export const statusLabel: Record<Project['data']['status'], string> = {
   archived: '終了',
 };
 
-// 備考の文言の正本は project-summary.ts。カードや詳細ページはこれまでどおりここから読む
-export { VIBE_CODING_NOTE };
+// 備考の文言とリポジトリの URL の出し分けの正本は project-summary.ts。カードや詳細ページはこれまでどおりここから読む
+export { VIBE_CODING_NOTE, publicRepoUrl };
 
 /**
  * プロジェクト 1 件を AI が読みやすい Markdown にする。

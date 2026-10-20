@@ -1,7 +1,28 @@
 // llms.txt の作品の行に出す要約（src/lib/project-summary.ts の projectIndexSummary）を確かめる。
 // コードを AI が書いた作品には備考を、公開サイトのある作品には URL を、この順で続ける
 import { describe, it, expect } from 'vitest';
-import { projectIndexSummary, VIBE_CODING_NOTE } from '../src/lib/project-summary.ts';
+import {
+  projectIndexSummary,
+  publicRepoUrl,
+  VIBE_CODING_NOTE,
+} from '../src/lib/project-summary.ts';
+
+describe('サイトに出すリポジトリの URL', () => {
+  const repo = 'https://github.com/n-yoshida-dev/example';
+
+  it('Private の作品は URL を出さない（開くと 404 になるため）', () => {
+    expect(publicRepoUrl({ visibility: 'private', repo })).toBeUndefined();
+  });
+
+  it('Public と Archive の作品は URL をそのまま出す', () => {
+    expect(publicRepoUrl({ visibility: 'public', repo })).toBe(repo);
+    expect(publicRepoUrl({ visibility: 'archived', repo })).toBe(repo);
+  });
+
+  it('repo を書いていなければ、どの公開状態でも出さない', () => {
+    expect(publicRepoUrl({ visibility: 'public' })).toBeUndefined();
+  });
+});
 
 describe('llms.txt の作品の行の要約', () => {
   const summary = '学習ログを AI に読ませて理解度を判定する。';

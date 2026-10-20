@@ -78,7 +78,8 @@ OGP 画像を作り直すとき：`node scripts/generate-og.mjs`（文言は同�
 
 - **プロジェクトを足す**：`public-profile/projects/<slug>.md` を作る。frontmatter の項目は `src/content.config.ts` を参照。
   `featured: true` で主要プロジェクト、`false` で Other / Experiments。本文が空なら詳細ページは作られない（一覧だけに出る）。
-  `vibeCoding: true` はコードを AI が書いた作品に付ける（カード・詳細ページ・Markdown 版・llms.txt に備考が出る）
+  `vibeCoding: true` はコードを AI が書いた作品に付ける（カード・詳細ページ・Markdown 版・llms.txt に備考が出る）。
+  `visibility: private` の作品は `repo` を書いても、サイトにはリポジトリへのリンクを出さない（開くと 404 になるため）
 - **仕組みを足す**：`public-profile/systems/<slug>.md` を作る。`order` で並び順
 - **一覧のカードの一文**：`tagline` に一文で書く（句点「。」なし・60 字以内。破ると `npm run build` が落ちる）
 - **詳細ページの本文が長いとき**（本文 400 字超）：frontmatter に `highlights`（要点。3 行まで）を足す。書き忘れると `npm run test` が落ちる

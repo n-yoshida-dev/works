@@ -6,7 +6,7 @@ import { checkHome, sectionHtml } from '../scripts/check-home.mjs';
 /** 3 点の節を持つトップの HTML。引数で節の中身を差し替える */
 function page({ about, projects, systems } = {}) {
   return `<main>
-    <section id="about" class="home-section"><h2>About</h2>${about ?? '<h1>Naoki Yoshida</h1><p class="lead" data-astro-cid-x>業務システムの現場で約 10 年、仕様化とテストを担当</p>'}</section>
+    <section id="about" class="home-section"><h2>About</h2>${about ?? '<h1>Naoki Yoshida</h1><p class="lead" data-astro-cid-x>生活や学習で使うツールを作っています</p>'}</section>
     <section id="projects" class="home-section"><h2>Projects</h2>${projects ?? '<ul class="card-grid"><li class="card">OrgFlow</li></ul>'}</section>
     <section id="systems" class="home-section"><h2>Systems</h2>${systems ?? '<ul class="card-grid"><li class="card">Learning System</li></ul>'}</section>
     <section id="ask" class="home-section"><h2>Ask AI</h2></section>

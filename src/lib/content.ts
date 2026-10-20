@@ -73,6 +73,14 @@ export function absoluteUrl(path: string, site: URL | undefined): string {
   return new URL(path, site ?? 'http://localhost:4321').toString();
 }
 
+/**
+ * 訪問者に見せてよいリポジトリの URL。Private のリポジトリは開くと GitHub の 404 になるので出さない
+ * （載せるのは存在と目的まで）。frontmatter の repo は検算（T11 の check:repos）のために残す
+ */
+export function publicRepoUrl(d: Project['data']): string | undefined {
+  return d.visibility === 'private' ? undefined : d.repo;
+}
+
 /** 公開状態の日本語ラベル */
 export const visibilityLabel: Record<Project['data']['visibility'], string> = {
   public: 'Public',
@@ -115,7 +123,8 @@ export function projectToMarkdown(p: Project, site: URL | undefined): string {
     `- 状態: ${statusLabel[d.status]}`,
   ];
   if (d.period) lines.push(`- 期間: ${d.period}`);
-  if (d.repo) lines.push(`- リポジトリ: ${d.repo}`);
+  const repo = publicRepoUrl(d);
+  if (repo) lines.push(`- リポジトリ: ${repo}`);
   if (d.site) lines.push(`- サイト: ${d.site}`);
   if (d.stack.length) lines.push(`- 技術: ${d.stack.join(', ')}`);
   if (d.vibeCoding) lines.push(`- 作り方: ${VIBE_CODING_NOTE}`);

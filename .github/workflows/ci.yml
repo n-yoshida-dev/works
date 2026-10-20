@@ -51,7 +51,7 @@ jobs:
 
       - name: llms.txt と Markdown 版が生成されているか
         run: |
-          for f in dist/llms.txt dist/llms-full.txt dist/profile.md dist/articles.md dist/projects/orgflow.md; do
+          for f in dist/llms.txt dist/llms-full.txt dist/profile.md dist/writing.md dist/projects/orgflow.md dist/tools/claude-plugins.md; do
             test -s "$f" || { echo "::error::$f が生成されていません"; exit 1; }
           done
           grep -q '^# Naoki Yoshida' dist/llms.txt

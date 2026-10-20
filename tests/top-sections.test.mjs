@@ -1,5 +1,5 @@
 // トップの About 以外の短い版（SPEC.md §4。2026-10-03 に見本から選んだ形）を作る読み取り処理（src/lib/outline.ts）を確かめる。
-// About の要点の Markdown 版（highlightLine）・Articles の連載 × 公開月の表（articleCalendar）。
+// About の要点の Markdown 版（highlightLine）・Writing の連載 × 公開月の表（articleCalendar）。
 // 実際の public-profile で空にならないことと、読み取りの規則そのものを見る。
 import { describe, it, expect } from 'vitest';
 import { readFile } from 'node:fs/promises';
@@ -18,7 +18,7 @@ describe('About の要点の Markdown 版', () => {
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
-describe('トップの Articles の連載 × 公開月', async () => {
+describe('トップの Writing の連載 × 公開月', async () => {
   const articles = JSON.parse(
     await readFile(path.join(root, 'public-profile/articles.json'), 'utf8'),
   );

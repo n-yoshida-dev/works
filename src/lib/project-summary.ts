@@ -12,6 +12,11 @@ export function publicRepoUrl(d: { visibility: string; repo?: string }): string 
   return d.visibility === 'private' ? undefined : d.repo;
 }
 
+/** 作品の詳細ページのパス（拡張子なし）。tool は /tools、app は /projects の下に置く */
+export function projectPath(id: string, d: { kind: 'app' | 'tool' }): string {
+  return `/${d.kind === 'tool' ? 'tools' : 'projects'}/${id}`;
+}
+
 /** llms.txt の作品の行に出す要約。コードを AI が書いた作品には備考を、公開サイトのある作品にはその URL を続ける */
 export function projectIndexSummary(d: {
   summary: string;

@@ -5,9 +5,13 @@ import {
   absoluteUrl,
   getFeaturedProjects,
   getOtherProjects,
+  getTools,
   getSystems,
   getPage,
   getArticles,
+  hasDetail,
+  projectPath,
+  type Project,
 } from '../lib/content';
 import { projectIndexSummary } from '../lib/project-summary';
 
@@ -16,9 +20,15 @@ export const GET: APIRoute = async ({ site }) => {
   /** プロジェクトの要約（備考・公開サイトの URL つき） */
   const summaryOf = (p: { data: Parameters<typeof projectIndexSummary>[0] }) =>
     projectIndexSummary(p.data);
+  /** 作品 1 件の行。詳細ページのある作品は Markdown 版へのリンクにする */
+  const entryLine = (p: Project) =>
+    hasDetail(p)
+      ? `- [${p.data.title}](${url(`${projectPath(p.id, p.data)}.md`)}): ${summaryOf(p)}`
+      : `- ${p.data.title}: ${summaryOf(p)}`;
   const profile = await getPage('profile');
   const featured = await getFeaturedProjects();
   const others = await getOtherProjects();
+  const tools = await getTools();
   const systems = await getSystems();
   const articles = await getArticles();
 
@@ -41,23 +51,23 @@ export const GET: APIRoute = async ({ site }) => {
     '',
     '## Projects',
     '',
-    ...featured.map((p) => `- [${p.data.title}](${url(`/projects/${p.id}.md`)}): ${summaryOf(p)}`),
+    ...featured.map(entryLine),
     '',
     '## Other projects',
     '',
-    ...others.map((p) =>
-      (p.body ?? '').trim()
-        ? `- [${p.data.title}](${url(`/projects/${p.id}.md`)}): ${summaryOf(p)}`
-        : `- ${p.data.title}: ${summaryOf(p)}`,
-    ),
+    ...others.map(entryLine),
+    '',
+    '## Tools',
+    '',
+    ...tools.map(entryLine),
     '',
     '## Systems',
     '',
     ...systems.map((s) => `- [${s.data.title}](${url(`/systems/${s.id}.md`)}): ${s.data.summary}`),
     '',
-    '## Articles',
+    '## Writing',
     '',
-    `- [Articles](${url('/articles.md')}): ${articles.length} technical articles, grouped by series`,
+    `- [Writing](${url('/writing.md')}): ${articles.length} technical articles, grouped by series`,
     '',
     '## External links',
     '',

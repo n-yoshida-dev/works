@@ -10,7 +10,7 @@ export interface CalendarArticle {
   series?: string;
 }
 
-/** トップの Articles 節の「連載 × 公開月」の表 */
+/** トップの Writing 節の「連載 × 公開月」の表 */
 export interface ArticleCalendar {
   /** 列になる月（YYYY-MM）。最初の記事の月から最後の記事の月まで、記事の無い月も含めて古い順 */
   months: string[];
@@ -35,7 +35,7 @@ function nextMonth(month: string): string {
 }
 
 /**
- * 記事の一覧から、トップの Articles 節の「連載 × 公開月」の表を作る（■ 1 つが記事 1 本）。
+ * 記事の一覧から、トップの Writing 節の「連載 × 公開月」の表を作る（■ 1 つが記事 1 本）。
  * 月は最初の記事の月から最後の記事の月まで切れ目なく並べ、連載は最初の記事が古い順に並べる（階段状になり、学んだ順が読める）
  */
 export function articleCalendar(articles: CalendarArticle[]): ArticleCalendar {

@@ -3,9 +3,17 @@
 import { describe, it, expect } from 'vitest';
 import {
   projectIndexSummary,
+  projectPath,
   publicRepoUrl,
   VIBE_CODING_NOTE,
 } from '../src/lib/project-summary.ts';
+
+describe('作品の詳細ページのパス', () => {
+  it('tool は /tools、app は /projects の下に置く', () => {
+    expect(projectPath('claude-plugins', { kind: 'tool' })).toBe('/tools/claude-plugins');
+    expect(projectPath('orgflow', { kind: 'app' })).toBe('/projects/orgflow');
+  });
+});
 
 describe('サイトに出すリポジトリの URL', () => {
   const repo = 'https://github.com/n-yoshida-dev/example';

@@ -1,5 +1,5 @@
 ---
-// トップ。1 枚のページに 5 節（About / Projects / Systems / Articles / Ask AI）を縦に並べ、
+// トップ。1 枚のページに 6 節（About / Projects / Tools / Systems / Writing / Ask AI）を縦に並べ、
 // 左の目次がその節へ移動する（SPEC.md §4）。各節は短い版で、詳しい版は各ページに残して「すべて →」で行く。
 // 先頭は画面 1 つ分の表紙（名前・一言・要点 3 行・目次）で、About の節は表紙の中に置き、外部リンクのカードは表紙の直後に置く
 // （2026-10-05 ユーザーがコンペの見本 A を選択。logs/decisions.md、見本は docs/design-candidates/2026-10-04-first-screen/）。
@@ -15,6 +15,7 @@ import {
   getFeaturedProjects,
   getOtherProjects,
   getHomeWideProjects,
+  getTools,
   getSystems,
   getArticles,
   platformLabel,
@@ -33,6 +34,7 @@ const projectCount = allFeatured.length + (await getOtherProjects()).length;
 const projectNote = `${featured.length} / ${projectCount} 件`;
 const projectNoteWide =
   wideExtras.length > 0 ? `${featured.length + wideExtras.length} / ${projectCount} 件` : undefined;
+const tools = await getTools();
 const systems = await getSystems();
 const articles = await getArticles();
 const calendar = articleCalendar(articles.map((a) => a.data));
@@ -42,13 +44,14 @@ const articleSource =
   platforms.length === 1 && platforms[0] ? `${platforms[0]} に書いた` : '書いた';
 
 /**
- * 表紙の目次に添える件数（節の id → 件数と単位）。今のトップで件数を出している 3 節だけ。
- * Projects は見出しの「4 / 12 件」のうち全体の件数を使う。PC では 1 件 1 マスの小さな図も並べる
+ * 表紙の目次に添える件数（節の id → 件数と単位）。トップで件数を出している 4 節だけ。
+ * Projects は見出しの「4 / 10 件」のうち全体の件数を使う。PC では 1 件 1 マスの小さな図も並べる
  */
 const coverCounts: Partial<Record<string, { n: number; unit: string }>> = {
   projects: { n: projectCount, unit: '件' },
+  tools: { n: tools.length, unit: '件' },
   systems: { n: systems.length, unit: '件' },
-  articles: { n: articles.length, unit: '本' },
+  writing: { n: articles.length, unit: '本' },
 };
 ---
 
@@ -131,6 +134,14 @@ const coverCounts: Partial<Record<string, { n: number; unit: string }>> = {
     </ul>
   </HomeSection>
 
+  <HomeSection id="tools" note={`${tools.length} 件`}>
+    <ul class="card-grid">
+      {tools.map((p) => (
+        <ProjectCard project={p} compact />
+      ))}
+    </ul>
+  </HomeSection>
+
   <HomeSection id="systems" note={`${systems.length} 件`}>
     <ul class="card-grid">
       {systems.map((s) => (
@@ -139,7 +150,7 @@ const coverCounts: Partial<Record<string, { n: number; unit: string }>> = {
     </ul>
   </HomeSection>
 
-  <HomeSection id="articles" note={`${articles.length} 本`}>
+  <HomeSection id="writing" note={`${articles.length} 本`}>
     <p class="section-lead">
       {`${articleSource} ${articles.length} 本を、${calendar.rows.length} つの連載に分けています。`}
       <span class="sq" aria-hidden="true"></span>

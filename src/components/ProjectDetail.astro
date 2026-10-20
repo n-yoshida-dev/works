@@ -1,0 +1,68 @@
+---
+// 作品 1 件の詳細ページの中身。Projects（/projects/<slug>）と Tools（/tools/<slug>）で同じ形にするための部品。
+// 開いた直後に見えるのは要約・要点・リンクだけにし、本文は FoldedBody が畳む（全文は Markdown 版が持つ）。
+import { render, getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import FoldedBody from './FoldedBody.astro';
+import {
+  visibilityLabel,
+  statusLabel,
+  VIBE_CODING_NOTE,
+  publicRepoUrl,
+  projectPath,
+  type Project,
+} from '../lib/content';
+
+interface Props {
+  project: Project;
+}
+const { project } = Astro.props;
+const d = project.data;
+const path = projectPath(project.id, d);
+/** 題名の上のパンくず。種類ごとの一覧へ戻る */
+const parent =
+  d.kind === 'tool' ? { href: '/tools', label: 'Tools' } : { href: '/projects', label: 'Projects' };
+const repo = publicRepoUrl(d);
+const { Content } = await render(project);
+const systems = await getCollection('systems', (s) => d.systems.includes(s.id));
+---
+
+<Base title={d.title} description={d.summary} markdownHref={`${path}.md`}>
+  <p class="meta">
+    <a href={parent.href}>{parent.label}</a> /
+  </p>
+  <h1>
+    {d.title}
+    <span class="badge">{visibilityLabel[d.visibility]}</span>
+    <span class="badge">{statusLabel[d.status]}</span>
+  </h1>
+  <p class="lead">{d.summary}</p>
+  {d.vibeCoding && <p class="meta">{VIBE_CODING_NOTE}</p>}
+  <div class="entry-links">
+    {repo && <a href={repo}>GitHub リポジトリ</a>}
+    {d.site && <a href={d.site}>公開サイト</a>}
+    {d.period && <span class="meta">{d.period}</span>}
+  </div>
+  {d.stack.length > 0 && (
+    <ul class="tag-list" aria-label="主要技術">
+      {d.stack.map((s) => (
+        <li>{s}</li>
+      ))}
+    </ul>
+  )}
+
+  <FoldedBody highlights={d.highlights}>
+    <Content />
+  </FoldedBody>
+
+  {systems.length > 0 && (
+    <>
+      <h2>関連する仕組み</h2>
+      <p class="inline-links">
+        {systems.map((s) => (
+          <a href={`/systems/${s.id}`}>{s.data.title}</a>
+        ))}
+      </p>
+    </>
+  )}
+</Base>

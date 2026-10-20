@@ -1,0 +1,27 @@
+---
+// Tools 一覧。開発に入れて使う部品（kind: tool。Claude Code のプラグイン・テンプレートなど）を並べる。
+import Base from '../../layouts/Base.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { getTools } from '../../lib/content';
+
+const tools = await getTools();
+---
+
+<Base
+  title="Tools"
+  description="開発に入れて使う部品の一覧。Claude Code のプラグインや、自作アプリを始めるときのテンプレートを、リポジトリへのリンクとともに示します。"
+>
+  <h1>Tools</h1>
+  <p class="lead">
+    自分の開発に入れて使っている部品です。アプリは <a href="/projects">Projects</a>、組み合わせ方は{' '}
+    <a href="/systems">Systems</a> にあります。
+  </p>
+
+  {/* カードの題名（h3）の前に見出しの段をそろえる。見た目は変えず、読み上げにだけ渡す */}
+  <h2 class="visually-hidden">ツールの一覧</h2>
+  <ul class="card-grid">
+    {tools.map((p) => (
+      <ProjectCard project={p} />
+    ))}
+  </ul>
+</Base>

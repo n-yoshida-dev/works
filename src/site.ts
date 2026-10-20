@@ -41,14 +41,16 @@ export interface Section {
 }
 
 /**
- * トップの 5 節。この順に縦に並べ、左の目次もこの順（SPEC.md §4）。
+ * トップの 6 節。この順に縦に並べ、左の目次もこの順（SPEC.md）。
+ * Projects は使うもの、Tools は入れるもの、Systems は読むもの（logs/decisions.md 2026-10-20）。
  * 節を増やす・減らすときはここと index.astro を直す（tests/home-sections.test.mjs が両方の一致を確かめる）
  */
 export const SECTIONS: readonly Section[] = [
   { id: 'about', label: 'About' },
   { id: 'projects', label: 'Projects', more: { href: '/projects', label: 'すべてのプロジェクト' } },
+  { id: 'tools', label: 'Tools', more: { href: '/tools', label: 'すべてのツール' } },
   { id: 'systems', label: 'Systems', more: { href: '/systems', label: 'すべての仕組み' } },
-  { id: 'articles', label: 'Articles', more: { href: '/articles', label: 'すべての記事' } },
+  { id: 'writing', label: 'Writing', more: { href: '/writing', label: 'すべての記事' } },
   { id: 'ask', label: 'Ask AI' },
 ] as const;
 

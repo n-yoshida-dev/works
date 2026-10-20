@@ -1,7 +1,7 @@
 # works
 
 [Naoki Yoshida](https://github.com/n-yoshida-dev) の制作活動ハブ。
-自作アプリ（Projects）、AI・GitHub・自作ツールを組み合わせた開発・学習・知識管理の仕組み（Systems）、技術記事（Articles）を紹介する静的サイト。
+自作アプリ（Projects）、開発に入れて使う部品（Tools）、AI・GitHub・自作ツールを組み合わせた開発・学習・知識管理の仕組み（Systems）、技術記事（Writing）を紹介する静的サイト。
 AI がこのサイトを調べるための入口（`/llms.txt`、各ページの Markdown 版、Ask AI ページ）も持つ。
 
 公開 URL：まだ無い（Vercel の新しいプロジェクトを作ってから載せる）
@@ -12,8 +12,8 @@ AI がこのサイトを調べるための入口（`/llms.txt`、各ページの
 works/
 ├── public-profile/          ← 公開してよい情報だけの正本（手動管理の Markdown / JSON）
 │   ├── profile.md           ← トップに出す自己紹介とリンク
-│   ├── articles.json        ← Articles（技術記事へのリンク）
-│   ├── projects/*.md        ← Projects。1 ファイル 1 リポジトリ
+│   ├── articles.json        ← Writing（技術記事へのリンク）
+│   ├── projects/*.md        ← Projects と Tools（kind で分ける）。1 ファイル 1 リポジトリ
 │   └── systems/*.md         ← Systems。1 ファイル 1 仕組み
 ├── src/
 │   ├── content.config.ts    ← public-profile の frontmatter の型（ここに合わないとビルドが失敗する）
@@ -34,17 +34,19 @@ works/
 
 ## ページ
 
-| URL                | 内容                                                                                                                                      | Markdown 版           |
-| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------- | --------------------- |
-| `/`                | Home。1 枚のページに 5 節（About / Projects / Systems / Articles / Ask AI）を短い版で並べ、About と Ask AI 以外の節から「すべて →」で下へ | `/profile.md`         |
-| `/projects`        | Projects 一覧                                                                                                                             | —                     |
-| `/projects/<slug>` | Projects 詳細（本文があるものだけ）                                                                                                       | `/projects/<slug>.md` |
-| `/systems`         | Systems 一覧                                                                                                                              | —                     |
-| `/systems/<slug>`  | Systems 詳細                                                                                                                              | `/systems/<slug>.md`  |
-| `/articles`        | Articles（連載ごと）                                                                                                                      | `/articles.md`        |
-| `/ask`             | Ask AI（プロンプトのコピーと各 AI へのリンク）                                                                                            | —                     |
-| `/llms.txt`        | AI 向け索引（[llmstxt.org](https://llmstxt.org) 形式）                                                                                    | —                     |
-| `/llms-full.txt`   | 主要ページの Markdown を 1 ファイルに連結                                                                                                 | —                     |
+| URL                | 内容                                                                                                                                             | Markdown 版           |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------- |
+| `/`                | Home。1 枚のページに 6 節（About / Projects / Tools / Systems / Writing / Ask AI）を短い版で並べ、About と Ask AI 以外の節から「すべて →」で下へ | `/profile.md`         |
+| `/projects`        | Projects 一覧（`kind: app`）                                                                                                                     | —                     |
+| `/projects/<slug>` | Projects 詳細（本文があるものだけ）                                                                                                              | `/projects/<slug>.md` |
+| `/tools`           | Tools 一覧（`kind: tool`）                                                                                                                       | —                     |
+| `/tools/<slug>`    | Tools 詳細（本文があるものだけ）                                                                                                                 | `/tools/<slug>.md`    |
+| `/systems`         | Systems 一覧                                                                                                                                     | —                     |
+| `/systems/<slug>`  | Systems 詳細                                                                                                                                     | `/systems/<slug>.md`  |
+| `/writing`         | Writing（技術記事。連載ごと）                                                                                                                    | `/writing.md`         |
+| `/ask`             | Ask AI（プロンプトのコピーと各 AI へのリンク）                                                                                                   | —                     |
+| `/llms.txt`        | AI 向け索引（[llmstxt.org](https://llmstxt.org) 形式）                                                                                           | —                     |
+| `/llms-full.txt`   | 主要ページの Markdown を 1 ファイルに連結                                                                                                        | —                     |
 
 ## 開発
 
@@ -77,7 +79,8 @@ OGP 画像を作り直すとき：`node scripts/generate-og.mjs`（文言は同�
 すべて `public-profile/` の編集で完結する。コードは触らない。
 
 - **プロジェクトを足す**：`public-profile/projects/<slug>.md` を作る。frontmatter の項目は `src/content.config.ts` を参照。
-  `featured: true` で主要プロジェクト、`false` で Other / Experiments。本文が空なら詳細ページは作られない（一覧だけに出る）。
+  `kind: tool` にすると Projects ではなく Tools に出る（プラグイン・テンプレートなど、開発に入れて使う部品。省略すると `app`）。
+  `featured: true` で主要プロジェクト、`false` で Other / Experiments（Tools では使わない）。本文が空なら詳細ページは作られない（一覧だけに出る）。
   `vibeCoding: true` はコードを AI が書いた作品に付ける（カード・詳細ページ・Markdown 版・llms.txt に備考が出る）。
   `visibility: private` の作品は `repo` を書いても、サイトにはリポジトリへのリンクを出さない（開くと 404 になるため）
 - **仕組みを足す**：`public-profile/systems/<slug>.md` を作る。`order` で並び順

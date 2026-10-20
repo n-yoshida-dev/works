@@ -1,0 +1,117 @@
+---
+// すべてのページの共通枠。<head> のメタ情報（SEO / OGP）、左の固定目次、フッターを持つ。
+// 目次はトップの 7 節（SECTIONS）へのリンク。トップではページ内の `#id`、他のページでは `/#id` に飛ぶ（SPEC.md §4）。
+// トップだけは slot="cover" で表紙（開いた直後の 1 画面）を渡し、左の目次と本文はその下から始まる。
+import '../styles/global.css';
+import AskEntry from '../components/AskEntry.astro';
+import Icon from '../components/Icon.astro';
+import { SITE, SECTIONS, QUICK_LINKS, sectionIdForPath } from '../site';
+
+interface Props {
+  /** ページ固有のタイトル。トップは省略してサイト名だけにする */
+  title?: string;
+  description?: string;
+  /** このページの Markdown 版があれば、その URL（AI・人間向けの導線として出す） */
+  markdownHref?: string;
+}
+
+const { title, description = SITE.description, markdownHref } = Astro.props;
+const fullTitle = title ? `${title} — ${SITE.name}` : SITE.title;
+/**
+ * 公開 URL の形にそろえたパス。`build.format: 'file'` のため、ビルド時の Astro.url.pathname は
+ * `/projects.html` `/index.html` のように拡張子付きになる（公開 URL は拡張子なし。astro.config.mjs）
+ */
+const currentPath =
+  Astro.url.pathname
+    .replace(/\.html$/, '')
+    .replace(/\/index$/, '')
+    .replace(/\/$/, '') || '/';
+const canonical = new URL(currentPath, Astro.site);
+const ogImage = new URL('/og.png', Astro.site);
+const isHome = currentPath === '/';
+/** 詳しい版のページを見ているとき、その節の目次項目を強調する（トップでは JavaScript が今いる節に付け替える） */
+const currentSection = isHome ? undefined : sectionIdForPath(currentPath);
+/** 表紙のあるページ（トップ）。右下の Ask AI ボタンを表紙の上に出さない箱に入れる */
+const hasCover = Astro.slots.has('cover');
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    {markdownHref && <link rel="alternate" type="text/markdown" href={markdownHref} />}
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE.title} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content={SITE.locale} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+  </head>
+  <body>
+    <slot name="cover" />
+    <div class="layout">
+      <header class="side">
+        <a class="brand" href="/">
+          {SITE.name}
+        </a>
+        <nav aria-label="目次">
+          {SECTIONS.map((s) => (
+            <a
+              href={isHome ? `#${s.id}` : `/#${s.id}`}
+              aria-current={currentSection === s.id ? 'true' : undefined}
+            >
+              {s.label}
+            </a>
+          ))}
+        </nav>
+        <div class="side-links">
+          {QUICK_LINKS.map((l) => (
+            <a href={l.href}>
+              <Icon name={l.icon} />
+              {l.label}
+            </a>
+          ))}
+        </div>
+      </header>
+      <div class="page">
+        <main class="container">
+          <slot />
+        </main>
+        <footer class="site-footer">
+          <div class="container">
+            <span>
+              © {new Date().getFullYear()} {SITE.name}
+            </span>
+            {markdownHref && <a href={markdownHref}>このページの Markdown</a>}
+            <a href="/llms.txt">AI 向けの要約（llms.txt）</a>
+          </div>
+        </footer>
+        {
+          /*
+            Ask AI の追従ボタン。どのページからでも各 AI を開けるよう右下に留め、押すと AI を選ぶメニューが開く。/ask 自身では出さない（SPEC.md §4）。
+            表紙のあるトップでは .fab-rail（本文の箱の末尾。CSS の sticky）に入れ、表紙では出さず本文と一緒に下から入ってくる
+          */
+          currentPath !== '/ask' &&
+            (hasCover ? (
+              <div class="fab-rail">
+                <AskEntry variant="fab" />
+              </div>
+            ) : (
+              <AskEntry variant="fab" />
+            ))
+        }
+      </div>
+    </div>
+  </body>
+</html>

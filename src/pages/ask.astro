@@ -1,0 +1,108 @@
+---
+// Ask AI。自前のチャットは持たず、訪問者自身の AI にプロンプトを渡す。
+// 見出しとタブの題名は、ここへ来るボタンと同じ言葉（ASK_BUTTON_LABEL）にする
+import Base from '../layouts/Base.astro';
+import { buildAskPrompt, chatLinks } from '../lib/ask';
+import { ASK_BUTTON_LABEL, SITE } from '../site';
+
+const prompt = buildAskPrompt(Astro.site);
+const links = chatLinks(Astro.site);
+---
+
+<Base
+  title={ASK_BUTTON_LABEL}
+  description="あなたの ChatGPT / Claude / Gemini に、このサイトと公開リポジトリを読ませて Naoki Yoshida について質問するためのプロンプト。"
+>
+  <h1>{ASK_BUTTON_LABEL}</h1>
+  <p class="lead">
+    このサイトに AI チャットはありません。代わりに、あなたが普段使っている AI
+    にこのサイトを読ませて質問できます。
+    下のプロンプトをコピーするか、ボタンから新しいチャットを開いてください。
+  </p>
+
+  <div class="prompt-box">
+    <pre id="ask-prompt"><code>{prompt}</code></pre>
+    <div class="button-row">
+      <button
+        type="button"
+        class="button button-primary"
+        id="copy-prompt"
+        data-copied="コピーしました"
+      >
+        プロンプトをコピー
+      </button>
+      {links.map((l) =>
+        l.href ? (
+          <a
+            class="button"
+            href={l.href}
+            target={l.copy ? '_blank' : undefined}
+            rel={l.copy ? 'noopener' : undefined}
+            data-ask-copy={l.copy?.prompt}
+            data-ask-source={l.copy?.source}
+          >
+            {l.label}
+          </a>
+        ) : null,
+      )}
+    </div>
+  </div>
+
+  <h2>AI が読むもの</h2>
+  <ul>
+    <li>
+      <a href="/llms.txt">/llms.txt</a>
+      ：このサイトの索引。プロフィール、Projects、Systems、記事、外部リンクへの導線
+    </li>
+    <li>
+      <a href="/llms-full.txt">/llms-full.txt</a>：主要ページの Markdown を 1 ファイルにまとめたもの
+    </li>
+    <li>
+      各ページの Markdown 版（例：<a href="/projects/orgflow.md">/projects/orgflow.md</a>
+      ）。ページ末尾のリンクから開けます
+    </li>
+    <li>
+      <a href={SITE.githubUrl}>GitHub</a> の公開リポジトリと README、ADR
+    </li>
+    <li>
+      <a href={SITE.qiitaUrl}>Qiita</a> の記事
+    </li>
+  </ul>
+
+  <h2>注意</h2>
+  <ul>
+    <li>
+      最初の答えは短い概要と、次に聞くとよい質問の候補だけにするよう書いてあります。詳しいことは続けて質問してください
+    </li>
+    <li>
+      AI の回答は要約であり、一次情報は各リポジトリと記事です。判断に使う前に出典を確認してください
+    </li>
+    <li>ここに無い情報（非公開のリポジトリの中身・生活の詳細）は AI にも分かりません</li>
+  </ul>
+
+  <script>
+    // Gemini のボタンのコピー（プロンプト + サイトの全文。入口のメニューと同じ処理）
+    import '../scripts/ask-copy';
+
+    // コピーボタン。クリップボード API が使えない環境では、テキストを選択状態にする
+    const button = document.getElementById('copy-prompt') as HTMLButtonElement | null;
+    const pre = document.getElementById('ask-prompt');
+    if (button && pre) {
+      const original = button.textContent ?? '';
+      button.addEventListener('click', async () => {
+        const text = pre.textContent ?? '';
+        try {
+          await navigator.clipboard.writeText(text);
+          button.textContent = button.dataset.copied ?? original;
+          setTimeout(() => (button.textContent = original), 1500);
+        } catch {
+          const range = document.createRange();
+          range.selectNodeContents(pre);
+          const selection = window.getSelection();
+          selection?.removeAllRanges();
+          selection?.addRange(range);
+        }
+      });
+    }
+  </script>
+</Base>

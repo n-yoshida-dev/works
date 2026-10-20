@@ -1,0 +1,78 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# 同じブランチで新しい push があったら、走っている古いジョブを止める
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  site:
+    name: site (format / 禁止語 / typecheck / test / build)
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: 依存をインストール
+        run: npm ci
+
+      - name: フォーマット崩れがないか
+        run: npm run format:check
+
+      - name: public-profile に公開してはいけない情報が無いか
+        run: npm run lint
+
+      - name: 型チェック
+        run: npm run typecheck
+
+      - name: 単体テスト
+        run: npm run test
+
+      - name: ビルド
+        run: npm run build
+        env:
+          SITE_URL: https://example.invalid
+
+      - name: トップに 3 点（何の人か・何を作ったか・どう開発しているか）が中身つきで出ているか
+        run: npm run check:home
+
+      - name: llms.txt と Markdown 版が生成されているか
+        run: |
+          for f in dist/llms.txt dist/llms-full.txt dist/profile.md dist/articles.md dist/projects/orgflow.md; do
+            test -s "$f" || { echo "::error::$f が生成されていません"; exit 1; }
+          done
+          grep -q '^# Naoki Yoshida' dist/llms.txt
+          echo "AI 向けファイルの生成を確認"
+
+  no-secrets:
+    name: 秘密情報が混入していないか
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: 追跡対象に秘密情報が含まれていないことを確認
+        run: |
+          # .gitignore は git add -f で貫通できるため、CI でも独立して検査する
+          HITS=$(git ls-files \
+            | grep -E '(^|/)(PRIVATE\.md|CLAUDE\.local\.md|\.env(\..+)?)$|\.local\.(json|md)$|(^|/)(secrets|data/private)/|(^|/)credentials\.json$|\.(pem|key|p12|keystore)$' \
+            | grep -v '\.env\.example$' || true)
+          if [ -n "$HITS" ]; then
+            echo "::error::秘密情報がリポジトリに含まれています"
+            echo "$HITS"
+            exit 1
+          fi
+          echo "秘密情報の混入なし"

@@ -29,6 +29,11 @@
 そのため T6 で、2 つのページ・Markdown 版・読み取りの関数・テスト・トップの節・llms の行を消した。T7 に残るのは Tools の新設・`kind` の追加・`/writing` への改名。
 CSS（`src/styles/global.css` の Skills・Journey・年表の部分）と OG 画像の文言（`scripts/generate-og.mjs` の「Skills」）はまだ残っている。CSS は T7、OG は T8 で直す。
 
+### 2026-10-20：プラグインの install が `.claude/settings.json` の整形を崩す
+
+`claude plugin install --scope project` は `.claude/settings.json` を書き直し、Prettier の整形（短い配列を 1 行にする）と違う形にする。
+その後の `npm run format:check` が CI で落ちた。install のあとは `npx prettier --write .claude/settings.json` を回してからコミットする。
+
 ### 2026-10-20：キャリア系の語の言い換え
 
 Systems の本文にあった、計画文書 3-9 の禁止語に当たる 2 語を言い換えた（到達度を表す語は skill-matrix と同じ「理解度」に、職業上の来歴を表す語は「仕事」に）。

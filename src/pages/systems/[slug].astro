@@ -3,6 +3,7 @@
 import { render, getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import FoldedBody from '../../components/FoldedBody.astro';
+import { hasDetail, projectPath } from '../../lib/content';
 
 export async function getStaticPaths() {
   const systems = await getCollection('systems');
@@ -35,13 +36,13 @@ const related = await getCollection('projects', (p) => p.data.systems.includes(s
 
   {related.length > 0 && (
     <>
-      <h2>関連するプロジェクト</h2>
+      <h2>関連するプロジェクト・ツール</h2>
       <p class="inline-links">
         {related
           .sort((a, b) => a.data.order - b.data.order)
           .map((p) =>
-            (p.body ?? '').trim() ? (
-              <a href={`/projects/${p.id}`}>{p.data.title}</a>
+            hasDetail(p) ? (
+              <a href={projectPath(p.id, p.data)}>{p.data.title}</a>
             ) : (
               <span>{p.data.title}</span>
             ),

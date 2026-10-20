@@ -52,7 +52,7 @@ git commit     → ステージ済みファイルに秘密情報があればブ�
 区切り         → /handoff が HANDOFF / TODO / KNOWLEDGE / 判断台帳を更新
 ```
 
-複数のアプリで同じ設定を使うため、リポジトリごとにコピーせず [プラグイン](/projects/claude-plugins)として 1 か所で管理します。
+複数のアプリで同じ設定を使うため、リポジトリごとにコピーせず [プラグイン](/tools/claude-plugins)として 1 か所で管理します。
 
 ## 4. PR からマージまで
 

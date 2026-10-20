@@ -1,0 +1,18 @@
+# 生成物・依存
+dist/
+.astro/
+node_modules/
+.vercel/
+
+# 開発ダッシュボードは apps-workflow のテンプレートの写し。テンプレートと差分を出さないため整形しない（KNOWLEDGE.md）
+dashboard/
+
+# デザインの見本は、作り手（AI）が書いたままの記録として残す
+docs/design-candidates/**/*.html
+
+# 公開プロフィールの Markdown は人が読む文書。整形ツールで改行位置を変えない
+public-profile/**/*.md
+
+# 開発ドキュメント（AI 向け）も同様
+*.md
+!README.md

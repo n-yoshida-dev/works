@@ -1,0 +1,50 @@
+---
+// Ask AI の入口。ボタンを押すと（PC はマウスを乗せても）各 AI を選ぶメニューが開き、/ask に移らずに訪問者の AI を開ける（SPEC.md §3・§4）。
+// 開け閉めは HTML の popover（popovertarget）に任せ、JavaScript は使わない。外を押すか Esc で閉じる。
+// JavaScript は Gemini のプロンプトとサイトの全文のコピーだけ（src/scripts/ask-copy.ts。Gemini は URL でプロンプトを渡せず、URL も読めないため）。
+import { chatLinks } from '../lib/ask';
+import { ASK_BUTTON_LABEL } from '../site';
+
+interface Props {
+  /** fab：右下の追従ボタン（メニューはボタンの上に開く）。section：トップの Ask AI 節のボタン（メニューはボタンの下に開く） */
+  variant: 'fab' | 'section';
+}
+const { variant } = Astro.props;
+const links = chatLinks(Astro.site).filter((l) => l.href);
+/** メニューの id。1 ページに fab と section が 1 つずつまでなので、variant で分ければ重ならない */
+const menuId = `ask-menu-${variant}`;
+---
+
+<div class:list={['ask-entry', `ask-entry-${variant}`]}>
+  <button
+    type="button"
+    class:list={['ask-trigger', variant === 'fab' ? 'ask-fab' : 'button button-primary']}
+    popovertarget={menuId}
+  >
+    {ASK_BUTTON_LABEL}
+  </button>
+  <div id={menuId} class="ask-menu" popover>
+    <ul class="ask-menu-panel">
+      {links.map((l) => (
+        <li>
+          <a
+            href={l.href}
+            target="_blank"
+            rel="noopener"
+            data-ask-copy={l.copy?.prompt}
+            data-ask-source={l.copy?.source}
+          >
+            {l.label}
+          </a>
+        </li>
+      ))}
+      <li class="ask-menu-more">
+        <a href="/ask">プロンプトを見る</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<script>
+  import '../scripts/ask-copy';
+</script>

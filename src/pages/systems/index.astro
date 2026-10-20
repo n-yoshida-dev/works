@@ -1,0 +1,25 @@
+---
+// Systems 一覧。「何を作ったか」ではなく「どう組み合わせて仕組みにしているか」。
+import Base from '../../layouts/Base.astro';
+import SystemCard from '../../components/SystemCard.astro';
+import { getSystems } from '../../lib/content';
+
+const systems = await getSystems();
+---
+
+<Base
+  title="Systems"
+  description="自作アプリ・AI・GitHub・自作ツールをどう組み合わせて、開発・学習・生活改善を仕組み化しているか。"
+>
+  <h1>Systems</h1>
+  <p class="lead">
+    <a href="/projects">Projects</a> が「何を作ったか」なら、ここは「それらをどう組み合わせて、
+    自分の開発・学習・生活改善を仕組みにしているか」です。
+    どれもアプリではなく運用で、非公開のリポジトリを含みます。ここには設計の考え方だけを書いています。
+  </p>
+  <ul class="card-grid">
+    {systems.map((s) => (
+      <SystemCard system={s} />
+    ))}
+  </ul>
+</Base>

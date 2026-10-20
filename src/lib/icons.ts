@@ -1,0 +1,22 @@
+// トップで使う線のアイコン（ロゴではない汎用の形）。色は持たず、描くときに文字色（currentColor）で塗る。
+// 使う場所は About の外部リンク（SPEC.md §4。2026-10-03 ユーザーが見本から選択）と、
+// 左の目次の下の GitHub・Qiita（2026-10-06 ユーザーが見本 B を選択）だけ。
+// 形は見本（docs/design-candidates/2026-10-03-top-sections/）の B・C から引いた。どれも 24×24 の枠に描く
+
+/** アイコンの名前と、その形（SVG の path の d 属性の並び） */
+export const ICONS = {
+  /** コード（GitHub） */
+  code: ['M8 5l-5 7 5 7', 'M16 5l5 7-5 7', 'M14 4l-4 16'],
+  /** ペン（Qiita） */
+  pen: ['M4 20h16', 'M4 16l10.5-10.5a2.1 2.1 0 0 1 3 3L7 19l-4 1z'],
+  /** 開いた本（Reading Log） */
+  book: [
+    'M12 6.5c-1.5-1.5-4-2-8-2v13c4 0 6.5.5 8 2 1.5-1.5 4-2 8-2v-13c-4 0-6.5.5-8 2z',
+    'M12 6.5v13',
+  ],
+} as const satisfies Record<string, readonly string[]>;
+
+export type IconName = keyof typeof ICONS;
+
+/** frontmatter の型定義（z.enum）に渡す名前の一覧 */
+export const ICON_NAMES = Object.keys(ICONS) as [IconName, ...IconName[]];

@@ -1,0 +1,237 @@
+---
+// トップ。1 枚のページに 5 節（About / Projects / Systems / Articles / Ask AI）を縦に並べ、
+// 左の目次がその節へ移動する（SPEC.md §4）。各節は短い版で、詳しい版は各ページに残して「すべて →」で行く。
+// 先頭は画面 1 つ分の表紙（名前・一言・要点 3 行・目次）で、About の節は表紙の中に置き、外部リンクのカードは表紙の直後に置く
+// （2026-10-05 ユーザーがコンペの見本 A を選択。logs/decisions.md、見本は docs/design-candidates/2026-10-04-first-screen/）。
+// 文章は frontmatter の tagline / highlights と各コレクションの要約だけを出し、profile.md の本文は Markdown 版（/profile.md）に任せる。
+import Base from '../layouts/Base.astro';
+import AskEntry from '../components/AskEntry.astro';
+import HomeSection from '../components/HomeSection.astro';
+import Icon from '../components/Icon.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import SystemCard from '../components/SystemCard.astro';
+import {
+  getPage,
+  getFeaturedProjects,
+  getOtherProjects,
+  getHomeWideProjects,
+  getSystems,
+  getArticles,
+  platformLabel,
+} from '../lib/content';
+import { articleCalendar } from '../lib/outline';
+import { SITE, SECTIONS } from '../site';
+
+const profile = await getPage('profile');
+// 主なプロジェクトは 4 件まで（SPEC.md §4）。総数は切る前の件数で数える。
+// カードが 3 列になる広い画面では、homeWide の 2 件を足して 6 枚（2 行ちょうど）にする
+const allFeatured = await getFeaturedProjects();
+const featured = allFeatured.slice(0, 4);
+const wideExtras = (await getHomeWideProjects()).slice(0, 6 - featured.length);
+const projectCount = allFeatured.length + (await getOtherProjects()).length;
+// 見出しの件数。広い画面では足した分を数えた件数に差し替える
+const projectNote = `${featured.length} / ${projectCount} 件`;
+const projectNoteWide =
+  wideExtras.length > 0 ? `${featured.length + wideExtras.length} / ${projectCount} 件` : undefined;
+const systems = await getSystems();
+const articles = await getArticles();
+const calendar = articleCalendar(articles.map((a) => a.data));
+// 掲載先が 1 つだけなら「Qiita に書いた」と名前を出す（複数になったら名前を出さない）
+const platforms = [...new Set(articles.map((a) => platformLabel[a.data.platform]))];
+const articleSource =
+  platforms.length === 1 && platforms[0] ? `${platforms[0]} に書いた` : '書いた';
+
+/**
+ * 表紙の目次に添える件数（節の id → 件数と単位）。今のトップで件数を出している 3 節だけ。
+ * Projects は見出しの「4 / 12 件」のうち全体の件数を使う。PC では 1 件 1 マスの小さな図も並べる
+ */
+const coverCounts: Partial<Record<string, { n: number; unit: string }>> = {
+  projects: { n: projectCount, unit: '件' },
+  systems: { n: systems.length, unit: '件' },
+  articles: { n: articles.length, unit: '本' },
+};
+---
+
+<Base description={profile.data.description} markdownHref="/profile.md">
+  <div class="cover" slot="cover">
+    <div class="cover-inner">
+      <HomeSection id="about" class="cover-about">
+        <div class="cover-id">
+          <h1>{SITE.name}</h1>
+          {profile.data.tagline && <p class="lead">{profile.data.tagline}</p>}
+        </div>
+        {profile.data.highlights && (
+          <ul class="cover-facts">
+            {profile.data.highlights.map((h) => (
+              <li>
+                <span class="fact-label">{h.label}</span>
+                <span class="fact-title">{h.title}</span>
+                {h.detail && <span class="fact-detail">{h.detail}</span>}
+              </li>
+            ))}
+          </ul>
+        )}
+      </HomeSection>
+      <nav class="cover-nav" aria-label="目次">
+        <ol class="ix">
+          {SECTIONS.map((s, i) => {
+            const count = coverCounts[s.id];
+            return (
+              <li>
+                <a href={`#${s.id}`}>
+                  <span class="ix-no" aria-hidden="true">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <span class="ix-name">{s.label}</span>
+                  <span class="ix-sq" aria-hidden="true">
+                    {count && Array.from({ length: count.n }, () => <i />)}
+                  </span>
+                  <span class="ix-count">{count && `${count.n} ${count.unit}`}</span>
+                  <span class="ix-go" aria-hidden="true">
+                    →
+                  </span>
+                </a>
+              </li>
+            );
+          })}
+        </ol>
+      </nav>
+    </div>
+    <a class="cover-down" href="#after-cover" aria-hidden="true" tabindex="-1">
+      ↓
+    </a>
+  </div>
+
+  <div class="about-links" id="after-cover">
+    {profile.data.links && (
+      <ul class="link-cards" aria-label="外部のページ">
+        {profile.data.links.map((l) => (
+          <li>
+            <a class="link-card" href={l.url}>
+              {l.icon && <Icon name={l.icon} />}
+              <span>
+                <span class="link-label">{l.label}</span>
+                {l.note && <span class="link-note">{l.note}</span>}
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
+
+  <HomeSection id="projects" note={projectNote} noteWide={projectNoteWide}>
+    <ul class="card-grid">
+      {featured.map((p) => (
+        <ProjectCard project={p} compact />
+      ))}
+      {wideExtras.map((p) => (
+        <ProjectCard project={p} compact wideOnly />
+      ))}
+    </ul>
+  </HomeSection>
+
+  <HomeSection id="systems" note={`${systems.length} 件`}>
+    <ul class="card-grid">
+      {systems.map((s) => (
+        <SystemCard system={s} compact />
+      ))}
+    </ul>
+  </HomeSection>
+
+  <HomeSection id="articles" note={`${articles.length} 本`}>
+    <p class="section-lead">
+      {`${articleSource} ${articles.length} 本を、${calendar.rows.length} つの連載に分けています。`}
+      <span class="sq" aria-hidden="true"></span>
+      {' 1 つが記事 1 本で、公開した月に置いています。'}
+    </p>
+    <div class="series" style={`--months: ${calendar.months.length}`}>
+      <div class="series-row series-head" aria-hidden="true">
+        <span></span>
+        <span></span>
+        {calendar.months.map((m) => (
+          <span class="m-label">{m}</span>
+        ))}
+      </div>
+      <ol class="series-list">
+        {calendar.rows.map((row) => (
+          <li class="series-row">
+            <span class="s-name">{row.series}</span>
+            <span class="s-count">
+              {row.total} 本
+              <span class="visually-hidden">
+                （
+                {row.perMonth
+                  .map((n, i) => (n > 0 ? `${calendar.months[i]} に ${n} 本` : ''))
+                  .filter(Boolean)
+                  .join('、')}
+                ）
+              </span>
+            </span>
+            {row.perMonth.map((n) => (
+              <span class="m" aria-hidden="true">
+                {Array.from({ length: n }, () => (
+                  <i />
+                ))}
+              </span>
+            ))}
+          </li>
+        ))}
+      </ol>
+    </div>
+    {calendar.latest && (
+      <p class="latest">
+        <span class="latest-label">最新</span>
+        <a href={calendar.latest.url}>{calendar.latest.title}</a>
+        <span class="latest-meta">
+          {calendar.latest.publishedAt}・{calendar.latest.series}
+        </span>
+      </p>
+    )}
+  </HomeSection>
+
+  <HomeSection id="ask">
+    <p>あなたの AI に、このサイトと公開リポジトリを読ませて私について質問できます。</p>
+    <div class="button-row">
+      <AskEntry variant="section" />
+    </div>
+    <p class="llms-note">
+      AI 向けの入口：<a href="/llms.txt">llms.txt</a>（このサイトの要約を、AI
+      が読みやすい形にまとめたファイル）
+    </p>
+  </HomeSection>
+
+  <p class="meta">最終確認日: {profile.data.updated}</p>
+
+  <script>
+    // 目次の「今いる節」。画面の上から 1/3 の線を最後に通過した節を今いる節とし、目次の aria-current を付け替える。
+    // ページ末尾までスクロールしたときは、短くて線に届かない最後の節（Ask AI）を今いる節にする。理由は KNOWLEDGE.md
+    const links = [...document.querySelectorAll<HTMLAnchorElement>('.side nav a[href^="#"]')];
+    const sections = links.map((a) => document.getElementById(a.hash.slice(1)));
+    let scheduled = false;
+    function update() {
+      scheduled = false;
+      const line = window.innerHeight / 3;
+      const atBottom =
+        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 1;
+      let current = 0;
+      sections.forEach((s, i) => {
+        if (s && s.getBoundingClientRect().top <= line) current = i;
+      });
+      if (atBottom) current = sections.length - 1;
+      links.forEach((a, i) => {
+        if (i === current) a.setAttribute('aria-current', 'location');
+        else a.removeAttribute('aria-current');
+      });
+    }
+    const schedule = () => {
+      if (!scheduled) {
+        scheduled = true;
+        requestAnimationFrame(update);
+      }
+    };
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+    update();
+  </script>
+</Base>

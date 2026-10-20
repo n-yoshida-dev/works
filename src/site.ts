@@ -1,0 +1,62 @@
+// サイト全体で使う定数。ここ以外にサイト名や GitHub アカウントを直書きしない。
+import type { IconName } from './lib/icons';
+
+export const SITE = {
+  name: 'Naoki Yoshida',
+  /** <title> の末尾と OGP の site_name */
+  title: 'Naoki Yoshida',
+  description:
+    'Software engineer building personal software and AI-assisted development systems. 自作アプリと、AI・GitHub・自作ツールを組み合わせた開発・学習の仕組みを公開しています。',
+  github: 'n-yoshida-dev',
+  githubUrl: 'https://github.com/n-yoshida-dev',
+  qiitaUrl: 'https://qiita.com/n-yoshida-dev',
+  // このサイトのリポジトリへのリンク（repoUrl）は 2026-10-20 に外した。リポジトリを Private にするため、訪問者に 404 を見せない
+  locale: 'ja_JP',
+} as const;
+
+/**
+ * Ask AI（/ask）への入口のボタンの言葉。トップの Ask AI 節・右下の追従ボタン・/ask の見出しとタブで同じ言葉を使う。
+ * このサイトはポートフォリオではないので「portfolio」を使わない（2026-10-14 ユーザーが選択。logs/decisions.md）
+ */
+export const ASK_BUTTON_LABEL = 'Ask AI about this site';
+
+/**
+ * 左の目次の下に並べるリンク（アイコン付き）。2026-10-06 ユーザーが見本 B を選択（logs/decisions.md）：
+ * トップの表紙には置かない（表紙のすぐ下に、説明つきのリンクカードがあるため）。
+ * llms.txt は人間には説明なしで伝わらないので、ここには置かず、トップの Ask AI 節とフッターに説明つきで置く
+ */
+export const QUICK_LINKS: readonly { label: string; href: string; icon: IconName }[] = [
+  { label: 'GitHub', href: SITE.githubUrl, icon: 'code' },
+  { label: 'Qiita', href: SITE.qiitaUrl, icon: 'pen' },
+] as const;
+
+/** トップの 1 節。目次（左の固定目次）と、トップの見出し・「すべて →」の行き先を同じ定義から作る */
+export interface Section {
+  /** `<section id>` と目次リンクの `#id`。変えるときは index.astro の `<HomeSection id>` も一緒に変える */
+  id: string;
+  /** 目次とトップの見出しに出す名前 */
+  label: string;
+  /** 詳しい版のページ。無い節（About）は「すべて →」を出さない */
+  more?: { href: string; label: string };
+}
+
+/**
+ * トップの 5 節。この順に縦に並べ、左の目次もこの順（SPEC.md §4）。
+ * 節を増やす・減らすときはここと index.astro を直す（tests/home-sections.test.mjs が両方の一致を確かめる）
+ */
+export const SECTIONS: readonly Section[] = [
+  { id: 'about', label: 'About' },
+  { id: 'projects', label: 'Projects', more: { href: '/projects', label: 'すべてのプロジェクト' } },
+  { id: 'systems', label: 'Systems', more: { href: '/systems', label: 'すべての仕組み' } },
+  { id: 'articles', label: 'Articles', more: { href: '/articles', label: 'すべての記事' } },
+  { id: 'ask', label: 'Ask AI' },
+] as const;
+
+/** 現在のパスが属する節の id。詳しい版のページ（/projects など）とその配下を、その節に対応づける */
+export function sectionIdForPath(pathname: string): string | undefined {
+  const path = pathname.replace(/\/$/, '') || '/';
+  if (path === '/ask') return 'ask';
+  return SECTIONS.find(
+    (s) => s.more && (path === s.more.href || path.startsWith(s.more.href + '/')),
+  )?.id;
+}

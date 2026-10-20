@@ -1,4 +1,4 @@
-// /articles.md — Articles の Markdown 版
+// /writing.md — Writing の Markdown 版
 import type { APIRoute } from 'astro';
 import { getArticles, articlesToMarkdown, markdownResponse } from '../lib/content';
 

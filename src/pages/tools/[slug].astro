@@ -1,0 +1,15 @@
+---
+// ツール詳細。kind: tool のうち、本文がある（body が空でない）エントリだけページを作る。中身は ProjectDetail（Projects と共通）。
+import { getCollection } from 'astro:content';
+import ProjectDetail from '../../components/ProjectDetail.astro';
+import { hasDetail } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const tools = await getCollection('projects', (p) => p.data.kind === 'tool' && hasDetail(p));
+  return tools.map((project) => ({ params: { slug: project.id }, props: { project } }));
+}
+
+const { project } = Astro.props;
+---
+
+<ProjectDetail project={project} />

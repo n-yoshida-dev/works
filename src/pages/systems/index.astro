@@ -17,6 +17,8 @@ const systems = await getSystems();
     自分の開発・学習・生活改善を仕組みにしているか」です。
     どれもアプリではなく運用で、非公開のリポジトリを含みます。ここには設計の考え方だけを書いています。
   </p>
+  {/* カードの題名（h3）の前に見出しの段をそろえる。見た目は変えず、読み上げにだけ渡す */}
+  <h2 class="visually-hidden">仕組みの一覧</h2>
   <ul class="card-grid">
     {systems.map((s) => (
       <SystemCard system={s} />

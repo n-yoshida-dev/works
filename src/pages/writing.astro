@@ -1,5 +1,5 @@
 ---
-// Articles。技術記事へのリンクを連載ごとにまとめる。
+// Writing。技術記事へのリンクを連載ごとにまとめる（2026-10-20 に /articles から改名。logs/decisions.md）。
 import Base from '../layouts/Base.astro';
 import { getArticles, groupArticlesBySeries, platformLabel } from '../lib/content';
 import { SITE } from '../site';
@@ -9,11 +9,11 @@ const groups = groupArticlesBySeries(articles);
 ---
 
 <Base
-  title="Articles"
+  title="Writing"
   description="技術記事の一覧。OrgFlow の設計、Spring Boot、Spring Security と JWT 認証、マルチテナントの学習記録を連載で公開しています。"
-  markdownHref="/articles.md"
+  markdownHref="/writing.md"
 >
-  <h1>Articles</h1>
+  <h1>Writing</h1>
   <p class="lead">
     個人開発の過程を学習記録として公開しています。連載ごとに、読む順（公開日の古い順）に並べています。
     一覧は <a href={SITE.qiitaUrl}>Qiita</a> にもあります。

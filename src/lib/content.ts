@@ -2,7 +2,7 @@
 // ページ側にロジックを持たせず、ここに集めておく（Phase 2 で自動生成に置き換えるときの境界）。
 import { getCollection, getEntry, type CollectionEntry } from 'astro:content';
 import { highlightLine } from './outline';
-import { VIBE_CODING_NOTE, publicRepoUrl } from './project-summary';
+import { VIBE_CODING_NOTE, publicRepoUrl, projectPath } from './project-summary';
 
 export type Project = CollectionEntry<'projects'>;
 export type System = CollectionEntry<'systems'>;
@@ -14,22 +14,36 @@ function byOrder<T extends { data: { order: number } }>(a: T, b: T): number {
   return a.data.order - b.data.order;
 }
 
+/** Projects に出すもの（kind: app）だけを取り出す。Tools（kind: tool）は getTools */
+async function getApps(filter: (p: Project) => boolean): Promise<Project[]> {
+  const all = await getCollection('projects', (p) => p.data.kind === 'app' && filter(p));
+  return all.sort(byOrder);
+}
+
 /** 主要プロジェクト（featured: true）。order 順 */
 export async function getFeaturedProjects(): Promise<Project[]> {
-  const all = await getCollection('projects', (p) => p.data.featured);
-  return all.sort(byOrder);
+  return getApps((p) => p.data.featured);
 }
 
 /** その他・実験（featured: false）。order 順 */
 export async function getOtherProjects(): Promise<Project[]> {
-  const all = await getCollection('projects', (p) => !p.data.featured);
-  return all.sort(byOrder);
+  return getApps((p) => !p.data.featured);
 }
 
 /** トップが 3 列のときだけ主要プロジェクトの後ろに足すもの（featured: false かつ homeWide: true）。order 順 */
 export async function getHomeWideProjects(): Promise<Project[]> {
-  const all = await getCollection('projects', (p) => !p.data.featured && p.data.homeWide);
+  return getApps((p) => !p.data.featured && p.data.homeWide);
+}
+
+/** Tools（kind: tool）。featured の区別はせず、order 順 */
+export async function getTools(): Promise<Project[]> {
+  const all = await getCollection('projects', (p) => p.data.kind === 'tool');
   return all.sort(byOrder);
+}
+
+/** 詳細ページを作るか。本文が空でないエントリだけ作る（HTML 版と Markdown 版で同じ条件にする） */
+export function hasDetail(p: Project): boolean {
+  return (p.body ?? '').trim().length > 0;
 }
 
 /** Systems。order 順 */
@@ -80,7 +94,7 @@ export const visibilityLabel: Record<Project['data']['visibility'], string> = {
   archived: 'Archive',
 };
 
-/** 記事の掲載先の表示名。other は名前を出さない（Articles ページとトップの Articles 節で使う） */
+/** 記事の掲載先の表示名。other は名前を出さない（Writing ページとトップの Writing 節で使う） */
 export const platformLabel: Record<Article['data']['platform'], string> = {
   qiita: 'Qiita',
   zenn: 'Zenn',
@@ -97,8 +111,8 @@ export const statusLabel: Record<Project['data']['status'], string> = {
   archived: '終了',
 };
 
-// 備考の文言とリポジトリの URL の出し分けの正本は project-summary.ts。カードや詳細ページはこれまでどおりここから読む
-export { VIBE_CODING_NOTE, publicRepoUrl };
+// 備考の文言・リポジトリの URL の出し分け・詳細ページのパスの正本は project-summary.ts。カードや詳細ページはこれまでどおりここから読む
+export { VIBE_CODING_NOTE, publicRepoUrl, projectPath };
 
 /**
  * プロジェクト 1 件を AI が読みやすい Markdown にする。
@@ -156,7 +170,7 @@ export function pageToMarkdown(p: Page): string {
 /** 記事一覧を Markdown にする */
 export function articlesToMarkdown(articles: Article[]): string {
   const lines = [
-    '# Articles',
+    '# Writing',
     '',
     '技術記事の一覧。連載ごとに、読む順（公開日の古い順）に並べている。',
     '',

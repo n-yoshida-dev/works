@@ -13,6 +13,12 @@ const visibility = z.enum(['public', 'private', 'archived']);
 const projectStatus = z.enum(['active', 'paused', 'done', 'archived']);
 
 /**
+ * 作品の種類。app は使うもの（Projects に出す）、tool は開発に入れて使う部品（Tools に出す。プラグイン・テンプレートなど）。
+ * 型を分けずに 1 つのコレクションで持ち、一覧と URL だけを分ける（logs/decisions.md 2026-10-20「Systems を独立した節として残す」）
+ */
+const projectKind = z.enum(['app', 'tool']);
+
+/**
  * 詳細ページの先頭に出す要点。1 行 1 項目で 3 つまで。本文に書いてある事実だけから作る。
  * これを書いたエントリは、HTML の詳細ページで本文を「詳しく読む」に畳む（Markdown 版は全文のまま）。
  * 本文が短いエントリは書かなくてよい（本文をそのまま出す）
@@ -30,11 +36,13 @@ const cardTagline = z
     error: 'tagline は一文にする（句点「。」を含めない）',
   });
 
-/** 自作アプリ・リポジトリ（Projects ページ） */
+/** 自作アプリ・リポジトリ（Projects ページと Tools ページ。kind で分ける） */
 const projects = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './public-profile/projects' }),
   schema: z.object({
     title: z.string(),
+    /** 作品の種類。書かなければ app（Projects に出す） */
+    kind: projectKind.default('app'),
     /** 一覧のカードに出す一文 */
     tagline: cardTagline,
     /** 詳細ページの冒頭・Markdown 版・llms.txt に出す 1〜2 文 */
@@ -125,7 +133,7 @@ const pages = defineCollection({
   }),
 });
 
-/** 技術記事（Articles ページ）。Phase 2 で自動取得に置き換えやすいよう JSON にしている */
+/** 技術記事（Writing ページ）。Phase 2 で自動取得に置き換えやすいよう JSON にしている */
 const articles = defineCollection({
   loader: file('./public-profile/articles.json'),
   schema: z.object({

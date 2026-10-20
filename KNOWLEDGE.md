@@ -12,6 +12,23 @@
 
 ---
 
+### 2026-10-20：Tools は projects のコレクションに `kind` で同居させ、詳細ページは部品で共通にした（T7）
+
+Tools 用に別のコレクションを作らず、`projects` に `kind: 'app' | 'tool'` を足した（計画文書 3-2 のとおり）。項目（公開状態・期間・技術・備考）が同じで、型を 2 つ持つと片方だけ直す事故が起きるため。
+一覧と URL だけを分け、取り出しは `src/lib/content.ts` の `getApps`（Projects 側）と `getTools`、パスは `src/lib/project-summary.ts` の `projectPath` に集めた。
+詳細ページの中身は `src/components/ProjectDetail.astro` に移し、`/projects/[slug]` と `/tools/[slug]` はどちらも `getStaticPaths` で `kind` を絞るだけにした（同じ HTML を 2 か所に書かないため）。
+
+### 2026-10-20：T10 の `kind: tool` を T7 に前倒しし、トップの作品を 1 件入れ替えた（Claude が選んだ）
+
+Tools が 0 件のままだと、T7 の見た目の点検で Tools の画面を確かめられない。そこで `claude-plugins.md`・`app-template.md` を T7 で `kind: tool` にした。
+その結果、トップの主なプロジェクトが 3 件になり、2 列のカードに穴が空く。`life-plan-simulator`（進行中）を `featured: true` に上げ、
+広い画面だけで足す枠（`homeWide`）には `ai-study-coach`（Public で詳細ページがある）を入れた。どれを載せるかはユーザーに確かめていない。
+
+### 2026-10-20：Astro は、改行をはさんだ文字と要素のあいだの空白を落とすことがある
+
+`/tools` の説明文で「組み合わせ方は」の直後で改行して `<a>Systems</a>` を書いたら、画面では「組み合わせ方はSystems」とくっついた。
+文字と要素の間で改行するときは `{' '}` を明示する（Prettier も整形でそう直す）。詳細ページのバッジの隙間を余白で作っているのも同じ理由（`global.css` の `h1 .badge`）。
+
 ### 2026-10-20：リポジトリは Private で作り、中身を確かめてから本人が Public にする
 
 `gh repo create --public` は Claude のフック（PreToolUse）が止める。公開設定はユーザーが変える決まり（`../CLAUDE.md`）なので、Private で作った。

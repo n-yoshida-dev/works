@@ -4,6 +4,7 @@ import { SITE } from '../site';
 import {
   getFeaturedProjects,
   getOtherProjects,
+  getTools,
   getSystems,
   getPage,
   getArticles,
@@ -17,7 +18,12 @@ export const GET: APIRoute = async ({ site }) => {
   const parts: string[] = [`# ${SITE.name} — full text`, '', `> ${SITE.description}`, ''];
 
   parts.push('---', '', pageToMarkdown(await getPage('profile')));
-  for (const p of [...(await getFeaturedProjects()), ...(await getOtherProjects())]) {
+  const entries = [
+    ...(await getFeaturedProjects()),
+    ...(await getOtherProjects()),
+    ...(await getTools()),
+  ];
+  for (const p of entries) {
     parts.push('---', '', projectToMarkdown(p, site));
   }
   for (const s of await getSystems()) {

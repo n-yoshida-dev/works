@@ -55,11 +55,10 @@ describe('Ask AI の各 AI へのリンク', () => {
     expect(prompt).toContain('Answer in Japanese, including headings.');
   });
 
-  // このサイトはキャリアの情報を載せない。無いものを AI が推測で埋めないよう、どちらのプロンプトにも書く
-  it('仕事の内容や技術の評価はサイトに無いと伝え、推測させない', () => {
+  // 紹介するのは作ったもの。職種の言葉で人を紹介させない（logs/decisions.md 2026-10-20「About の一言から仕事の年数を外す」）
+  it('どちらのプロンプトも、作ったものを紹介させ、職種の言葉を使わない', () => {
     for (const p of [prompt, buildPastedPrompt(site)]) {
-      expect(p).toContain('This site does not include work history, employers, or skill levels.');
-      expect(p).toContain('Do not guess.');
+      expect(p).toContain('makes');
       expect(p).not.toContain('software engineer');
     }
   });

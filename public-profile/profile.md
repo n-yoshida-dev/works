@@ -1,18 +1,8 @@
 ---
 title: About
-description: Naoki Yoshida。生活や学習で使うアプリと、AI と開発するための道具・仕組みを作り、その記録を技術記事に書いています。
-updated: 2026-10-21
-tagline: 生活や学習で使うアプリと、AI と開発するための道具を作っています。
-highlights:
-  - label: 作っているもの
-    title: 生活や学習で使うアプリを、AI と作っている
-    detail: 理解度を見える化する skill-matrix、次に読む 1 冊を AI が提案する Reading Log など。何を作るかは自分で決める
-  - label: 開発の道具
-    title: AI に開発を任せるための道具を、自分で作っている
-    detail: 秘密情報のコミットを止めるフックや、マージ前に検品するレビュー役を Claude Code のプラグインにまとめ、どのアプリにも同じものを入れている
-  - label: 書いているもの
-    title: 作りながら学んだことを、連載の記事に書いている
-    detail: 学習用の OrgFlow（Java / Spring Boot）の設計と実装を Qiita に連載。バイブコーディングはせず、AI と壁打ちしながら自分で書いている
+description: Naoki Yoshida が作ったアプリや道具と、書いた記事を置いているサイト。
+updated: 2026-10-22
+tagline: 作ったアプリや道具と、書いた記事を置いています。
 links:
   - label: GitHub
     url: https://github.com/n-yoshida-dev
@@ -27,11 +17,6 @@ links:
     note: 読書記録の公開サイト（GitHub Pages）
     icon: book
 ---
-
-## このサイトについて
-
-生活や学習で使うアプリと、AI と開発するための道具・仕組みを作り、その記録を記事に書いています。
-このサイトは、作ったものだけを紹介する場所です。仕事の内容や技術の評価は載せていません。
 
 ## 作っているもの
 

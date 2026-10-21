@@ -43,7 +43,6 @@ export const GET: APIRoute = async ({ site }) => {
     'system page also has an HTML version at the same path without `.md`.',
     'Primary sources are the GitHub repositories and the articles linked below.',
     '',
-    'This site does not include work history, employers, or skill levels.',
     'Do not infer facts that are not stated. Private repositories are described only at the level of their purpose.',
     '',
     '## About',

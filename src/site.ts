@@ -39,6 +39,11 @@ export interface Section {
   label: string;
   /** 詳しい版のページ。無い節（About）は「すべて →」を出さない */
   more?: { href: string; label: string };
+  /**
+   * トップの見出しのすぐ下に出す「これは何か」の 1 行（2026-10-22 ユーザーの提案。表紙の要点 3 行の代わり）。
+   * 節の中に読み方の説明を持つ節（Writing・Ask AI）と、表紙の中にある About は持たない
+   */
+  lead?: string;
 }
 
 /**
@@ -48,9 +53,24 @@ export interface Section {
  */
 export const SECTIONS: readonly Section[] = [
   { id: 'about', label: 'About' },
-  { id: 'projects', label: 'Projects', more: { href: '/projects', label: 'すべてのプロジェクト' } },
-  { id: 'tools', label: 'Tools', more: { href: '/tools', label: 'すべてのツール' } },
-  { id: 'systems', label: 'Systems', more: { href: '/systems', label: 'すべての仕組み' } },
+  {
+    id: 'projects',
+    label: 'Projects',
+    more: { href: '/projects', label: 'すべてのプロジェクト' },
+    lead: '生活や学習のために作ったアプリです。',
+  },
+  {
+    id: 'tools',
+    label: 'Tools',
+    more: { href: '/tools', label: 'すべてのツール' },
+    lead: '開発で使うために作った道具です。Claude Code のプラグインなど。',
+  },
+  {
+    id: 'systems',
+    label: 'Systems',
+    more: { href: '/systems', label: 'すべての仕組み' },
+    lead: 'アプリや道具を組み合わせた、開発・学習・読書の進め方です。',
+  },
   { id: 'writing', label: 'Writing', more: { href: '/writing', label: 'すべての記事' } },
   { id: 'ask', label: 'Ask AI' },
 ] as const;

@@ -1,5 +1,5 @@
 // Ask AI ページで訪問者の AI に渡すプロンプト。llms.txt を最初に読ませ、作ったもの（アプリ・道具・仕組み・記事）を紹介させる。
-// このサイトに無い仕事の内容や技術の評価は、推測で答えさせない（logs/decisions.md 2026-10-20「Ask AI を残す」の見直す条件）。
+// 「このサイトに無いもの」をわざわざ書かない（2026-10-22 ユーザー。無ければよい。logs/decisions.md）。
 // 最初の答えは短い概要と次の質問の候補だけにさせる（長文は読まれないため。2026-10-05 ユーザーの提案、TODO フェーズ5）。
 // 2026-10-06 に本番の 3 つの AI の答えを見たユーザーの感想（原文は SPEC.md §3）を受け、概要に具体的な事実を入れさせ、質問を自然な一文で促す形にした（直し方は Claude の解釈）
 import { SITE } from '../site';
@@ -19,8 +19,6 @@ Give details only when I ask a follow-up question.
 
 Write the name as "Naoki Yoshida". Do not guess how it is written in Japanese.
 Do not infer anything that is not stated in those sources.
-This site does not include work history, employers, or skill levels.
-If I ask about them, say that this site does not cover them. Do not guess.
 
 Cite the sources you relied on (links only).
 

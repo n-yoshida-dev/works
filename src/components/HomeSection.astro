@@ -25,6 +25,7 @@ if (!section) {
     {note && <span class:list={['section-note', { 'narrow-only': noteWide }]}>{note}</span>}
     {noteWide && <span class="section-note wide-only">{noteWide}</span>}
   </h2>
+  {section.lead && <p class="section-lead">{section.lead}</p>}
   <slot />
   {section.more && (
     <p class="more-link">

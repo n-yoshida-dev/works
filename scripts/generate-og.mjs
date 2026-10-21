@@ -10,9 +10,10 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const out = path.join(here, '..', 'public', 'og.png');
 
 const name = 'Naoki Yoshida';
-const line1 = 'Software engineer building personal software';
-const line2 = 'and AI-assisted development systems.';
-const line3 = 'Projects · Systems · Skills · Ask AI';
+// 職種の言葉は入れず、作っているものだけを書く（logs/decisions.md 2026-10-20）。3 行目はトップの節の名前と同じ
+const line1 = 'Personal apps, tools for AI-assisted development,';
+const line2 = 'and the systems behind them.';
+const line3 = 'Projects · Tools · Systems · Writing · Ask AI';
 
 // 1200×630 は OGP の標準サイズ。装飾は付けず、文字と 1 本の線だけ
 const svg = `

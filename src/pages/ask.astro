@@ -11,7 +11,7 @@ const links = chatLinks(Astro.site);
 
 <Base
   title={ASK_BUTTON_LABEL}
-  description="あなたの ChatGPT / Claude / Gemini に、このサイトと公開リポジトリを読ませて Naoki Yoshida について質問するためのプロンプト。"
+  description="あなたの ChatGPT / Claude / Gemini に、このサイトと公開リポジトリを読ませて、Naoki Yoshida が作ったものについて質問するためのプロンプト。"
 >
   <h1>{ASK_BUTTON_LABEL}</h1>
   <p class="lead">
@@ -52,7 +52,7 @@ const links = chatLinks(Astro.site);
   <ul>
     <li>
       <a href="/llms.txt">/llms.txt</a>
-      ：このサイトの索引。プロフィール、Projects、Systems、記事、外部リンクへの導線
+      ：このサイトの索引。About、Projects、Tools、Systems、Writing、外部リンクへの導線
     </li>
     <li>
       <a href="/llms-full.txt">/llms-full.txt</a>：主要ページの Markdown を 1 ファイルにまとめたもの
@@ -77,7 +77,10 @@ const links = chatLinks(Astro.site);
     <li>
       AI の回答は要約であり、一次情報は各リポジトリと記事です。判断に使う前に出典を確認してください
     </li>
-    <li>ここに無い情報（非公開のリポジトリの中身・生活の詳細）は AI にも分かりません</li>
+    <li>
+      ここに無い情報（非公開のリポジトリの中身・仕事の内容・生活の詳細）は AI
+      にも分かりません。推測で答えないよう書いてあります
+    </li>
   </ul>
 
   <script>

@@ -5,8 +5,9 @@ export const SITE = {
   name: 'Naoki Yoshida',
   /** <title> の末尾と OGP の site_name */
   title: 'Naoki Yoshida',
+  // 職種の言葉は入れない。作っているものだけを書く（logs/decisions.md 2026-10-20「About の一言から仕事の年数を外す」）
   description:
-    'Software engineer building personal software and AI-assisted development systems. 自作アプリと、AI・GitHub・自作ツールを組み合わせた開発・学習の仕組みを公開しています。',
+    'Personal apps, tools for AI-assisted development, and the systems behind them. 生活や学習で使うアプリと、AI と開発するための道具・仕組み、その記録の技術記事を公開しています。',
   github: 'n-yoshida-dev',
   githubUrl: 'https://github.com/n-yoshida-dev',
   qiitaUrl: 'https://qiita.com/n-yoshida-dev',

@@ -54,4 +54,13 @@ describe('Ask AI の各 AI へのリンク', () => {
     expect(prompt).toContain('Cite the sources');
     expect(prompt).toContain('Answer in Japanese, including headings.');
   });
+
+  // このサイトはキャリアの情報を載せない。無いものを AI が推測で埋めないよう、どちらのプロンプトにも書く
+  it('仕事の内容や技術の評価はサイトに無いと伝え、推測させない', () => {
+    for (const p of [prompt, buildPastedPrompt(site)]) {
+      expect(p).toContain('This site does not include work history, employers, or skill levels.');
+      expect(p).toContain('Do not guess.');
+      expect(p).not.toContain('software engineer');
+    }
+  });
 });

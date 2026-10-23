@@ -40,8 +40,7 @@ const articles = await getArticles();
 const calendar = articleCalendar(articles.map((a) => a.data));
 // 掲載先が 1 つだけなら「Qiita に書いた」と名前を出す（複数になったら名前を出さない）
 const platforms = [...new Set(articles.map((a) => platformLabel[a.data.platform]))];
-const articleSource =
-  platforms.length === 1 && platforms[0] ? `${platforms[0]} に書いた` : '書いた';
+const articleSource = platforms.length === 1 && platforms[0] ? `${platforms[0]} に書いた` : '';
 
 /**
  * 表紙の目次に添える件数（節の id → 件数と単位）。トップで件数を出している 4 節だけ。
@@ -141,7 +140,8 @@ const coverCounts: Partial<Record<string, { n: number; unit: string }>> = {
 
   <HomeSection id="writing" note={`${articles.length} 本`}>
     <p class="section-lead">
-      {`${articleSource} ${articles.length} 本を、${calendar.rows.length} つの連載に分けています。`}
+      {/* 本数・連載の数は見出しの件数と図が持つので、説明の文には入れない（2026-10-23 ユーザー） */}
+      {`${articleSource}技術記事を、連載ごとに並べています。`}
       <span class="sq" aria-hidden="true"></span>
       {' 1 つが記事 1 本で、公開した月に置いています。'}
     </p>

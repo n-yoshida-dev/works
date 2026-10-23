@@ -17,4 +17,4 @@
 - Skills と Journey の節・ページ・Markdown 版（`/skills` `/journey` `/skills.md` `/journey.md`）は無い。`/llms.txt` と `/llms-full.txt` にも出さない
 - `public-profile/` 直下のページは `profile.md` だけ
 - `visibility: private` の作品は、カード・詳細ページ・Markdown 版にリポジトリへのリンクを出さない（開くと 404 になるため。`src/lib/project-summary.ts` の `publicRepoUrl`）
-- Ask AI の依頼文から、技術を区分ごとに分けて答えさせる指示を外した（依頼文の全体は T8 で作り直す）
+- Ask AI の依頼文から、技術を区分ごとに分けて答えさせる指示を外した（依頼文の全体は T8 で作り直した。上の「Ask AI の依頼文と llms.txt」の行）

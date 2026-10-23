@@ -11,7 +11,7 @@
 | B      | Codex（GPT-6.1 Sol、effort medium） | `Yoshida Works`（Yoshida を小さく、Works を大きく。下に本名の署名） |
 | C      | Opus 5.5（Agent ツール）            | `n-yoshida-dev / works`（works を PC 7rem まで大きく）              |
 
-## 本人の選択（要旨。原文は ops に記録）
+## 本人の選択（要旨。原文は ops の Beads ops-ei4 のコメント）
 
 - 名前は「works」。B の形から上の「Yoshida」を外し、名前の下に小さく「Naoki Yoshida / n-yoshida-dev」と添える（GitHub や Qiita のアカウント名を書くように）
 - 表紙の見せ方は A か B で迷い、開いたときの動きは C

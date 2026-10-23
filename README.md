@@ -24,7 +24,8 @@ works/
 │   ├── check-public-profile.mjs   ← 禁止語スキャン（npm run lint）
 │   ├── public-profile-rules.json  ← 禁止語パターンと理由
 │   ├── generate-og.mjs            ← OGP 画像の生成（public/og.png）
-│   └── check-home.mjs             ← ビルドしたトップに 3 点が中身つきで出ているかの検査
+│   ├── check-home.mjs             ← ビルドしたトップに 3 点が中身つきで出ているかの検査
+│   └── check-dist.mjs             ← ビルド後の dist/ 全体の禁止語スキャン（npm run check:dist）
 ├── tests/                   ← スキャンの回帰テスト、public-profile の参照整合・詳細ページの本文の長さ・トップの節のテスト
 └── .github/workflows/ci.yml
 ```
@@ -60,7 +61,7 @@ npm run preview      # ビルド結果の確認。AI エージェントから起
 CI と同じ検査をまとめて回す：
 
 ```bash
-npm run format:check && npm run lint && npm run typecheck && npm run test && npm run build && npm run check:home
+npm run format:check && npm run lint && npm run typecheck && npm run test && npm run build && npm run check:home && npm run check:dist
 ```
 
 | コマンド               | 内容                                                                                             |
@@ -71,6 +72,7 @@ npm run format:check && npm run lint && npm run typecheck && npm run test && npm
 | `npm run test`         | Vitest                                                                                           |
 | `npm run build`        | ビルド。frontmatter が型に合わないとここで失敗する                                               |
 | `npm run check:home`   | ビルドしたトップに、3 点（何の人か・何を作ったか・どう開発しているか）の節が中身つきで出ているか |
+| `npm run check:dist`   | ビルド後の `dist/` 全体に、禁止語と前身のサイトのページ・リポジトリへの参照が無いか              |
 
 OGP 画像を作り直すとき：`node scripts/generate-og.mjs`（文言は同スクリプト内）。
 
@@ -101,6 +103,7 @@ OGP 画像を作り直すとき：`node scripts/generate-og.mjs`（文言は同�
 **ほかに書かないもの**：家族、金銭、住所、生年月日・年齢、勤め先の名前と内部情報、人事評価・給与、健康、連絡先、認証情報、ローカルのパス。
 
 - `npm run lint` がパターンを機械的に検査する（`scripts/public-profile-rules.json`）。ヒットしたら **書き直す**。許可リストは作らない
+- `npm run check:dist` がビルド後の `dist/` 全体を同じパターンで検査する。HTML に出ない Markdown 版・`llms.txt`・サイトマップへの漏れもここで止まる
 - パターンにできないもの（会社名・製品名・固有の案件名）は、PR を出す前に目視で確認する
 - 非公開のリポジトリは「存在と目的」だけを書き、中身は書かない
 

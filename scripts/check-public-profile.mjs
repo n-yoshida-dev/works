@@ -9,10 +9,11 @@ import path from 'node:path';
 const here = path.dirname(fileURLToPath(import.meta.url));
 const rulesPath = path.join(here, 'public-profile-rules.json');
 
-/** ルール定義を読み込み、正規表現にコンパイルする */
-export async function loadRules(file = rulesPath) {
+/** ルール定義を読み込み、正規表現にコンパイルする。key で distOnlyRules などの別の組を選べる */
+export async function loadRules(file = rulesPath, key = 'rules') {
   const json = JSON.parse(await readFile(file, 'utf8'));
-  return json.rules.map((r) => ({ ...r, regex: new RegExp(r.pattern, 'gu') }));
+  if (!Array.isArray(json[key])) throw new Error(`${file} に規則の組 "${key}" がありません`);
+  return json[key].map((r) => ({ ...r, regex: new RegExp(r.pattern, 'gu') }));
 }
 
 /** 1 つのテキストを検査し、ヒットした行を返す */
@@ -27,6 +28,7 @@ export function scanText(text, rules, fileLabel = '(text)') {
         hits.push({
           file: fileLabel,
           line: index + 1,
+          column: match.index + 1,
           rule: rule.id,
           reason: rule.reason,
           matched: match[0],

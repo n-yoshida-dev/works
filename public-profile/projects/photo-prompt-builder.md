@@ -3,7 +3,7 @@ title: photo-prompt-builder
 tagline: 写真を AI で加工するときの英語プロンプトを、選ぶだけで組み立てる Web ツール
 summary: 写真を AI で加工するときの英語プロンプトを、スタイルと条件を選ぶだけで組み立てる Web ツール。写真は端末の外に出さない。
 repo: https://github.com/n-yoshida-dev/photo-prompt-builder
-visibility: private
+visibility: public
 status: paused
 period: 2026-09
 stack: [React, TypeScript, Vite]

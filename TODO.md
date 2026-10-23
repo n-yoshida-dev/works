@@ -21,8 +21,9 @@ SessionStart フックが `##` 見出しごとに `- [x]` / `- [ ]` を数えて
 - [x] 検査：禁止語にキャリア系の語を足す、`scripts/check-dist.mjs`（ビルド後の `dist/` 全体を検査）を作って CI に入れる、`check-home.mjs` の 3 点を今のトップ（名前と持ち主の行・Projects・Systems）に合わせて見直す（T9）
   完了条件：CI に `check-dist` が入り、わざとキャリア系の禁止語を書いたテストで落ちる
   結果：`check-home.mjs` は T8 の時点で今のトップに合っていたので直していない
-- [ ] Tools の中身：`claude-code-toolkit.md` を足し、`photo-prompt-builder.md` の visibility を public に直す。`app-template.md` の本文の「このサイトもこのテンプレートから作りました」を事実に合わせる（このサイトは前身から写した）。`claude-plugins.md`・`app-template.md` の `kind: tool` は T7 で済んだ（T10）
+- [x] Tools の中身：`claude-code-toolkit.md` を足し、`photo-prompt-builder.md` の visibility を public に直す。`app-template.md` の本文の「このサイトもこのテンプレートから作りました」を事実に合わせる（このサイトは前身から写した）。`claude-plugins.md`・`app-template.md` の `kind: tool` は T7 で済んだ（T10）
   完了条件：`/tools` に 3 件。`check:repos` の食い違いが 0
+  結果：`check:repos` は T11 で作るので、同じ突き合わせを `gh repo view` で手で回して 12 件すべて一致を確かめた
 - [ ] 検算スクリプト `check:articles`（Qiita と `articles.json` の突き合わせ）・`check:repos`（`repo` の URL と visibility の突き合わせ）。CI には入れない（T11）
   完了条件：手で回して、Qiita の未掲載の記事と visibility の食い違いが一覧で出る
 - [ ] 文書の書き直し：README・CLAUDE.md・PLAN・SPEC を新しい方針で書き、前身の判断台帳から引き継ぐ決定を要約して `logs/decisions.md` に移す。前身の名残（`.gitignore`・`.prettierignore` の `dashboard/`・`docs/design-candidates/`、コメントの `docs/design-candidates/` への参照、`src/lib/ask.ts` 冒頭の「区分」）も片付ける（T12）
@@ -54,6 +55,7 @@ SessionStart フックが `##` 見出しごとに `- [x]` / `- [ ]` を数えて
 - [ ] 押す所の大きさ（上部の目次・カードのリンク・パンくずが 24〜27px で、44px に届かない）と、hover の見た目が `@media (hover: hover)` の外にある点（T7 の点検の気づき。前からある形）
 - [ ] OG 画像の最後の行（節の名前を等幅・リンクの青・中点でつないだ行）が DESIGN.md の「青はリンクだけ」に反する。消すか薄い文字色にするか（T8 の点検役。前からある形で、本人は 2026-10-23 にこの画像を見て OK）
 - [ ] 表紙の目次の「About」を押すと名前と持ち主の行しか無い表紙に着く。目次の名前か行き先を変えるか（T8 の点検の気づき）。スマホの表紙の目次の最後の行の下に線が無い点も
+- [ ] `claude-plugins.md` の中身の表を今の apps-workflow 2.0.0 に合わせる（進捗表は todo-progress に移り、スキルは 7 つ。highlights の「フック 3 つ・スキル 4 つ」も古い）（T10 で気づいた）
 - [ ] 前身の TODO の保留 7 件（文面の細かいレビュー・自動取得・独自ドメイン・analytics・RAG）を、ここでやるか仕分ける
 
 ## 確認待ち（ユーザーの回答が要るもの）

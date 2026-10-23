@@ -19,22 +19,22 @@
 
                      完了率  残り/全体  フェーズ   (done %, open/total, phase)
 ████████████████████  100%     0 / 1     フェーズ1：初期化
-██████████░░░░░░░░░░   50%     3 / 6     フェーズ2：ハブの中身
+█████████████░░░░░░░   66%     2 / 6     フェーズ2：ハブの中身
 ░░░░░░░░░░░░░░░░░░░░    0%     4 / 4     フェーズ3：公開
-███████░░░░░░░░░░░░░   36%     7 / 11    合計 / Total
-公開まで残り 7 件（上から「フェーズ3：公開」の節まで） / 7 open until release
-公開後（合計に含めない）：6 件（済み 0 件） / After release (not in total): 6 open, 0 done
+█████████░░░░░░░░░░░   45%     6 / 11    合計 / Total
+公開まで残り 6 件（上から「フェーズ3：公開」の節まで） / 6 open until release
+公開後（合計に含めない）：7 件（済み 0 件） / After release (not in total): 7 open, 0 done
 
 前回の区切り（2026-10-23）から：完了 +1 件、タスクの数 +0 件 / Since last checkpoint (2026-10-23): done +1, tasks +0
 ```
 
 ## 現在地
 
-- フェーズ：**フェーズ2「ハブの中身」**。T9（検査）は PR `feat/check-dist` で入った前提で書いている。CI は `dist/` 全体の禁止語も見る（`npm run check:dist`）
+- フェーズ：**フェーズ2「ハブの中身」**。T10（Tools の中身）は PR `feat/tools-content` で入った前提で書いている。CI は `dist/` 全体の禁止語も見る（`npm run check:dist`。T9）
 - サイトの名前は「works」、表紙は名前・持ち主の行（Naoki Yoshida / n-yoshida-dev）・目次だけ（`logs/decisions.md` 2026-10-22・23）
-- トップの節は About / Projects / Tools / Systems / Writing / Ask AI。Tools は今 2 件（T10 で `claude-code-toolkit` を足して 3 件）
+- トップの節は About / Projects / Tools / Systems / Writing / Ask AI。Tools は 3 件（claude-code-toolkit・claude-plugins・app-template）
 - 見た目の決まりは `DESIGN.md`。画面を触る前に読む
-- 計画の全体は ops の `docs/2026-10-20-制作活動ハブとキャリアプロフィールの分離計画.md` 4 節。このリポジトリで残っているのは T10〜T15。Beads の epic は ops-ei4
+- 計画の全体は ops の `docs/2026-10-20-制作活動ハブとキャリアプロフィールの分離計画.md` 4 節。このリポジトリで残っているのは T11〜T15。Beads の epic は ops-ei4
 - **リポジトリはまだ Private。** Public への切り替えは本人がやる（TODO フェーズ3 の 1 件目。フェーズ2 が終わってから）
 - Vercel のプロジェクトはまだ無い（T13。本人がブラウザで作る）
 - 前身のサイトの文書（`../portfolio`。非公開の保存用）は読んでよいが写さない。SPEC と判断台帳はまだ前身を参照している（T12 で移す）
@@ -43,6 +43,6 @@
 
 ## 次セッションで最初にやること
 
-1. T10（Tools の中身：`claude-code-toolkit.md` を足す、`photo-prompt-builder.md` の visibility、`app-template.md` の本文を事実に合わせる）
+1. T11（検算スクリプト `check:articles`・`check:repos`。CI には入れない）
 
 `TODO.md` の先頭と一致させる。書くのは最初の一手だけで、一覧は `TODO.md` が持つ。

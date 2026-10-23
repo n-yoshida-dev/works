@@ -15,14 +15,14 @@
 ## 進捗
 
 ```
-進捗（TODO.md より自動集計・2026-10-20） / Progress from TODO.md
+進捗（TODO.md より自動集計・2026-10-23） / Progress from TODO.md
 
                      完了率  残り/全体  フェーズ   (done %, open/total, phase)
 ████████████████████  100%     0 / 1     フェーズ1：初期化
-███░░░░░░░░░░░░░░░░░   16%     5 / 6     フェーズ2：ハブの中身
+██████░░░░░░░░░░░░░░   33%     4 / 6     フェーズ2：ハブの中身
 ░░░░░░░░░░░░░░░░░░░░    0%     4 / 4     フェーズ3：公開
-███░░░░░░░░░░░░░░░░░   18%     9 / 11    合計 / Total
-公開まで残り 9 件（上から「フェーズ3：公開」の節まで） / 9 open until release
+█████░░░░░░░░░░░░░░░   27%     8 / 11    合計 / Total
+公開まで残り 8 件（上から「フェーズ3：公開」の節まで） / 8 open until release
 公開後（合計に含めない）：4 件（済み 0 件） / After release (not in total): 4 open, 0 done
 
 前回の区切り（2026-10-20）から：完了 +1 件、タスクの数 +0 件 / Since last checkpoint (2026-10-20): done +1, tasks +0
@@ -30,18 +30,19 @@
 
 ## 現在地
 
-- フェーズ：**フェーズ2「ハブの中身」**。T7（Tools の新設・`/writing` への改名・`DESIGN.md`）は PR `feat/tools-and-writing` で入った前提で書いている
-- トップの節は About / Projects / Tools / Systems / Writing / Ask AI。Tools は今 2 件（`claude-plugins`・`app-template`。T10 で `claude-code-toolkit` を足して 3 件）
-- 見た目の決まりは `DESIGN.md`（今ある CSS を写したもの）。画面を触る前に読む
-- 計画の全体は ops の `docs/2026-10-20-制作活動ハブとキャリアプロフィールの分離計画.md` 4 節。このリポジトリで残っているのは T8〜T15
+- フェーズ：**フェーズ2「ハブの中身」**。T8（文面・サイトの名前 works）は PR `feat/copy-for-hub` で入った前提で書いている
+- サイトの名前は「works」、表紙は名前・持ち主の行（Naoki Yoshida / n-yoshida-dev）・目次だけ（`logs/decisions.md` 2026-10-22・23）
+- トップの節は About / Projects / Tools / Systems / Writing / Ask AI。Tools は今 2 件（T10 で `claude-code-toolkit` を足して 3 件）
+- 見た目の決まりは `DESIGN.md`。画面を触る前に読む
+- 計画の全体は ops の `docs/2026-10-20-制作活動ハブとキャリアプロフィールの分離計画.md` 4 節。このリポジトリで残っているのは T9〜T15。Beads の epic は ops-ei4
 - **リポジトリはまだ Private。** Public への切り替えは本人がやる（TODO フェーズ3 の 1 件目。フェーズ2 が終わってから）
 - Vercel のプロジェクトはまだ無い（T13。本人がブラウザで作る）
 - 前身のサイトの文書（`../portfolio`。非公開の保存用）は読んでよいが写さない。SPEC と判断台帳はまだ前身を参照している（T12 で移す）
-- 進め方：ユーザーの判断が要らない作業は、PR ごとに止まらず続けて進める。T8 の文案だけは本人に読んでもらう
+- 進め方：ユーザーの判断が要らない作業は、PR ごとに止まらず続けて進める（2026-10-23 本人が「必要であれば自動的に進めて」）
 - ユーザー待ち：なし
 
 ## 次セッションで最初にやること
 
-1. T8（文面：`profile.md` の一言・要点 3 行・短い本文、`llms.txt` の節、Ask AI の依頼文、OG 画像の文言）。文案は本人に読んでもらう。TODO の T8 の下の「文案で気をつけること」も見る
+1. T9（検査：キャリア系の禁止語、`check-dist.mjs` を CI に、`check-home.mjs` の見直し）
 
 `TODO.md` の先頭と一致させる。書くのは最初の一手だけで、一覧は `TODO.md` が持つ。

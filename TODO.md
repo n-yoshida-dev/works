@@ -15,10 +15,10 @@ SessionStart フックが `##` 見出しごとに `- [x]` / `- [ ]` を数えて
 
 - [x] 型とナビ：`kind: 'app' | 'tool'` の追加、`SECTIONS` に Tools、Tools の一覧と詳細、`/articles` → `/writing`。残った Skills・Journey・年表の CSS を消す。画面を触るので `DESIGN.md` を今ある決まりから作る（T7）
   完了条件：`npm run build` が通り、`dist/` に `tools*` と `writing*` があり、`skills*`・`journey*`・`articles*` が無い。`DESIGN.md` があり `apps-workflow:look` の「B 毎回の点検」を通っている
-- [ ] 文面：`profile.md` の一言・要点 3 行・短い本文、`llms.txt` / `llms-full.txt` の節、Ask AI の依頼文、OG 画像の文言（今は「Skills」が残っている）（T8）
+- [x] 文面：`profile.md` の一言・要点 3 行・短い本文、`llms.txt` / `llms-full.txt` の節、Ask AI の依頼文、OG 画像の文言（今は「Skills」が残っている）（T8）
   完了条件：本人が文案に OK。`llms.txt` に Skills / Journey の行が無く、OG 画像に「Skills」が無い
-  文案で気をつけること（T7 の見た目の点検で出た気づき）：一言・要点・Projects の「Other / Experiments」の説明の「ツール」はアプリを指しているが、ナビの Tools は「開発に入れて使う部品」。読み手が取り違えないよう言葉を分ける。`llms.txt` の冒頭の「each project and system page」に tool も含める
-- [ ] 検査：禁止語にキャリア系の語を足す、`scripts/check-dist.mjs`（ビルド後の `dist/` 全体を検査）を作って CI に入れる、`check-home.mjs` の 3 点を新しい要点に合わせる（T9）
+  結果：本人のレビューで要点 3 行と一言をやめ、各節の見出しの下に 1 行の説明を置いた。サイトの名前はコンペのあと「works」に（`logs/decisions.md` 2026-10-22・23）。2026-10-23 に本人が仕上がりに OK
+- [ ] 検査：禁止語にキャリア系の語を足す、`scripts/check-dist.mjs`（ビルド後の `dist/` 全体を検査）を作って CI に入れる、`check-home.mjs` の 3 点を今のトップ（名前と持ち主の行・Projects・Systems）に合わせて見直す（T9）
   完了条件：CI に `check-dist` が入り、わざとキャリア系の禁止語を書いたテストで落ちる
 - [ ] Tools の中身：`claude-code-toolkit.md` を足し、`photo-prompt-builder.md` の visibility を public に直す。`app-template.md` の本文の「このサイトもこのテンプレートから作りました」を事実に合わせる（このサイトは前身から写した）。`claude-plugins.md`・`app-template.md` の `kind: tool` は T7 で済んだ（T10）
   完了条件：`/tools` に 3 件。`check:repos` の食い違いが 0
@@ -51,6 +51,8 @@ SessionStart フックが `##` 見出しごとに `- [x]` / `- [ ]` を数えて
 - [ ] 開発ダッシュボードを足すか決める（前身にはあった。`apps-workflow:dashboard`）
 - [ ] トップで同じ形の箱（外部リンク・Projects・Tools・Systems）が続くのを変えるか（T7 の点検役の好みの問題。比較ページ https://claude.ai/artifact/U4RMnoabvLkEDc7M7ic5Wz ）
 - [ ] 押す所の大きさ（上部の目次・カードのリンク・パンくずが 24〜27px で、44px に届かない）と、hover の見た目が `@media (hover: hover)` の外にある点（T7 の点検の気づき。前からある形）
+- [ ] OG 画像の最後の行（節の名前を等幅・リンクの青・中点でつないだ行）が DESIGN.md の「青はリンクだけ」に反する。消すか薄い文字色にするか（T8 の点検役。前からある形で、本人は 2026-10-23 にこの画像を見て OK）
+- [ ] 表紙の目次の「About」を押すと名前と持ち主の行しか無い表紙に着く。目次の名前か行き先を変えるか（T8 の点検の気づき）。スマホの表紙の目次の最後の行の下に線が無い点も
 - [ ] 前身の TODO の保留 7 件（文面の細かいレビュー・自動取得・独自ドメイン・analytics・RAG）を、ここでやるか仕分ける
 
 ## 確認待ち（ユーザーの回答が要るもの）

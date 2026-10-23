@@ -1,7 +1,7 @@
 ---
 title: About
 description: Naoki Yoshida が作ったアプリや道具と、書いた記事を置いているサイト。
-updated: 2026-10-22
+updated: 2026-10-23
 links:
   - label: GitHub
     url: https://github.com/n-yoshida-dev

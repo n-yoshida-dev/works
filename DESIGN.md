@@ -13,10 +13,10 @@ colors:
 typography:
   cover-name:
     fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans JP', 'Hiragino Sans', 'Helvetica Neue', Arial, sans-serif"
-    fontSize: 4.5rem
+    fontSize: 7rem
     fontWeight: 600
-    lineHeight: 1.08
-    letterSpacing: -0.02em
+    lineHeight: 1
+    letterSpacing: -0.035em
   title:
     fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans JP', 'Hiragino Sans', 'Helvetica Neue', Arial, sans-serif"
     fontSize: 1.75rem
@@ -97,8 +97,8 @@ components:
 - **避けたい見た目**（前身でユーザーが言ったことの要旨。原文は ops に記録）：どこにでもある部品集の見た目、文章ばかりで素っ気ない百科事典のような紙面、
   ひと目で AI が作ったと分かる見た目、ぎらついた見た目（グラデーション・光るカード・3D・ロゴの羅列のような SaaS 風）
 - **手本の画面**：GitHub と技術文書（CSS 冒頭の方針「GitHub や技術文書と並べて違和感がない見た目」）
-- **このサイトだけの見どころ 1 つ**：トップの表紙（開いた直後の 1 画面に、名前・一言・要点 3 行・目次だけを置き、線が左から引かれて開く）
-- **題名**：サイト名は「Naoki Yoshida」（`logs/decisions.md` 2026-10-20「名前は works / n-yoshida-works」）
+- **このサイトだけの見どころ 1 つ**：トップの表紙（開いた直後の 1 画面に、サイトの名前・持ち主の行・目次だけを置き、目次の行が浮かんで線が引かれて開く）
+- **題名**：サイトの名前は「works」。表紙では名前の下に小さく「Naoki Yoshida / n-yoshida-dev」を添える。名前の下に一言は置かない（`logs/decisions.md` 2026-10-23。コンペの記録は `docs/design-candidates/2026-10-23-site-name/`）
 
 ## Colors
 
@@ -123,19 +123,20 @@ components:
 ## Typography
 
 - **Web フォントは読み込まない**（外部への通信 0）。OS の書体の並び：`-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans JP', 'Hiragino Sans', 'Helvetica Neue', Arial, sans-serif`
-- 等幅の書体（`ui-monospace` から始まる並び）は、コード・期間・技術タグ・表紙の目次の番号と件数・表紙の要点の小見出し・記事の図の月・「最新」の日付に使う
-- 文字の大きさの段：表紙の名前 2.4〜4.5rem（画面の幅で変わる）／ページの題名 1.75rem／節の見出し 1.35rem／カードの題名 1.05rem／本文 1rem（16px。40rem 未満は 15.5px）／
-  一文 0.95rem／補足 0.8〜0.875rem／バッジと表紙の要点の小見出し 0.75rem／表紙の目次の番号 0.7rem
+- 等幅の書体（`ui-monospace` から始まる並び）は、コード・期間・技術タグ・表紙の目次の番号と件数・記事の図の月・「最新」の日付に使う
+- 文字の大きさの段：表紙の名前 4.5〜7rem（画面の幅で変わる）／ページの題名 1.75rem／節の見出し 1.35rem／カードの題名 1.05rem／本文 1rem（16px。40rem 未満は 15.5px）／
+  一文・表紙の持ち主の行 0.95rem／補足 0.8〜0.875rem／バッジ 0.75rem／表紙の目次の番号 0.7rem
 - 太さは 600（見出し）と 400（本文）。表紙の目次の名前は 64rem 未満で 600、64rem 以上で 500
-- カードの一文・詳細ページの要点・日本語の短い見出し（要点の見出し・リンクカードの補足・連載名）は文節で折り返す（`word-break: auto-phrase`。Chromium だけで効く）。
+- カードの一文・詳細ページの要点・節の見出しの下の説明・日本語の短い見出し（リンクカードの補足・連載名）は文節で折り返す（`word-break: auto-phrase`。Chromium だけで効く）。
   カードの一文と要点は 2026-10-20 の点検で「テンプレー／ト」の折れが出たので足した（Claude が選んだ直し方。ユーザーは未確認）
-- 行間：本文 1.75、見出し 1.35、表紙の名前 1.08
+- 行間：本文 1.75、見出し 1.35、表紙の名前 1
 - 日本語を斜体にしない
 
 ## Layout
 
-- **トップ**：開いた直後の 1 画面が表紙（名前・一言・要点 3 行・目次）。その下に外部リンクのカード、続けて Projects / Tools / Systems / Writing / Ask AI の節を縦に並べる（`src/site.ts` の `SECTIONS`）。
-  各節は短い版で、詳しい版のページへ「すべて →」で送る
+- **トップ**：開いた直後の 1 画面が表紙（サイトの名前・持ち主の行・目次）。PC は左に名前と持ち主の行、右に目次の 2 列で、上下の中央をそろえる。スマホは縦に並べ、目次は 2 列。
+  その下に外部リンクのカード、続けて Projects / Tools / Systems / Writing / Ask AI の節を縦に並べる（`src/site.ts` の `SECTIONS`）。
+  各節は短い版で、見出しのすぐ下に「これは何か」の 1 行（`SECTIONS` の `lead`。Writing は図の読み方の 1 行）を置き、詳しい版のページへ「すべて →」で送る
 - **左の固定目次**：64rem 以上で左に 16rem の目次を固定する（`position: sticky`）。64rem 未満は上部に横並びで畳む。トップの 64rem 未満では、表紙の中に同じ目次があるので上部の目次を出さない
 - **本文の幅**：最大 52rem で、目次の右の残りの中央に置く。トップだけは 100rem 以上で本文を最大 76rem に広げ、Projects のカードを 3 列にする（Tools・Systems は 2 列のまま）
 - **カードの列**：2 列、40rem 未満は 1 列
@@ -156,7 +157,8 @@ components:
 
 | 部品 | CSS のクラス | 形 |
 |---|---|---|
-| 表紙 | `.cover` `.cover-facts` `.ix` | 地色もカードも使わず線だけで区切る。PC は左に要点 3 行・右に目次で、上下の線をそろえる |
+| 表紙 | `.cover` `.cover-id` `.ix` | 地色もカードも使わず線だけで区切る。名前は大きく、持ち主の行は小さく薄い文字。目次は行ごとに線で区切る |
+| 節の見出しの下の説明 | `.section-lead`（`HomeSection.astro`） | 薄い文字の 1 行。「これは何か」だけを書き、件数は入れない |
 | 外部リンクのカード | `.link-card` | 線のアイコン・名前（リンク色）・そこに何があるか（薄い文字） |
 | 作品・ツールのカード | `.card`（`ProjectCard.astro`） | 上段に期間と公開状態・状態のバッジ、続けて題名・一文、AI が書いた作品は備考を 1 行。下端にリンクを定位置に置く |
 | 仕組みのカード | `.card`（`SystemCard.astro`） | 題名と一文だけ |

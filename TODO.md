@@ -18,8 +18,9 @@ SessionStart フックが `##` 見出しごとに `- [x]` / `- [ ]` を数えて
 - [x] 文面：`profile.md` の一言・要点 3 行・短い本文、`llms.txt` / `llms-full.txt` の節、Ask AI の依頼文、OG 画像の文言（今は「Skills」が残っている）（T8）
   完了条件：本人が文案に OK。`llms.txt` に Skills / Journey の行が無く、OG 画像に「Skills」が無い
   結果：本人のレビューで要点 3 行と一言をやめ、各節の見出しの下に 1 行の説明を置いた。サイトの名前はコンペのあと「works」に（`logs/decisions.md` 2026-10-22・23）。2026-10-23 に本人が仕上がりに OK
-- [ ] 検査：禁止語にキャリア系の語を足す、`scripts/check-dist.mjs`（ビルド後の `dist/` 全体を検査）を作って CI に入れる、`check-home.mjs` の 3 点を今のトップ（名前と持ち主の行・Projects・Systems）に合わせて見直す（T9）
+- [x] 検査：禁止語にキャリア系の語を足す、`scripts/check-dist.mjs`（ビルド後の `dist/` 全体を検査）を作って CI に入れる、`check-home.mjs` の 3 点を今のトップ（名前と持ち主の行・Projects・Systems）に合わせて見直す（T9）
   完了条件：CI に `check-dist` が入り、わざとキャリア系の禁止語を書いたテストで落ちる
+  結果：`check-home.mjs` は T8 の時点で今のトップに合っていたので直していない
 - [ ] Tools の中身：`claude-code-toolkit.md` を足し、`photo-prompt-builder.md` の visibility を public に直す。`app-template.md` の本文の「このサイトもこのテンプレートから作りました」を事実に合わせる（このサイトは前身から写した）。`claude-plugins.md`・`app-template.md` の `kind: tool` は T7 で済んだ（T10）
   完了条件：`/tools` に 3 件。`check:repos` の食い違いが 0
 - [ ] 検算スクリプト `check:articles`（Qiita と `articles.json` の突き合わせ）・`check:repos`（`repo` の URL と visibility の突き合わせ）。CI には入れない（T11）

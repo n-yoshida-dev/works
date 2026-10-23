@@ -27,6 +27,18 @@ describe('禁止語スキャン', () => {
       ['API キー', 'token: ghp_abcdefghijklmnopqrstuvwxyz1234'],
       ['ローカルパス', '/home/someone/workspace/apps にある'],
       ['カード番号', 'カード 1234-5678-9012-3456'],
+      ['経歴', 'これまでの経歴'],
+      ['職務', '職務の内容'],
+      ['商用実務', '商用実務で 3 年'],
+      ['資格', '資格を取得した'],
+      ['転職', '転職に向けて学ぶ'],
+      ['採用', '採用担当の方へ'],
+      ['SIer', 'SIer で開発'],
+      ['情シス', '情シスとして運用'],
+      ['チームリーダー', 'チームリーダーを務めた'],
+      ['PL', 'PL として 5 名をまとめた'],
+      ['習熟度', '習熟度を 4 段階で示す'],
+      ['理解確認済み', 'Go は理解確認済み'],
     ];
     for (const [label, text] of cases) {
       const hits = scanText(text, rules);
@@ -45,6 +57,7 @@ describe('禁止語スキャン', () => {
       '機密の数字（口座・カードなど）はフックが機械的にブロック',
       'HTTP 422 を返す。tenant_id で分離する',
       '医療上の診断や安全性を保証するものではない',
+      'PLAN.md に書き、Playwright で確かめる',
     ];
     for (const text of ok) {
       const hits = scanText(text, rules);

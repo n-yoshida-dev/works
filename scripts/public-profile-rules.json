@@ -70,6 +70,24 @@
       "id": "local-path",
       "pattern": "(/home/[a-z0-9_-]+/|C:\\\\Users\\\\|~/workspace/)",
       "reason": "ローカルのパスは書かない（ユーザー名・環境が漏れる）"
+    },
+    {
+      "id": "career",
+      "pattern": "(経歴|職務|商用実務|資格|転職|採用|SIer|情シス|チームリーダー|\\bPL\\b|習熟度|理解確認済み)",
+      "reason": "このサイトはキャリアの情報を載せない（「採用する」は「使う」「選ぶ」に、「資格情報」は「認証情報」に書き換える）"
+    }
+  ],
+  "$comment_distOnlyRules": "ビルド後の dist/ だけに使う追加の規則（scripts/check-dist.mjs）。前身のサイトにあったキャリア系のページと、前身のリポジトリへの参照",
+  "distOnlyRules": [
+    {
+      "id": "old-pages",
+      "pattern": "(?:^|[\"'(\\s=]|https?://[^/\"'\\s<>]+)/(?:journey|skills)(?![\\w-])",
+      "reason": "前身のサイトの /journey・/skills へのリンクを出さない（キャリアのページだった）"
+    },
+    {
+      "id": "old-repo",
+      "pattern": "github\\.com/n-yoshida-dev/portfolio(?![\\w-])",
+      "reason": "前身のサイトのリポジトリ（非公開の保存用）を参照しない"
     }
   ]
 }

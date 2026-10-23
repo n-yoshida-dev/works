@@ -6,7 +6,7 @@ import { checkHome, sectionHtml } from '../scripts/check-home.mjs';
 /** 3 点の節を持つトップの HTML。引数で節の中身を差し替える */
 function page({ about, projects, systems } = {}) {
   return `<main>
-    <section id="about" class="home-section"><h2>About</h2>${about ?? '<h1>Naoki Yoshida</h1><p class="lead" data-astro-cid-x>生活や学習で使うツールを作っています</p>'}</section>
+    <section id="about" class="home-section"><h2>About</h2>${about ?? '<h1>works</h1><p class="lead" data-astro-cid-x>Naoki Yoshida / n-yoshida-dev</p>'}</section>
     <section id="projects" class="home-section"><h2>Projects</h2>${projects ?? '<ul class="card-grid"><li class="card">OrgFlow</li></ul>'}</section>
     <section id="systems" class="home-section"><h2>Systems</h2>${systems ?? '<ul class="card-grid"><li class="card">Learning System</li></ul>'}</section>
     <section id="ask" class="home-section"><h2>Ask AI</h2></section>
@@ -18,7 +18,7 @@ describe('トップの 3 点の検査', () => {
     expect(checkHome(page())).toEqual([]);
   });
 
-  it('節が無い・カードが無い・一言が無いと、それぞれ指摘する', () => {
+  it('節が無い・カードが無い・持ち主の行が無いと、それぞれ指摘する', () => {
     expect(checkHome(page().replace('id="systems"', 'id="other"'))).toEqual([
       '「どう開発しているか」の節 #systems がトップに無い',
     ]);
@@ -26,18 +26,18 @@ describe('トップの 3 点の検査', () => {
       '「何を作ったか」の節 #projects に カード 1 枚以上 が無い',
     ]);
     expect(checkHome(page({ about: '<h1>N</h1>' }))).toEqual([
-      '「何の人か」の節 #about に 名前（h1）と一言 が無い',
+      '「何の人か」の節 #about に 名前（h1）と持ち主の行 が無い',
     ]);
   });
 
-  it('一言（class="lead"）が無ければ、名前やリンクの文字が多くても不合格', () => {
+  it('持ち主の行（class="lead"）が無ければ、名前やリンクの文字が多くても不合格', () => {
     const about =
-      '<h1>Naoki Yoshida</h1><p><a href="#">GitHub</a> <a href="#">Qiita</a> <a href="#">Reading Log</a></p>';
+      '<h1>works</h1><p><a href="#">GitHub</a> <a href="#">Qiita</a> <a href="#">Reading Log</a></p>';
     expect(checkHome(page({ about }))).toEqual([
-      '「何の人か」の節 #about に 名前（h1）と一言 が無い',
+      '「何の人か」の節 #about に 名前（h1）と持ち主の行 が無い',
     ]);
-    expect(checkHome(page({ about: '<h1>Naoki Yoshida</h1><p class="lead"> </p>' }))).toEqual([
-      '「何の人か」の節 #about に 名前（h1）と一言 が無い',
+    expect(checkHome(page({ about: '<h1>works</h1><p class="lead"> </p>' }))).toEqual([
+      '「何の人か」の節 #about に 名前（h1）と持ち主の行 が無い',
     ]);
   });
 

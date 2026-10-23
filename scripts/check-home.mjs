@@ -11,8 +11,8 @@ const THREE_POINTS = [
   {
     point: '何の人か',
     id: 'about',
-    need: '名前（h1）と一言',
-    // 一言は名前の下の段落（class="lead"。profile.md の tagline）。隠した節名やリンクの文字では合格させない
+    need: '名前（h1）と持ち主の行',
+    // 持ち主の行は名前の下の段落（class="lead"。src/site.ts の SITE.owner と github）。隠した節名やリンクの文字では合格させない
     ok: (html) => /<h1[\s>]/.test(html) && leadText(html).length >= 5,
   },
   {

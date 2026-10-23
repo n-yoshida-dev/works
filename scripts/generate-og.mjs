@@ -9,7 +9,9 @@ import { fileURLToPath } from 'node:url';
 const here = path.dirname(fileURLToPath(import.meta.url));
 const out = path.join(here, '..', 'public', 'og.png');
 
-const name = 'Naoki Yoshida';
+// サイトの名前と、その下に小さく添える持ち主（表紙と同じ組み方。logs/decisions.md 2026-10-23）。値は src/site.ts の SITE と同じ
+const name = 'works';
+const owner = 'Naoki Yoshida / n-yoshida-dev';
 // 職種の言葉は入れず、作っているものだけを書く（logs/decisions.md 2026-10-20）。3 行目はトップの節の名前と同じ
 const line1 = 'Personal apps, tools for AI-assisted development,';
 const line2 = 'and the systems behind them.';
@@ -20,9 +22,10 @@ const svg = `
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <rect width="1200" height="630" fill="#ffffff"/>
   <rect x="80" y="80" width="6" height="470" fill="#1f2328"/>
-  <text x="120" y="230" font-family="Helvetica, Arial, 'Noto Sans JP', sans-serif" font-size="72" font-weight="700" fill="#1f2328">${name}</text>
-  <text x="120" y="320" font-family="Helvetica, Arial, sans-serif" font-size="36" fill="#59636e">${line1}</text>
-  <text x="120" y="370" font-family="Helvetica, Arial, sans-serif" font-size="36" fill="#59636e">${line2}</text>
+  <text x="116" y="220" font-family="Helvetica, Arial, 'Noto Sans JP', sans-serif" font-size="112" font-weight="700" letter-spacing="-3" fill="#1f2328">${name}</text>
+  <text x="120" y="270" font-family="Helvetica, Arial, sans-serif" font-size="28" fill="#59636e">${owner}</text>
+  <text x="120" y="350" font-family="Helvetica, Arial, sans-serif" font-size="36" fill="#59636e">${line1}</text>
+  <text x="120" y="400" font-family="Helvetica, Arial, sans-serif" font-size="36" fill="#59636e">${line2}</text>
   <text x="120" y="500" font-family="Menlo, Consolas, monospace" font-size="28" fill="#0969da">${line3}</text>
 </svg>`;
 

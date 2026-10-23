@@ -1,9 +1,10 @@
 ---
 // トップ。1 枚のページに 6 節（About / Projects / Tools / Systems / Writing / Ask AI）を縦に並べ、
 // 左の目次がその節へ移動する（SPEC.md §4）。各節は短い版で、詳しい版は各ページに残して「すべて →」で行く。
-// 先頭は画面 1 つ分の表紙（名前・一言・目次）で、About の節は表紙の中に置き、外部リンクのカードは表紙の直後に置く
-// （2026-10-05 ユーザーがコンペの見本 A を選択。2026-10-22 に要点 3 行を外し、各節の見出しの下の 1 行の説明に置き換えた。logs/decisions.md）。
-// 文章は frontmatter の tagline と各コレクションの要約だけを出し、profile.md の本文は Markdown 版（/profile.md）に任せる。
+// 先頭は画面 1 つ分の表紙（サイトの名前・持ち主・目次）で、About の節は表紙の中に置き、外部リンクのカードは表紙の直後に置く
+// （2026-10-05 ユーザーがコンペの見本 A を選択。2026-10-22 に要点 3 行を外し、各節の見出しの下の 1 行の説明に置き換えた。
+// 2026-10-23 に名前を「works」にし、一言を外した。logs/decisions.md）。
+// 文章は各コレクションの要約だけを出し、profile.md の本文は Markdown 版（/profile.md）に任せる。
 import Base from '../layouts/Base.astro';
 import AskEntry from '../components/AskEntry.astro';
 import HomeSection from '../components/HomeSection.astro';
@@ -60,7 +61,10 @@ const coverCounts: Partial<Record<string, { n: number; unit: string }>> = {
       <HomeSection id="about" class="cover-about">
         <div class="cover-id">
           <h1>{SITE.name}</h1>
-          {profile.data.tagline && <p class="lead">{profile.data.tagline}</p>}
+          {/* 名前の下は一言ではなく、持ち主の本名とアカウント名だけを小さく添える（2026-10-23 ユーザー） */}
+          <p class="lead">
+            {SITE.owner} / {SITE.github}
+          </p>
         </div>
       </HomeSection>
       <nav class="cover-nav" aria-label="目次">

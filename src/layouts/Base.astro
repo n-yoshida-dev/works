@@ -91,7 +91,7 @@ const hasCover = Astro.slots.has('cover');
         <footer class="site-footer">
           <div class="container">
             <span>
-              © {new Date().getFullYear()} {SITE.name}
+              © {new Date().getFullYear()} {SITE.owner}
             </span>
             {markdownHref && <a href={markdownHref}>このページの Markdown</a>}
             <a href="/llms.txt">AI 向けの要約（llms.txt）</a>

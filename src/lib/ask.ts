@@ -33,7 +33,7 @@ function siteBase(site: URL | undefined): string {
 export function buildAskPrompt(site: URL | undefined): string {
   return `Read ${siteBase(site)}/llms.txt first.
 
-Then introduce what ${SITE.name} makes: personal apps,
+Then introduce what ${SITE.owner} makes: personal apps,
 tools for AI-assisted development, the systems behind them,
 and technical articles.
 
@@ -49,12 +49,12 @@ ${ANSWER_RULES}`;
  */
 export function buildPastedPrompt(site: URL | undefined): string {
   return `The text after the line "---" is ${siteBase(site)}${PASTE_SOURCE},
-the site of ${SITE.name} that shows personal apps,
+the site of ${SITE.owner} that shows personal apps,
 tools for AI-assisted development, the systems behind them,
 and technical articles.
 Use only this text. You do not need to open any URL.
 
-Introduce what ${SITE.name} makes, based on it.
+Introduce what ${SITE.owner} makes, based on it.
 
 ${ANSWER_RULES}`;
 }

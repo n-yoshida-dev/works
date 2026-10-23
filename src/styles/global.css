@@ -294,17 +294,18 @@ main.container {
   gap: 1.75rem;
   min-width: 0;
 }
+/* サイトの名前「works」。1 語で短いので、本名のときより大きく組む（2026-10-23。コンペの B・C の見本の大きさに合わせた） */
 .cover-id h1 {
   margin: 0;
-  font-size: clamp(2.4rem, 10vw, 4.5rem);
-  line-height: 1.08;
-  letter-spacing: -0.02em;
+  font-size: clamp(4.5rem, 19vw, 7rem);
+  line-height: 1;
+  letter-spacing: -0.035em;
 }
+/* 名前の下の持ち主の行（本名 / アカウント名）。小さく薄い文字で添えるだけ */
 .cover-id .lead {
-  margin: 0.9rem 0 0;
-  font-size: clamp(1rem, 2.8vw, 1.2rem);
+  margin: 1rem 0 0;
+  font-size: 0.95rem;
   line-height: 1.6;
-  word-break: auto-phrase;
 }
 /* 表紙の目次。番号・節の名前・件数（件数はトップで件数を出している節だけ）。64rem 未満は 2 列 */
 .cover-nav {

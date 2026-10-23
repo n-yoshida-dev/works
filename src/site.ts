@@ -2,9 +2,15 @@
 import type { IconName } from './lib/icons';
 
 export const SITE = {
-  name: 'Naoki Yoshida',
+  /**
+   * サイトの名前。表紙の見出し・左の目次の一番上・llms.txt の見出しに出す。
+   * 本名を題名にせず「works」にし、持ち主は表紙の名前の下に小さく添える（2026-10-23 ユーザーがコンペの後に決めた。logs/decisions.md）
+   */
+  name: 'works',
   /** <title> の末尾と OGP の site_name */
-  title: 'Naoki Yoshida',
+  title: 'works',
+  /** 持ち主の名前。表紙の名前の下の行・フッターの著作権表示・AI への依頼文に出す */
+  owner: 'Naoki Yoshida',
   // 職種の言葉は入れない。作っているものだけを書く（logs/decisions.md 2026-10-20「About の一言から仕事の年数を外す」）
   description:
     'Personal apps, tools for AI-assisted development, and the systems behind them. 生活や学習で使うアプリと、AI と開発するための道具・仕組み、その記録の技術記事を公開しています。',

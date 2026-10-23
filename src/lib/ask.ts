@@ -1,4 +1,5 @@
-// Ask AI ページで訪問者の AI に渡すプロンプト。llms.txt を最初に読ませ、区分を混同しないよう指示する。
+// Ask AI ページで訪問者の AI に渡すプロンプト。llms.txt を最初に読ませ、作ったもの（アプリ・道具・仕組み・記事）を紹介させる。
+// 「このサイトに無いもの」をわざわざ書かない（2026-10-22 ユーザー。無ければよい。logs/decisions.md）。
 // 最初の答えは短い概要と次の質問の候補だけにさせる（長文は読まれないため。2026-10-05 ユーザーの提案、TODO フェーズ5）。
 // 2026-10-06 に本番の 3 つの AI の答えを見たユーザーの感想（原文は SPEC.md §3）を受け、概要に具体的な事実を入れさせ、質問を自然な一文で促す形にした（直し方は Claude の解釈）
 import { SITE } from '../site';
@@ -10,7 +11,7 @@ export const PASTE_SOURCE = '/llms-full.txt';
 const ANSWER_RULES = `Keep your first answer short:
 - An overview in at most 5 bullet points. Each is one sentence
   (about 40 to 60 Japanese characters) with concrete facts
-  such as years, project names, or technologies.
+  such as project names, what they do, or technologies.
 - Then, in one natural sentence, invite me to ask more,
   and give 3 short example questions I might ask next
   (each under about 30 Japanese characters).
@@ -32,10 +33,11 @@ function siteBase(site: URL | undefined): string {
 export function buildAskPrompt(site: URL | undefined): string {
   return `Read ${siteBase(site)}/llms.txt first.
 
-Then introduce ${SITE.name}, a software engineer building
-personal software and AI-assisted development systems.
+Then introduce what ${SITE.owner} makes: personal apps,
+tools for AI-assisted development, the systems behind them,
+and technical articles.
 
-Use this site, GitHub projects, technical articles,
+Use this site, GitHub repositories, technical articles,
 and other sources linked from llms.txt.
 
 ${ANSWER_RULES}`;
@@ -47,11 +49,12 @@ ${ANSWER_RULES}`;
  */
 export function buildPastedPrompt(site: URL | undefined): string {
   return `The text after the line "---" is ${siteBase(site)}${PASTE_SOURCE},
-the personal site of ${SITE.name}, a software engineer building
-personal software and AI-assisted development systems.
+the site of ${SITE.owner} that shows personal apps,
+tools for AI-assisted development, the systems behind them,
+and technical articles.
 Use only this text. You do not need to open any URL.
 
-Introduce ${SITE.name} based on it.
+Introduce what ${SITE.owner} makes, based on it.
 
 ${ANSWER_RULES}`;
 }

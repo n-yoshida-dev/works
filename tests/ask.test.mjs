@@ -54,4 +54,12 @@ describe('Ask AI の各 AI へのリンク', () => {
     expect(prompt).toContain('Cite the sources');
     expect(prompt).toContain('Answer in Japanese, including headings.');
   });
+
+  // 紹介するのは作ったもの。職種の言葉で人を紹介させない（logs/decisions.md 2026-10-20「About の一言から仕事の年数を外す」）
+  it('どちらのプロンプトも、作ったものを紹介させ、職種の言葉を使わない', () => {
+    for (const p of [prompt, buildPastedPrompt(site)]) {
+      expect(p).toContain('makes');
+      expect(p).not.toContain('software engineer');
+    }
+  });
 });

@@ -1,9 +1,10 @@
 ---
 // トップ。1 枚のページに 6 節（About / Projects / Tools / Systems / Writing / Ask AI）を縦に並べ、
 // 左の目次がその節へ移動する（SPEC.md §4）。各節は短い版で、詳しい版は各ページに残して「すべて →」で行く。
-// 先頭は画面 1 つ分の表紙（名前・一言・要点 3 行・目次）で、About の節は表紙の中に置き、外部リンクのカードは表紙の直後に置く
-// （2026-10-05 ユーザーがコンペの見本 A を選択。logs/decisions.md、見本は docs/design-candidates/2026-10-04-first-screen/）。
-// 文章は frontmatter の tagline / highlights と各コレクションの要約だけを出し、profile.md の本文は Markdown 版（/profile.md）に任せる。
+// 先頭は画面 1 つ分の表紙（サイトの名前・持ち主・目次）で、About の節は表紙の中に置き、外部リンクのカードは表紙の直後に置く
+// （2026-10-05 ユーザーがコンペの見本 A を選択。2026-10-22 に要点 3 行を外し、各節の見出しの下の 1 行の説明に置き換えた。
+// 2026-10-23 に名前を「works」にし、一言を外した。logs/decisions.md）。
+// 文章は各コレクションの要約だけを出し、profile.md の本文は Markdown 版（/profile.md）に任せる。
 import Base from '../layouts/Base.astro';
 import AskEntry from '../components/AskEntry.astro';
 import HomeSection from '../components/HomeSection.astro';
@@ -40,8 +41,7 @@ const articles = await getArticles();
 const calendar = articleCalendar(articles.map((a) => a.data));
 // 掲載先が 1 つだけなら「Qiita に書いた」と名前を出す（複数になったら名前を出さない）
 const platforms = [...new Set(articles.map((a) => platformLabel[a.data.platform]))];
-const articleSource =
-  platforms.length === 1 && platforms[0] ? `${platforms[0]} に書いた` : '書いた';
+const articleSource = platforms.length === 1 && platforms[0] ? `${platforms[0]} に書いた` : '';
 
 /**
  * 表紙の目次に添える件数（節の id → 件数と単位）。トップで件数を出している 4 節だけ。
@@ -61,19 +61,11 @@ const coverCounts: Partial<Record<string, { n: number; unit: string }>> = {
       <HomeSection id="about" class="cover-about">
         <div class="cover-id">
           <h1>{SITE.name}</h1>
-          {profile.data.tagline && <p class="lead">{profile.data.tagline}</p>}
+          {/* 名前の下は一言ではなく、持ち主の本名とアカウント名だけを小さく添える（2026-10-23 ユーザー） */}
+          <p class="lead">
+            {SITE.owner} / {SITE.github}
+          </p>
         </div>
-        {profile.data.highlights && (
-          <ul class="cover-facts">
-            {profile.data.highlights.map((h) => (
-              <li>
-                <span class="fact-label">{h.label}</span>
-                <span class="fact-title">{h.title}</span>
-                {h.detail && <span class="fact-detail">{h.detail}</span>}
-              </li>
-            ))}
-          </ul>
-        )}
       </HomeSection>
       <nav class="cover-nav" aria-label="目次">
         <ol class="ix">
@@ -152,7 +144,8 @@ const coverCounts: Partial<Record<string, { n: number; unit: string }>> = {
 
   <HomeSection id="writing" note={`${articles.length} 本`}>
     <p class="section-lead">
-      {`${articleSource} ${articles.length} 本を、${calendar.rows.length} つの連載に分けています。`}
+      {/* 本数・連載の数は見出しの件数と図が持つので、説明の文には入れない（2026-10-23 ユーザー） */}
+      {`${articleSource}技術記事を、連載ごとに並べています。`}
       <span class="sq" aria-hidden="true"></span>
       {' 1 つが記事 1 本で、公開した月に置いています。'}
     </p>
@@ -202,7 +195,7 @@ const coverCounts: Partial<Record<string, { n: number; unit: string }>> = {
   </HomeSection>
 
   <HomeSection id="ask">
-    <p>あなたの AI に、このサイトと公開リポジトリを読ませて私について質問できます。</p>
+    <p>あなたの AI に、このサイトと公開リポジトリを読ませて、作ったものについて質問できます。</p>
     <div class="button-row">
       <AskEntry variant="section" />
     </div>

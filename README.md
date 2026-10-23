@@ -87,7 +87,8 @@ OGP 画像を作り直すとき：`node scripts/generate-og.mjs`（文言は同�
 - **一覧のカードの一文**：`tagline` に一文で書く（句点「。」なし・60 字以内。破ると `npm run build` が落ちる）
 - **詳細ページの本文が長いとき**（本文 400 字超）：frontmatter に `highlights`（要点。3 行まで）を足す。書き忘れると `npm run test` が落ちる
 - **記事を足す**：`public-profile/articles.json` に 1 要素足す。`series` で連載ごとにまとまる
-- **トップの文章を直す**：`profile.md` の frontmatter。`tagline`・`highlights`・`links` だけがトップに出る。本文は Markdown 版と `/llms-full.txt` に出る
+- **トップの文章を直す**：`profile.md` の frontmatter の `links` だけがトップ（表紙の直後のリンクカード）に出る。本文は Markdown 版と `/llms-full.txt` に出る。
+  サイトの名前と持ち主は `src/site.ts` の `SITE`、各節の見出しの下の 1 行は同じファイルの `SECTIONS` の `lead`
 
 反映は `npm run build` が通れば完了。`main` へマージすると Vercel が自動でデプロイする。
 

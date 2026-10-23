@@ -54,7 +54,7 @@ jobs:
           for f in dist/llms.txt dist/llms-full.txt dist/profile.md dist/writing.md dist/projects/orgflow.md dist/tools/claude-plugins.md; do
             test -s "$f" || { echo "::error::$f が生成されていません"; exit 1; }
           done
-          grep -q '^# Naoki Yoshida' dist/llms.txt
+          grep -q '^# works' dist/llms.txt
           echo "AI 向けファイルの生成を確認"
 
   no-secrets:

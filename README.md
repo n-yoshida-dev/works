@@ -25,7 +25,9 @@ works/
 │   ├── public-profile-rules.json  ← 禁止語パターンと理由
 │   ├── generate-og.mjs            ← OGP 画像の生成（public/og.png）
 │   ├── check-home.mjs             ← ビルドしたトップに 3 点が中身つきで出ているかの検査
-│   └── check-dist.mjs             ← ビルド後の dist/ 全体の禁止語スキャン（npm run check:dist）
+│   ├── check-dist.mjs             ← ビルド後の dist/ 全体の禁止語スキャン（npm run check:dist）
+│   ├── check-articles.mjs         ← Qiita と articles.json の突き合わせ（手で回す。CI には入れない）
+│   └── check-repos.mjs            ← repo の公開状態と GitHub の突き合わせ（手で回す。CI には入れない）
 ├── tests/                   ← スキャンの回帰テスト、public-profile の参照整合・詳細ページの本文の長さ・トップの節のテスト
 └── .github/workflows/ci.yml
 ```
@@ -73,6 +75,13 @@ npm run format:check && npm run lint && npm run typecheck && npm run test && npm
 | `npm run build`        | ビルド。frontmatter が型に合わないとここで失敗する                                               |
 | `npm run check:home`   | ビルドしたトップに、3 点（何の人か・何を作ったか・どう開発しているか）の節が中身つきで出ているか |
 | `npm run check:dist`   | ビルド後の `dist/` 全体に、禁止語と前身のサイトのページ・リポジトリへの参照が無いか              |
+
+手で回す検算（外部に問い合わせるので CI には入れない。月 1 回ほど）：
+
+| コマンド                 | 内容                                                                                                                                                                                                        |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `npm run check:articles` | Qiita の記事一覧と `articles.json` を突き合わせ、サイトに無い記事と Qiita から消えた記事を出す。載せるかは人が決めるので、未掲載があっても失敗にしない。ユーザー名は `profile.md` の Qiita のリンクから取る |
+| `npm run check:repos`    | `projects/*.md` の `repo` と `visibility` を GitHub の実際と突き合わせる。食い違いがあれば失敗する。非公開のリポジトリも見るため、`gh`（GitHub CLI）にログインしておく                                      |
 
 OGP 画像を作り直すとき：`node scripts/generate-og.mjs`（文言は同スクリプト内）。
 

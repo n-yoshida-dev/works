@@ -18,7 +18,9 @@
     "format:check": "prettier --check .",
     "test": "vitest run",
     "check:home": "node scripts/check-home.mjs",
-    "check:dist": "node scripts/check-dist.mjs"
+    "check:dist": "node scripts/check-dist.mjs",
+    "check:articles": "node scripts/check-articles.mjs",
+    "check:repos": "node scripts/check-repos.mjs"
   },
   "repository": {
     "type": "git",

@@ -24,8 +24,9 @@ SessionStart フックが `##` 見出しごとに `- [x]` / `- [ ]` を数えて
 - [x] Tools の中身：`claude-code-toolkit.md` を足し、`photo-prompt-builder.md` の visibility を public に直す。`app-template.md` の本文の「このサイトもこのテンプレートから作りました」を事実に合わせる（このサイトは前身から写した）。`claude-plugins.md`・`app-template.md` の `kind: tool` は T7 で済んだ（T10）
   完了条件：`/tools` に 3 件。`check:repos` の食い違いが 0
   結果：`check:repos` は T11 で作るので、同じ突き合わせを `gh repo view` で手で回して 12 件すべて一致を確かめた
-- [ ] 検算スクリプト `check:articles`（Qiita と `articles.json` の突き合わせ）・`check:repos`（`repo` の URL と visibility の突き合わせ）。CI には入れない（T11）
+- [x] 検算スクリプト `check:articles`（Qiita と `articles.json` の突き合わせ）・`check:repos`（`repo` の URL と visibility の突き合わせ）。CI には入れない（T11）
   完了条件：手で回して、Qiita の未掲載の記事と visibility の食い違いが一覧で出る
+  結果：2026-10-24 に回して、Qiita の未掲載 4 本・visibility の食い違い 0 件
 - [ ] 文書の書き直し：README・CLAUDE.md・PLAN・SPEC を新しい方針で書き、前身の判断台帳から引き継ぐ決定を要約して `logs/decisions.md` に移す。前身の名残（`.gitignore`・`.prettierignore` の `dashboard/`・`docs/design-candidates/`、コメントの `docs/design-candidates/` への参照、`src/lib/ask.ts` 冒頭の「区分」）も片付ける（T12）
   完了条件：`SPEC.md` が前身を参照せずに読める。`git grep` で計画文書 3-9 の禁止語が、禁止語スキャンの定義とテスト以外で 0 件
 
@@ -56,6 +57,7 @@ SessionStart フックが `##` 見出しごとに `- [x]` / `- [ ]` を数えて
 - [ ] OG 画像の最後の行（節の名前を等幅・リンクの青・中点でつないだ行）が DESIGN.md の「青はリンクだけ」に反する。消すか薄い文字色にするか（T8 の点検役。前からある形で、本人は 2026-10-23 にこの画像を見て OK）
 - [ ] 表紙の目次の「About」を押すと名前と持ち主の行しか無い表紙に着く。目次の名前か行き先を変えるか（T8 の点検の気づき）。スマホの表紙の目次の最後の行の下に線が無い点も
 - [ ] `claude-plugins.md` の中身の表を今の apps-workflow 2.0.0 に合わせる（進捗表は todo-progress に移り、スキルは 7 つ。highlights の「フック 3 つ・スキル 4 つ」も古い）（T10 で気づいた）
+- [ ] `check:articles` の未掲載 4 本は、わざと載せていない記事のため毎回出る。載せない記事を除く仕組みを作るか（除く一覧を公開リポジトリに書くと題名が公開される点に注意）（T11 で気づいた）
 - [ ] 前身の TODO の保留 7 件（文面の細かいレビュー・自動取得・独自ドメイン・analytics・RAG）を、ここでやるか仕分ける
 
 ## 確認待ち（ユーザーの回答が要るもの）

@@ -16,7 +16,7 @@ const site =
 // https://astro.build/config
 export default defineConfig({
   site,
-  // 静的出力。サーバー処理は持たない（Phase 1 の方針。PLAN.md）
+  // 静的出力。サーバー処理は持たない（PLAN.md「やらないこと」）
   output: 'static',
   trailingSlash: 'never',
   build: {

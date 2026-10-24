@@ -22,7 +22,7 @@
 - `vibeCoding: true` はコードを AI が書いた作品。カード・詳細ページ・Markdown 版・`llms.txt` に同じ備考を 1 行出す
 - `visibility: private` の作品は存在と目的だけを書き、`repo` を書いてもリポジトリへのリンクを出さない（開くと 404 になるため。`src/lib/project-summary.ts` の `publicRepoUrl`）
 - `site` は作品の公開サイト。カード・詳細ページ・Markdown 版・`llms.txt` にリンクを出す。本文が空の作品は詳細ページを作らない（一覧だけに出る）
-- `projects.systems` は `systems` の slug を指す。`systems.components` は Projects の slug か外部の名前。参照が壊れていないことをテストで確かめる
+- `projects.systems` は `systems` の slug を指し、壊れていないことをテストで確かめる。`systems.components` は Projects の slug か外部の名前（外部の名前も入るので検査しない）
 - `updated`（`profile.md`）は最終確認日。YAML の日付は Date として読まれるので、型で `YYYY-MM-DD` の文字列にそろえる
 - `profile.md` の型には `tagline`・`highlights` の項目が残っているが、書かない（表紙に一言と要点を置かない。`logs/decisions.md` 2026-10-22・23）
 
@@ -42,7 +42,7 @@
 
 - ページはこれだけ。仕事の内容や技術の到達度を扱うページは持たない（`PLAN.md`「やらないこと」）
 - URL は拡張子・末尾のスラッシュなし（`trailingSlash: 'never'`、`build.format: 'file'`、Vercel の `cleanUrls`）
-- 各 HTML ページは `<link rel="alternate" type="text/markdown">` とフッターのリンクで Markdown 版を指す
+- Markdown 版のある HTML ページ（トップ・各詳細・`/writing`）は、`<link rel="alternate" type="text/markdown">` とフッターのリンクで Markdown 版を指す
 - 絶対 URL は `Astro.site`（`SITE_URL` → `VERCEL_PROJECT_PRODUCTION_URL` → localhost の順）から組み立てる
 - サイトの名前は「works」、持ち主は「Naoki Yoshida」（`src/site.ts` の `SITE`）。タブの題名の末尾と OGP の site_name は名前、フッターの著作権表示と Ask AI の依頼文は持ち主
 

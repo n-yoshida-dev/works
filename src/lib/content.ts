@@ -1,5 +1,5 @@
 // public-profile のデータを取り出す・Markdown 文字列に組み立てる、ページ横断の共通処理。
-// ページ側にロジックを持たせず、ここに集めておく（Phase 2 で自動生成に置き換えるときの境界）。
+// ページ側にロジックを持たせず、ここに集めておく（HTML と Markdown 版が同じ取り出し方を使うため）。
 import { getCollection, getEntry, type CollectionEntry } from 'astro:content';
 import { highlightLine } from './outline';
 import { VIBE_CODING_NOTE, publicRepoUrl, projectPath } from './project-summary';

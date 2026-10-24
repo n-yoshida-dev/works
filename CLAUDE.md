@@ -18,7 +18,8 @@ Astro の静的サイトで、コンテンツは `public-profile/` の Markdown 
 | `HANDOFF.md` | 現在地と次の一手だけ。履歴は持たない | AI |
 | `logs/decisions.md` | ユーザーと合意した判断の台帳。`/decide` で追記 | AI |
 | `PLAN.md` | 何を作るか・なぜ作るか | AI |
-| `SPEC.md` | 確定仕様。コンテンツの型・ページ・AI 向け出力 | AI |
+| `SPEC.md` | 確定仕様。コンテンツの型・ページ・Ask AI・トップの見せ方・検査 | AI |
+| `DESIGN.md` | 見た目の決まり（値の正本は `src/styles/global.css`）。画面を変える前に読む | AI |
 | `TODO.md` | タスクと進捗 | AI |
 | `KNOWLEDGE.md` | 技術的な設計判断・ハマりどころ | AI |
 | `README.md` | 構成・運用・公開情報の線引き | 人間 |
@@ -34,7 +35,8 @@ Astro の静的サイトで、コンテンツは `public-profile/` の Markdown 
 - **ユーザーの発言の原文を文書に写さない。** 要旨にとどめる（`../CLAUDE.md`「個人情報の取り扱い」）。原文を残したいときは ops に置き、ここには「ops に記録」とだけ書く
 - **非公開リポジトリ（personal-ai-context / study / ops / writing ほか）の中身をコピーしない。** 参照するのは「存在と目的」まで。
   固有名詞（会社名・製品名・案件名・家族・地名）はスキャンで拾えないので目視で確認する
-- **旧サイト（手元の `../portfolio`。非公開の保存用）の文書は読んでよいが、写さない。** コードの写しはこのリポジトリの最初の PR で済んでいる
+- **旧サイト（手元の `../portfolio`。非公開の保存用）の文書は読んでよいが、写さない。** コードの写しはこのリポジトリの最初の PR で済み、
+  仕様と判断は `SPEC.md` と `logs/decisions.md` に要約して移した（T12）。ふだんは読まなくてよい
 - **コンテンツの正本は `public-profile/`。** ページ側（`src/pages/`）に文章を直書きしない。見出し・説明文などの定型文だけを置く
 - **HTML は人間向けに短く、Markdown 版・llms.txt は AI 向けに詳しく。** 長い本文は `highlights`（要点 3 行）を書いて HTML では畳み、Markdown 版は全文のまま
 - **frontmatter の項目を増やすときは `src/content.config.ts` と `README.md`「コンテンツの更新」を同時に直す**

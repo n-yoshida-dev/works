@@ -11,7 +11,7 @@ AI がこのサイトを調べるための入口（`/llms.txt`、各ページの
 ```text
 works/
 ├── public-profile/          ← 公開してよい情報だけの正本（手動管理の Markdown / JSON）
-│   ├── profile.md           ← トップに出す自己紹介とリンク
+│   ├── profile.md           ← トップの外部リンクと、Markdown 版に出す自己紹介の本文
 │   ├── articles.json        ← Writing（技術記事へのリンク）
 │   ├── projects/*.md        ← Projects と Tools（kind で分ける）。1 ファイル 1 リポジトリ
 │   └── systems/*.md         ← Systems。1 ファイル 1 仕組み
@@ -123,5 +123,5 @@ OGP 画像を作り直すとき：`node scripts/generate-og.mjs`（文言は同�
 
 ## 開発ドキュメント（AI 向け）
 
-`PLAN.md`（何を・なぜ）/ `SPEC.md`（確定仕様）/ `TODO.md`（タスク）/ `KNOWLEDGE.md`（技術判断とハマりどころ）/
-`HANDOFF.md`（現在地）/ `logs/decisions.md`（合意した判断の台帳）。
+`PLAN.md`（何を・なぜ）/ `SPEC.md`（確定仕様）/ `DESIGN.md`（見た目の決まり）/ `TODO.md`（タスク）/ `KNOWLEDGE.md`（技術判断とハマりどころ）/
+`HANDOFF.md`（現在地）/ `logs/decisions.md`（合意した判断の台帳）/ `docs/design-candidates/`（見た目や名前を複数の AI の案から選んだときの記録）。

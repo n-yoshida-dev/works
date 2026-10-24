@@ -22,7 +22,7 @@
 
 `scripts/check-dist.mjs` は `public-profile-rules.json` の `rules` に、dist だけで使う `distOnlyRules` を足して検査する。語の一覧を 1 か所にしておけば、元の文章と出来上がりを同じ語で調べられる（スクリプトに直書きする案はハードコード禁止に当たるので選ばなかった）。
 `/skills` は単純に探すと、Tools から他のリポジトリの `.../apps-workflow/skills` へ張るリンクに誤って当たる。そこで「`href="` などの直後か、`https://ホスト` の直後に来る `/skills`」だけを拾う形にした（サイトマップの `https://…/skills/` は拾う）。
-`PL` は `\bPL\b` にして `PLAN.md`・`Playwright` に当たらないようにした。HTML は 1 行が長いので、ヒットはまわり 40 字だけ出す（`scanText` のヒットに `column` を足した）。
+英大文字 2 字の略語の語は、前後を単語の境目（`\b`）で区切り、`PLAN.md`・`Playwright` に当たらないようにした。HTML は 1 行が長いので、ヒットはまわり 40 字だけ出す（`scanText` のヒットに `column` を足した）。
 
 ### 2026-10-23：表紙の持ち主の行は `class="lead"` のまま使い、名前は `SITE.name` と `SITE.owner` に分けた（T8）
 

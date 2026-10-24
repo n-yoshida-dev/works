@@ -27,8 +27,9 @@ SessionStart フックが `##` 見出しごとに `- [x]` / `- [ ]` を数えて
 - [x] 検算スクリプト `check:articles`（Qiita と `articles.json` の突き合わせ）・`check:repos`（`repo` の URL と visibility の突き合わせ）。CI には入れない（T11）
   完了条件：手で回して、Qiita の未掲載の記事と visibility の食い違いが一覧で出る
   結果：2026-10-24 に回して、Qiita の未掲載 4 本・visibility の食い違い 0 件
-- [ ] 文書の書き直し：README・CLAUDE.md・PLAN・SPEC を新しい方針で書き、前身の判断台帳から引き継ぐ決定を要約して `logs/decisions.md` に移す。前身の名残（`.gitignore`・`.prettierignore` の `dashboard/`・`docs/design-candidates/`、コメントの `docs/design-candidates/` への参照、`src/lib/ask.ts` 冒頭の「区分」）も片付ける（T12）
+- [x] 文書の書き直し：README・CLAUDE.md・PLAN・SPEC を新しい方針で書き、前身の判断台帳から引き継ぐ決定を要約して `logs/decisions.md` に移す。前身の名残（`.gitignore`・`.prettierignore` の `dashboard/`・`docs/design-candidates/`、コメントの `docs/design-candidates/` への参照、`src/lib/ask.ts` 冒頭の「区分」）も片付ける（T12）
   完了条件：`SPEC.md` が前身を参照せずに読める。`git grep` で計画文書 3-9 の禁止語が、禁止語スキャンの定義とテスト以外で 0 件
+  結果：`.prettierignore` の `docs/design-candidates/**/*.html` は、このリポジトリに名前のコンペの見本の HTML があるので残した。`ask.ts` の「区分」は T8 で消えていた
 
 ## フェーズ3：公開
 

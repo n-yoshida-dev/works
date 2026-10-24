@@ -133,7 +133,7 @@ const pages = defineCollection({
   }),
 });
 
-/** 技術記事（Writing ページ）。Phase 2 で自動取得に置き換えやすいよう JSON にしている */
+/** 技術記事（Writing ページ）。手で書く JSON で、Qiita との食い違いは npm run check:articles で確かめる */
 const articles = defineCollection({
   loader: file('./public-profile/articles.json'),
   schema: z.object({

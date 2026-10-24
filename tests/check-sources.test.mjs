@@ -78,4 +78,15 @@ describe('repo の公開状態の突き合わせ（check:repos）', () => {
     expect(judge(entry, { error: 'GitHub で開けない（HTTP 404）' }).status).toBe('unknown');
     expect(judge({ file: 'y.md', visibility: 'archived' }, {}).status).toBe('skip');
   });
+
+  it('改名前の URL のままなら、転送で開けて公開状態が合っていても食い違いにする', () => {
+    const entry = { file: 'x.md', repo: 'https://github.com/o/old-name', visibility: 'public' };
+    const renamed = { visibility: 'public', isArchived: false, fullName: 'o/new-name' };
+    expect(judge(entry, renamed)).toMatchObject({
+      status: 'mismatch',
+      note: 'repo が古い名前（今は o/new-name）',
+    });
+    // 大文字小文字の違いだけなら同じリポジトリ
+    expect(judge(entry, { ...renamed, fullName: 'O/Old-Name' }).status).toBe('ok');
+  });
 });

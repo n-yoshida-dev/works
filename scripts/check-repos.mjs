@@ -39,10 +39,15 @@ export function siteVisibilityOf(github) {
 /**
  * 1 作品の判定。status は ok（一致）・mismatch（食い違い）・unknown（確かめられない）・skip（repo なし）
  * github は gh から取れた状態。取れなかったときは error に理由を入れて渡す
+ * GitHub は改名前の URL を新しい名前へ転送するので、正式な名前（fullName）と違えば、公開状態が合っていても食い違いにする
  */
 export function judge({ file, repo, visibility }, github) {
   if (!repo) return { file, status: 'skip', note: `repo なし（visibility: ${visibility}）` };
   if (github.error) return { file, status: 'unknown', note: github.error };
+  const slug = repoSlug(repo);
+  if (github.fullName && slug && github.fullName.toLowerCase() !== slug.toLowerCase()) {
+    return { file, status: 'mismatch', note: `repo が古い名前（今は ${github.fullName}）` };
+  }
   const actual = siteVisibilityOf(github);
   if (actual === visibility) return { file, status: 'ok', note: `${visibility}` };
   return { file, status: 'mismatch', note: `サイトは ${visibility}、GitHub は ${actual}` };
@@ -55,7 +60,7 @@ async function fetchGithub(slug) {
       'api',
       `repos/${slug}`,
       '--jq',
-      '{visibility, isArchived: .archived}',
+      '{visibility, isArchived: .archived, fullName: .full_name}',
     ]);
     return JSON.parse(stdout);
   } catch (error) {

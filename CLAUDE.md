@@ -36,7 +36,7 @@ Astro の静的サイトで、コンテンツは `public-profile/` の Markdown 
 - **非公開リポジトリ（personal-ai-context / study / ops / writing ほか）の中身をコピーしない。** 参照するのは「存在と目的」まで。
   固有名詞（会社名・製品名・案件名・家族・地名）はスキャンで拾えないので目視で確認する
 - **旧サイト（手元の `../portfolio`。非公開の保存用）の文書は読んでよいが、写さない。** コードの写しはこのリポジトリの最初の PR で済み、
-  仕様と判断は `SPEC.md` と `logs/decisions.md` に要約して移した（T12）。ふだんは読まなくてよい
+  仕様と判断は `SPEC.md` と `logs/decisions.md` に要約して移した。ふだんは読まなくてよい
 - **コンテンツの正本は `public-profile/`。** ページ側（`src/pages/`）に文章を直書きしない。見出し・説明文などの定型文だけを置く
 - **HTML は人間向けに短く、Markdown 版・llms.txt は AI 向けに詳しく。** 長い本文は `highlights`（要点 3 行）を書いて HTML では畳み、Markdown 版は全文のまま
 - **frontmatter の項目を増やすときは `src/content.config.ts` と `README.md`「コンテンツの更新」を同時に直す**

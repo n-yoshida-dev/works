@@ -39,7 +39,7 @@ SessionStart フックが `##` 見出しごとに `- [x]` / `- [ ]` を数えて
 2. HTML・Markdown 版・`llms.txt`・`llms-full.txt`・サイトマップのどこにもキャリアの情報が無い（`check-dist` と `curl`）。3 つの AI が Ask AI でキャリアの情報を答えない
 3. README に、何のサイトかと更新の仕方がある
 
-- [ ] 本人がリポジトリを Public に切り替える（Claude はフックで止まる。フェーズ2 が終わってから）
+- [x] 本人がリポジトリを Public に切り替える（Claude はフックで止まる。フェーズ2 が終わってから）
   完了条件：`gh repo view n-yoshida-dev/works --json visibility` が PUBLIC
 - [ ] 本人が Vercel に新しいプロジェクト `n-yoshida-works` を作る（Import → プロジェクト名 → Deploy）（T13）
   完了条件：本番ドメインが 200。GitHub に `vercel[bot]` の deployment が付く

@@ -41,10 +41,12 @@ SessionStart フックが `##` 見出しごとに `- [x]` / `- [ ]` を数えて
 
 - [x] 本人がリポジトリを Public に切り替える（Claude はフックで止まる。フェーズ2 が終わってから）
   完了条件：`gh repo view n-yoshida-dev/works --json visibility` が PUBLIC
-- [ ] 本人が Vercel に新しいプロジェクト `n-yoshida-works` を作る（Import → プロジェクト名 → Deploy）（T13）
+- [x] 本人が Vercel に新しいプロジェクト `n-yoshida-works` を作る（Import → プロジェクト名 → Deploy）（T13）
   完了条件：本番ドメインが 200。GitHub に `vercel[bot]` の deployment が付く
+  結果：本番は https://works-eta-rosy.vercel.app 。トップ・各一覧・`/ask`・AI 向けファイルが 200。`vercel[bot]` の記録は deployments ではなく main の先端のコミットの状態（Vercel success）に付いた（2026-10-28）
 - [ ] 本番で公開の条件の 1・2 を確かめる。撮影（375px・1280px）と `curl` は Claude、3 つの AI で Ask AI を試すのは本人（T14）
   完了条件：`curl` で `/llms.txt` `/llms-full.txt` `/sitemap-0.xml` にキャリア系の語が無い。3 つの AI がキャリアの情報を答えない
+  途中：Claude の分は済み（2026-10-28）。本番の 48 ファイル（HTML 23 ページ・Markdown 版・llms・サイトマップ）を `check-dist` の規則で調べて 0 件、`/skills` `/journey` `/articles` は 404、撮影ははみ出し・エラー・外部への通信 0（比較ページ https://claude.ai/artifact/J5C852szsySycHrGAEVxm6 ）。残りは本人が 3 つの AI で Ask AI を試すこと
 - [ ] 外部の参照を新しい URL に：GitHub の homepage 欄、ops の成果物公開の工程 8 と成果物台帳、Beads の epic（T15）
   完了条件：`gh repo view n-yoshida-dev/works --json homepageUrl` が本番 URL。ops の文書に旧 URL が無い
 
@@ -59,6 +61,7 @@ SessionStart フックが `##` 見出しごとに `- [x]` / `- [ ]` を数えて
 - [ ] 表紙の目次の「About」を押すと名前と持ち主の行しか無い表紙に着く。目次の名前か行き先を変えるか（T8 の点検の気づき）。スマホの表紙の目次の最後の行の下に線が無い点も
 - [ ] `claude-plugins.md` の中身の表を今の apps-workflow 2.0.0 に合わせる（進捗表は todo-progress に移り、スキルは 7 つ。highlights の「フック 3 つ・スキル 4 つ」も古い）（T10 で気づいた）
 - [ ] `check:articles` の未掲載 4 本は、わざと載せていない記事のため毎回出る。載せない記事を除く仕組みを作るか（除く一覧を公開リポジトリに書くと題名が公開される点に注意）（T11 で気づいた）
+- [ ] Vercel のプロジェクト名が `works`（ドメインは `works-eta-rosy.vercel.app`）で、判断台帳 2026-10-20 の `n-yoshida-works` と違う。名前を直すか、台帳を今の名前に合わせるか（T13 で気づいた。Vercel のデプロイ記録のリンク先が `/works/` だった）
 - [ ] 前身の TODO の保留 7 件（文面の細かいレビュー・自動取得・独自ドメイン・analytics・RAG）を、ここでやるか仕分ける
 
 ## 確認待ち（ユーザーの回答が要るもの）

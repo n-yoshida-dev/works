@@ -12,6 +12,16 @@
 
 ---
 
+### 2026-10-28：Vercel のデプロイの記録は、GitHub の deployments ではなくコミットの状態に付く
+
+T13 で `gh api repos/{owner}/{repo}/deployments` を見ると 0 件だった。Vercel は main の先端のコミットに `vercel[bot]` の状態（context `Vercel`、success）を付けていて、記録はそちらにある。
+確かめるときは `gh api repos/{owner}/{repo}/commits/<sha>/statuses` を見る。状態のリンク先の URL から Vercel のプロジェクト名も分かる。
+
+### 2026-10-28：表紙を撮るときは、動きを減らす設定にしてから撮る
+
+look.mjs の `shoot` でそのままトップを撮ると、表紙の開く動き（約 1.7 秒）の途中で撮れ、目次と ↓ が写らない（名前と持ち主の行だけになる）。
+`--setup` で `page.emulateMedia({ reducedMotion: 'reduce' })` のあとに読み込み直してから撮ると、最初から終わりの姿で写る（SPEC.md §4 の、動きを減らす設定では動かさない決まりを使う）。
+
 ### 2026-10-24：`check:repos` は gh で GitHub に聞き、`check:articles` は未掲載があっても失敗にしない（T11）
 
 `check:repos` は `gh api repos/<owner>/<name>` で公開状態を聞く。非公開のリポジトリは認証なしの API では 404 になり、private の表記が合っているかを確かめられないため（トークンを環境変数で渡す案は、手で回す道具に設定を増やすだけなので選ばなかった）。CI に入れないのも同じ理由。

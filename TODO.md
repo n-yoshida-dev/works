@@ -44,9 +44,10 @@ SessionStart フックが `##` 見出しごとに `- [x]` / `- [ ]` を数えて
 - [x] 本人が Vercel に新しいプロジェクト `n-yoshida-works` を作る（Import → プロジェクト名 → Deploy）（T13）
   完了条件：本番ドメインが 200。GitHub に `vercel[bot]` の deployment が付く
   結果：本番は https://works-eta-rosy.vercel.app 。トップ・各一覧・`/ask`・AI 向けファイルが 200。`vercel[bot]` の記録は deployments ではなく main の先端のコミットの状態（Vercel success）に付いた（2026-10-28）
-- [ ] 本番で公開の条件の 1・2 を確かめる。撮影（375px・1280px）と `curl` は Claude、3 つの AI で Ask AI を試すのは本人（T14）
+- [x] 本番で公開の条件の 1・2 を確かめる。撮影（375px・1280px）と `curl` は Claude、3 つの AI で Ask AI を試すのは本人（T14）
   完了条件：`curl` で `/llms.txt` `/llms-full.txt` `/sitemap-0.xml` にキャリア系の語が無い。3 つの AI がキャリアの情報を答えない
-  途中：Claude の分は済み（2026-10-28）。本番の 48 ファイル（HTML 23 ページ・Markdown 版・llms・サイトマップ）を `check-dist` の規則で調べて 0 件、`/skills` `/journey` `/articles` は 404、撮影ははみ出し・エラー・外部への通信 0（比較ページ https://claude.ai/artifact/J5C852szsySycHrGAEVxm6 ）。残りは本人が 3 つの AI で Ask AI を試すこと
+  結果：Claude の分は 2026-10-28 に済み。本番の 48 ファイル（HTML 23 ページ・Markdown 版・llms・サイトマップ）を `check-dist` の規則で調べて 0 件、`/skills` `/journey` `/articles` は 404、撮影ははみ出し・エラー・外部への通信 0（比較ページ https://claude.ai/artifact/J5C852szsySycHrGAEVxm6 ）。
+  同じ日に本人が 3 つの AI で試し、どれもキャリアの情報を答えなかった。ChatGPT と Claude は `llms.txt` を出典に挙げて答えた。Gemini は出典が無く、サイトに無い作品も挙げた（公開後の改善に 1 行）
 - [ ] 外部の参照を新しい URL に：GitHub の homepage 欄、ops の成果物公開の工程 8 と成果物台帳、Beads の epic（T15）
   完了条件：`gh repo view n-yoshida-dev/works --json homepageUrl` が本番 URL。ops の文書に旧 URL が無い
 
@@ -65,6 +66,7 @@ SessionStart フックが `##` 見出しごとに `- [x]` / `- [ ]` を数えて
   結果：本人が `n-yoshida-works.vercel.app` をドメインに足した。プロジェクト名は `works` のまま（`logs/decisions.md` 2026-10-28）
 - [ ] 広い画面（1600px 以上で Projects が 3 列）のトップのカードが 5 枚で 1 枠空く。`homeWide` の作品を 1 件足すか、3 列でも 4 枚に戻すか（2026-10-28 に AI Study Coach を外して `homeWide` が `ops` だけになった）
   完了条件：1600px 以上の幅で撮ったトップの Projects に空いた枠が無い
+- [ ] Gemini の Ask AI の答えが、サイトの全文ではなく別の情報（GitHub・Qiita など。Claude の推定）から作られていた。出典が無く、サイトに無い作品（経費申請の Web アプリなど）を挙げた。貼り付けた文に全文が入っていたか（コピーの失敗か）、全文があっても Gemini が使わなかったのかを確かめる（T14 で気づいた）
 - [ ] 前身の TODO の保留 7 件（文面の細かいレビュー・自動取得・独自ドメイン・analytics・RAG）を、ここでやるか仕分ける
 
 ## 確認待ち（ユーザーの回答が要るもの）

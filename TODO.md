@@ -48,8 +48,11 @@ SessionStart フックが `##` 見出しごとに `- [x]` / `- [ ]` を数えて
   完了条件：`curl` で `/llms.txt` `/llms-full.txt` `/sitemap-0.xml` にキャリア系の語が無い。3 つの AI がキャリアの情報を答えない
   結果：Claude の分は 2026-10-28 に済み。本番の 48 ファイル（HTML 23 ページ・Markdown 版・llms・サイトマップ）を `check-dist` の規則で調べて 0 件、`/skills` `/journey` `/articles` は 404、撮影ははみ出し・エラー・外部への通信 0（比較ページ https://claude.ai/artifact/J5C852szsySycHrGAEVxm6 ）。
   同じ日に本人が 3 つの AI で試し、どれもキャリアの情報を答えなかった。ChatGPT と Claude は `llms.txt` を出典に挙げて答えた。Gemini は出典が無く、サイトに無い作品も挙げた（公開後の改善に 1 行）
-- [ ] 外部の参照を新しい URL に：GitHub の homepage 欄、ops の成果物公開の工程 8 と成果物台帳、Beads の epic（T15）
+- [x] 外部の参照を新しい URL に：GitHub の homepage 欄、ops の成果物公開の工程 8 と成果物台帳、Beads の epic（T15）
   完了条件：`gh repo view n-yoshida-dev/works --json homepageUrl` が本番 URL。ops の文書に旧 URL が無い
+  結果：2026-10-28 に works の homepage を https://n-yoshida-works.vercel.app に、portfolio の homepage を空にした（計画文書の T15 の行どおり）。
+  ops の工程 8・成果物台帳（works を A-14 に足し、portfolio を保存用に）を直して ops に commit。Beads の epic ops-ei4 の説明を公開済みに直し、portfolio の URL の付箋 ops-urz.33 は論点でなくなったので閉じた。
+  旧 URL が残るのは ops の分離計画の調査記録と日々の作業メモだけ（当時の記録なので直していない。計画の進み具合の表は ops の横断タスク管理が直す決まり）
 
 ## 公開後の改善
 
@@ -68,6 +71,7 @@ SessionStart フックが `##` 見出しごとに `- [x]` / `- [ ]` を数えて
   完了条件：1600px 以上の幅で撮ったトップの Projects に空いた枠が無い
 - [ ] Gemini の Ask AI の答えが、サイトの全文ではなく別の情報（GitHub・Qiita など。Claude の推定）から作られていた。出典が無く、サイトに無い作品（経費申請の Web アプリなど）を挙げた。貼り付けた文に全文が入っていたか（コピーの失敗か）、全文があっても Gemini が使わなかったのかを確かめる（T14 で気づいた）
 - [ ] 前身の TODO の保留 7 件（文面の細かいレビュー・自動取得・独自ドメイン・analytics・RAG）を、ここでやるか仕分ける
+- [ ] Qiita のプロフィールに本番の URL を載せるか（本人の画面の操作。計画文書の T15 で「載せるなら新 URL」とされた分）
 
 ## 確認待ち（ユーザーの回答が要るもの）
 

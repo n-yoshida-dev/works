@@ -56,6 +56,7 @@ Tools 用に別のコレクションを作らず、`projects` に `kind: 'app' |
 Tools が 0 件のままだと、T7 の見た目の点検で Tools の画面を確かめられない。そこで `claude-plugins.md`・`app-template.md` を T7 で `kind: tool` にした。
 その結果、トップの主なプロジェクトが 3 件になり、2 列のカードに穴が空く。`life-plan-simulator`（進行中）を `featured: true` に上げ、
 広い画面だけで足す枠（`homeWide`）には `ai-study-coach`（Public で詳細ページがある）を入れた。どれを載せるかはユーザーに確かめていない。
+2026-10-28 に `ai-study-coach` をサイトから外したので、この枠は `ops` の 1 件だけになり、広い画面（3 列）のカードは 5 枚で 1 枠空く（`logs/decisions.md` 2026-10-28）。
 
 ### 2026-10-20：Astro は、改行をはさんだ文字と要素のあいだの空白を落とすことがある
 

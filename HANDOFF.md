@@ -23,7 +23,7 @@
 ███████████████░░░░░   75%     1 / 4     フェーズ3：公開
 ██████████████████░░   90%     1 / 11    合計 / Total
 公開まで残り 1 件（上から「フェーズ3：公開」の節まで） / 1 open until release
-公開後（合計に含めない）：9 件（済み 1 件） / After release (not in total): 9 open, 1 done
+公開後（合計に含めない）：10 件（済み 1 件） / After release (not in total): 10 open, 1 done
 
 前回の区切り（2026-10-28）から：完了 +1 件、タスクの数 +0 件 / Since last checkpoint (2026-10-28): done +1, tasks +0
 ```
@@ -33,7 +33,7 @@
 - フェーズ：**フェーズ3「公開」**。フェーズ2 は終わった。仕様は `SPEC.md`、判断は `logs/decisions.md`（前身から引き継いだ判断も末尾に要約済み）
 - CI は `dist/` 全体の禁止語も見る（`npm run check:dist`）。手で回す検算は `check:articles`・`check:repos`（README「開発」）
 - サイトの名前は「works」、表紙は名前・持ち主の行（Naoki Yoshida / n-yoshida-dev）・目次だけ（`logs/decisions.md` 2026-10-22・23）
-- トップの節は About / Projects / Tools / Systems / Writing / Ask AI。Tools は 3 件（claude-code-toolkit・claude-plugins・app-template）
+- トップの節は About / Projects / Tools / Systems / Writing / Ask AI。Projects は 9 件（AI Study Coach は 2026-10-28 に外した。`logs/decisions.md`）、Tools は 3 件（claude-code-toolkit・claude-plugins・app-template）
 - 見た目の決まりは `DESIGN.md`。画面を触る前に読む
 - 計画の全体は ops の `docs/2026-10-20-制作活動ハブとキャリアプロフィールの分離計画.md` 4 節。このリポジトリで残っているのは T14〜T15。Beads の epic は ops-ei4
 - リポジトリは Public（2026-10-25 に本人が切り替え）

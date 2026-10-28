@@ -27,6 +27,17 @@ Claude が実装中に選んだ技術的な選択とハマりどころは `KNOWL
 
 ---
 
+## 2026-10-28 AI Study Coach（ai-study-coach）をサイトから外す
+
+**論点**: 練習用に作った AI Study Coach をサイトに載せ続けるか
+**結論**: works から外す（ほかの置き場からも外す。決めたのは ops の会話で、ops に記録）。アーカイブ済みの練習リポジトリ 3 つ（`archived.md`）はそのまま残す
+**理由**: 練習用のアプリで、2026-10-28 に GitHub のリポジトリをアーカイブした。Vercel と Supabase も本人が消すので、アプリの URL は開けなくなる
+**却下した代替案**: ops に記録
+**確信度**: 高
+**見直す条件**: なし
+
+---
+
 ## 2026-10-28 本番の URL は n-yoshida-works.vercel.app にし、Vercel のプロジェクト名は works のままにする
 
 **論点**: 本人が Vercel のプロジェクトを `works` の名前で作ったため、本番のドメインが `works-eta-rosy.vercel.app`（`works.vercel.app` は他人が使っていて、Vercel が語を足した）になり、2026-10-20 の `n-yoshida-works` と違った

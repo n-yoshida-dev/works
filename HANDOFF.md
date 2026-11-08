@@ -47,6 +47,6 @@
 
 ## 次セッションで最初にやること
 
-1. 「公開後の改善」から判断の要らないもの：`claude-plugins.md` の中身の表と highlights を今の apps-workflow（`~/.claude/plugins/installed_plugins.json` の導入版）に合わせる
+1. 「公開後の改善」の残りから次の 1 件を選ぶ。残りはどれも見せ方か載せ方の判断が要るので、本人に案を見せてから進める
 
 `TODO.md` の先頭と一致させる。書くのは最初の一手だけで、一覧は `TODO.md` が持つ。

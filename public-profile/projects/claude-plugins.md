@@ -13,7 +13,7 @@ order: 5
 systems: [ai-assisted-development]
 highlights:
   - 複数のアプリに設定をコピーせず、直す場所を 1 か所にするために作った
-  - 中身はフック 3 つ・スキル 4 つ・エージェント 1 つ
+  - 中身はフック 4 つ・スキル 7 つ・エージェント 2 つ
   - 検査ロジックはシェルスクリプトに置いて単体で試せるようにし、CI で shellcheck とプラグインの検証を通す
 ---
 
@@ -26,11 +26,17 @@ highlights:
 
 | 種別 | 名前 | 何をするか |
 |---|---|---|
-| フック | guard-secrets | `git add` / `commit` の直前にステージ済みファイルを検査し、秘密情報やローカル専用ファイルがあればブロックする |
-| フック | check-edited | フロントエンドの TypeScript を編集したら typecheck と lint、Go なら `go vet` を自動で走らせる |
-| フック | session-briefing | セッション開始時に TODO からフェーズ別の進捗表を作り、未完タスクを提示する |
-| スキル | progress / handoff / pr-check / pr-flow | 進捗表の表示、引き継ぎ文書の更新、CI と同じ検査のローカル実行、PR 作成からマージまでの手順 |
+| フック | guard-secrets | `git add` / `commit` / `stash` の直前にステージ済みファイルを検査し、秘密情報やローカル専用ファイルがあればブロックする |
+| フック | check-edited | フロントエンドの TypeScript・Astro を編集したら typecheck と lint、Go なら `go vet` を自動で走らせる |
+| フック | look-notice | 画面のファイルを変えたら、見た目の決まり（`DESIGN.md`）を読むことと、PR の前の見た目の点検を知らせる |
+| フック | session-briefing | セッション開始時に、引き継ぎ文書と判断の台帳を先に読むよう知らせる |
+| スキル | handoff / pr-check / pr-flow | 引き継ぎ文書の更新、CI と同じ検査のローカル実行、PR 作成からマージまでの手順 |
+| スキル | look | 画面の見た目の方向を見本の比較で決め、画面を変えた PR ごとに撮影して点検する |
+| スキル | codex-review / compete | 設計書を Codex に読み取り専用でレビューさせ、指摘を別のモデルが確かめる。設計案・画面案を複数のモデルが独立に作り、作り手を伏せて比べる |
+| スキル | dashboard | 開発の状況（進捗・確認待ち・CI・最近の変更）を 1 画面で見るダッシュボードを、リポジトリごとに作る手順とテンプレート |
 | エージェント | acceptance-reviewer | マージ前に差分を「完了条件」と仕様に照らして検品する読み取り専用の評価役。判定だけ返し、直すのは呼び出し側 |
+| エージェント | look-reviewer | 撮った画面を、見た目の決まり・AI がよく作る形・使いやすさの基本に照らして点検する読み取り専用の点検役 |
+| 依存 | todo-progress | 進捗表は公開版の [claude-code-toolkit](/tools/claude-code-toolkit) に移し、このプラグインを入れると一緒に入る |
 
 ## 守っていること
 

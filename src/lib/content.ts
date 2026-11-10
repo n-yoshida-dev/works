@@ -30,11 +30,6 @@ export async function getOtherProjects(): Promise<Project[]> {
   return getApps((p) => !p.data.featured);
 }
 
-/** トップが 3 列のときだけ主要プロジェクトの後ろに足すもの（featured: false かつ homeWide: true）。order 順 */
-export async function getHomeWideProjects(): Promise<Project[]> {
-  return getApps((p) => !p.data.featured && p.data.homeWide);
-}
-
 /** Tools（kind: tool）。featured の区別はせず、order 順 */
 export async function getTools(): Promise<Project[]> {
   const all = await getCollection('projects', (p) => p.data.kind === 'tool');

@@ -1,7 +1,8 @@
 ---
 // トップ。1 枚のページに 6 節（About / Projects / Tools / Systems / Writing / Ask AI）を縦に並べ、
 // 左の目次がその節へ移動する（SPEC.md §4）。各節は短い版で、詳しい版は各ページに残して「すべて →」で行く。
-// 先頭は画面 1 つ分の表紙（サイトの名前・持ち主・目次）で、About の節は表紙の中に置き、外部リンクのカードは表紙の直後に置く
+// 先頭は画面 1 つ分の表紙（サイトの名前・持ち主・目次）で、About の節は表紙の中に置き、外部リンクの一覧は表紙の直後に置く。
+// Projects・Tools・Systems は箱にせず線で区切った一覧にする（2026-11-10 ユーザーが案 F を選択。見た目は global.css）
 // （2026-10-05 ユーザーがコンペの見本 A を選択。2026-10-22 に要点 3 行を外し、各節の見出しの下の 1 行の説明に置き換えた。
 // 2026-10-23 に名前を「works」にし、一言を外した。logs/decisions.md）。
 // 文章は各コレクションの要約だけを出し、profile.md の本文は Markdown 版（/profile.md）に任せる。
@@ -15,7 +16,6 @@ import {
   getPage,
   getFeaturedProjects,
   getOtherProjects,
-  getHomeWideProjects,
   getTools,
   getSystems,
   getArticles,
@@ -25,16 +25,11 @@ import { articleCalendar } from '../lib/outline';
 import { SITE, SECTIONS } from '../site';
 
 const profile = await getPage('profile');
-// 主なプロジェクトは 4 件まで（SPEC.md §4）。総数は切る前の件数で数える。
-// カードが 3 列になる広い画面では、homeWide の 2 件を足して 6 枚（2 行ちょうど）にする
+// 主なプロジェクトは 4 件まで（SPEC.md §4）。総数は切る前の件数で数える
 const allFeatured = await getFeaturedProjects();
 const featured = allFeatured.slice(0, 4);
-const wideExtras = (await getHomeWideProjects()).slice(0, 6 - featured.length);
 const projectCount = allFeatured.length + (await getOtherProjects()).length;
-// 見出しの件数。広い画面では足した分を数えた件数に差し替える
 const projectNote = `${featured.length} / ${projectCount} 件`;
-const projectNoteWide =
-  wideExtras.length > 0 ? `${featured.length + wideExtras.length} / ${projectCount} 件` : undefined;
 const tools = await getTools();
 const systems = await getSystems();
 const articles = await getArticles();
@@ -115,13 +110,10 @@ const coverCounts: Partial<Record<string, { n: number; unit: string }>> = {
     )}
   </div>
 
-  <HomeSection id="projects" note={projectNote} noteWide={projectNoteWide}>
+  <HomeSection id="projects" note={projectNote}>
     <ul class="card-grid">
       {featured.map((p) => (
         <ProjectCard project={p} compact />
-      ))}
-      {wideExtras.map((p) => (
-        <ProjectCard project={p} compact wideOnly />
       ))}
     </ul>
   </HomeSection>

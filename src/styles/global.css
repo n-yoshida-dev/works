@@ -638,32 +638,37 @@ main.container {
   stroke-linejoin: round;
 }
 
-/* About の外部リンク。アイコン・名前・そこに何があるか（links の note）のカード */
+/*
+  About の外部リンク。箱にせず、上下の線で囲んだ一覧に、線のアイコン・名前・そこに何があるか（links の note）を 1 行ずつ並べる。
+  狭い画面では note が名前の下に折り返す（2026-11-10 ユーザーがトップの案 F を選択。logs/decisions.md）
+*/
 .link-cards {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
   margin: 0 0 0.5rem;
-  padding: 0;
+  padding: 0.6rem 0;
   list-style: none;
+  border-block: 1px solid var(--line);
 }
 .link-cards > li {
   margin: 0;
 }
 .link-card {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 0.7rem;
-  height: 100%;
-  padding: 0.75rem 0.9rem;
+  padding: 0.2rem 0;
   color: var(--fg);
-  background: var(--bg-subtle);
-  border: 1px solid var(--line);
-  border-radius: 8px;
+}
+.link-card > span {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 0.6rem;
 }
 .link-card:hover {
   text-decoration: none;
-  border-color: var(--fg-muted);
 }
 .link-card:hover .link-label {
   text-decoration: underline;
@@ -671,20 +676,16 @@ main.container {
 .link-card .icon {
   width: 1.4rem;
   height: 1.4rem;
-  margin-top: 0.2rem;
 }
 .link-label {
-  display: block;
   color: var(--link);
   font-weight: 600;
   line-height: 1.4;
 }
 .link-note {
-  display: block;
   color: var(--fg-muted);
   font-size: 0.8rem;
   line-height: 1.5;
-  margin-top: 0.15rem;
 }
 
 /*
@@ -880,6 +881,48 @@ h1 .badge {
   margin-top: auto;
   padding-top: 0.35rem;
   font-size: 0.9rem;
+}
+/*
+  トップの Projects・Tools・Systems は、カードの箱にせず線で区切った一覧にする（2026-11-10 ユーザーがトップの案 F を選択。logs/decisions.md）。
+  PC は左の列に題名と期間・バッジ、右の列に一文・備考・リンク。40rem 以下は 1 列で、カードと同じ順に積む。
+  一覧ページ（/projects・/tools・/systems）はカードのまま
+*/
+.home-section .card-grid {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--line);
+}
+.home-section .card {
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+  padding: 0.7rem 0;
+}
+.home-section .card-badges {
+  margin-left: 0;
+}
+@media (min-width: 40.01rem) {
+  .home-section .card {
+    display: grid;
+    grid-template-columns: 13rem minmax(0, 1fr);
+    grid-auto-flow: row dense;
+    align-items: baseline;
+    gap: 0.2rem 1.5rem;
+  }
+  .home-section .card h3 {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .home-section .card-top {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: start;
+  }
+  .home-section .card p,
+  .home-section .card-links {
+    grid-column: 2;
+  }
 }
 
 /* 詳細ページの題名の下のリンク行 */
@@ -1117,31 +1160,15 @@ h1 .badge {
 
 /*
   広い画面のトップ（2026-10-06 ユーザーが見本から C を選び、画面の幅で段階的に構成を変えることを提案。logs/decisions.md）。
-  100rem（1600px）以上で、トップの本文を最大 76rem・表紙を最大 92rem（16rem + 76rem）に広げ、Projects のカードを 3 列にする。
-  3 列のときだけ homeWide の 2 件（.wide-only）を出して 6 枚にし、見出しの件数も差し替える。Tools・Systems は 2 列のまま。
-  64〜100rem は 2 列・4 枚、40rem 未満は 1 列（下の @media (max-width: 40rem)）
+  100rem（1600px）以上で、トップの本文を最大 76rem・表紙を最大 92rem（16rem + 76rem）に広げる。
+  Projects のカードを 3 列にしていた分は、2026-11-10 にトップの節を一覧にしたので外した
 */
-.wide-only {
-  display: none;
-}
 @media (min-width: 100rem) {
   .cover ~ .layout .page .container {
     max-width: 76rem;
   }
   .cover-inner {
     max-width: 92rem;
-  }
-  #projects .card-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-  .card.wide-only {
-    display: flex;
-  }
-  .section-note.wide-only {
-    display: inline;
-  }
-  .section-note.narrow-only {
-    display: none;
   }
 }
 
@@ -1151,11 +1178,6 @@ h1 .badge {
   }
   .card-grid {
     grid-template-columns: minmax(0, 1fr);
-  }
-  /* トップの About の外部リンクは 1 列に積む */
-  .link-cards {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 0.5rem;
   }
   /* トップの Writing は連載名と本数を 1 行目、公開月の図を 2 行目にする */
   .series-row {

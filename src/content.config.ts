@@ -59,11 +59,6 @@ const projects = defineCollection({
     /** true なら一覧の上段（主要プロジェクト）に出す。false は「Other」にまとめる */
     featured: z.boolean().default(false),
     /**
-     * true なら、トップの Projects がカード 3 列になる広い画面（1600px 以上）のときだけ、主要プロジェクトの後ろに足す。
-     * 行をちょうど埋めるための枠で、featured: false のものに付ける（SPEC.md §4）
-     */
-    homeWide: z.boolean().default(false),
-    /**
      * true ならコードを AI が書いた作品（バイブコーディング）。カード・詳細ページ・Markdown 版・llms.txt に同じ備考を 1 行出す。
      * こうした作品も作品集（Projects）として載せ、作り方を備考で明示する（logs/decisions.md 2026-10-10）
      */

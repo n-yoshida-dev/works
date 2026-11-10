@@ -10,7 +10,7 @@
 
 | コレクション | 場所 | 主な項目 | 用途 |
 |---|---|---|---|
-| `projects` | `projects/*.md` | title / kind（app・tool）/ tagline / summary / repo / site / visibility（public・private・archived）/ status（active・paused・done・archived）/ period / stack / featured / homeWide / vibeCoding / order / systems / highlights | `kind: app`（省略時）は Projects、`kind: tool` は Tools に出す。1 ファイル 1 リポジトリ |
+| `projects` | `projects/*.md` | title / kind（app・tool）/ tagline / summary / repo / site / visibility（public・private・archived）/ status（active・paused・done・archived）/ period / stack / featured / vibeCoding / order / systems / highlights | `kind: app`（省略時）は Projects、`kind: tool` は Tools に出す。1 ファイル 1 リポジトリ |
 | `systems` | `systems/*.md` | title / tagline / summary / order / components / highlights | Systems。開発・学習・読書の仕組みの読み物 |
 | `pages` | `profile.md` だけ | title / description / updated / links | トップの外部リンクのカードと、Markdown 版の本文 |
 | `articles` | `articles.json` | id / title / url / platform / publishedAt / tags / series / summary | Writing。連載（series）ごとにまとめ、連載の中は古い順 |
@@ -18,7 +18,7 @@
 - `tagline` は一覧のカードに出す一文。句点なし・60 字以内（スキーマで確認）。`summary`（1〜2 文）は詳細ページの冒頭・Markdown 版・`llms.txt` に出し、カードには出さない。
   カードのために summary を削ると AI 向けの情報が減るので、項目を分けている
 - `highlights` は詳細ページの要点。3 行まで。本文に書いた事実だけから作る。本文が 400 字を超えるエントリは必須（テストで確認）
-- `featured: false` の作品は一覧の「Other / Experiments」にまとめる。`homeWide: true` は、トップのカードが 3 列になる広い画面でだけ足す枠（§4）
+- `featured: false` の作品は一覧の「Other / Experiments」にまとめる
 - `vibeCoding: true` はコードを AI が書いた作品。カード・詳細ページ・Markdown 版・`llms.txt` に同じ備考を 1 行出す
 - `visibility: private` の作品は存在と目的だけを書き、`repo` を書いてもリポジトリへのリンクを出さない（開くと 404 になるため。`src/lib/project-summary.ts` の `publicRepoUrl`）
 - `site` は作品の公開サイト。カード・詳細ページ・Markdown 版・`llms.txt` にリンクを出す。本文が空の作品は詳細ページを作らない（一覧だけに出る）
@@ -72,15 +72,17 @@
   - 目次の 1 行は番号（01〜06）・節の名前・件数。件数は Projects（全体の件数）・Tools・Systems・Writing の 4 節で、データから数える。PC では件数の横に 1 件 1 マスの小さな図を並べる
   - 開いたときに 1 回だけ、線が引かれ、文字と目次の行が下から浮かび、マスが左から現れる（CSS だけ）。`prefers-reduced-motion: reduce` では動かさない
   - PC のトップでは、左の固定目次と右下の Ask AI ボタンは表紙を過ぎてから出る。狭い画面のトップは表紙の中の目次（2 列）だけにし、上部の目次は出さない（同じ項目が二重になるため）
-- **表紙の直後に外部リンクのカード**（`profile.md` の `links`。線のアイコン・名前・そこに何があるか）。表紙には文字リンクを置かない
+- **表紙の直後に外部リンクの一覧**（`profile.md` の `links`。箱にせず上下の線で囲み、線のアイコン・名前・そこに何があるかを 1 行ずつ）。表紙には文字リンクを置かない
 - **各節は短い版**で、詳しい版のページへ「すべて →」で送る。Projects・Tools・Systems は見出しのすぐ下に「これは何か」の 1 行（`SECTIONS` の `lead`。件数は入れない）
-  - Projects：`featured` の作品を 4 件まで。見出しに「4 / 全体 件」。カードが 3 列になる広い画面では `homeWide` の作品を足して 6 枚にし、見出しの件数も合わせる
+  - Projects：`featured` の作品を 4 件まで。見出しに「4 / 全体 件」
   - Tools・Systems：全件
   - Writing：連載 × 公開月の図（■ 1 つが記事 1 本で、公開した月の列に置く。ビルド時に `articles.json` から作る）と、いちばん新しい記事 1 本。説明の文に本数・連載の数は入れない
   - Ask AI：説明の一文と入口のボタン（§3）、`llms.txt` へのリンクと「AI 向けの要約」の説明。最後に `profile.md` の最終確認日
-- **画面の幅で段階的に構成を変える**：100rem（1600px）以上はトップだけ本文を広げ、Projects のカードを 3 列・6 枚にする（Tools・Systems は 2 列のまま）。
-  それより狭い PC は 2 列・4 枚、64rem 未満は上部の目次で 2 列、40rem 未満は 1 列。トップ以外のページは本文の幅を広げない（長い文が読みにくくなるため）
-- **一覧の 1 件は薄枠のカード**：作品・ツールは期間と状態、題名、一文（`tagline`）、AI が書いた作品は備考を 1 行、下端にリンクを定位置に置く。仕組みは題名と一文だけ（構成要素のタグは一覧ページでだけ出す）
+- **画面の幅で段階的に構成を変える**：100rem（1600px）以上はトップだけ本文を広げる。64rem 未満は上部の目次、40rem 未満はカードと一覧の行を 1 列に積む。
+  トップ以外のページは本文の幅を広げない（長い文が読みにくくなるため）
+- **トップの Projects・Tools・Systems は箱にせず、線で区切った一覧**にする（1 行 1 件。PC は左に題名と期間・バッジ、右に一文・備考・リンク。2026-11-10）。外部リンクも同じく線で囲む。
+  箱（カード）は一覧ページ（`/projects`・`/tools`・`/systems`）だけで使う
+- **一覧ページの 1 件は薄枠のカード**：作品・ツールは期間と状態、題名、一文（`tagline`）、AI が書いた作品は備考を 1 行、下端にリンクを定位置に置く。仕組みは題名と一文だけ（構成要素のタグは一覧ページでだけ出す）
 - **詳細ページ**は題名・`summary`・リンク・技術を出し、`highlights` があれば要点を先に出して本文を「詳しく読む」（`<details>`）に畳む。無ければ本文をそのまま出す。
   開いた直後に見える文字は 800 字以下。関連する仕組み・作品は題名だけ
 - **HTML は人間向けに短く、Markdown 版・`llms.txt` は AI 向けに詳しく**。Markdown 版には本文の全文を出す。同じ文章を両方に同じ量で出さない

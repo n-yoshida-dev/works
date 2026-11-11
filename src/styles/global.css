@@ -56,8 +56,13 @@ a {
   color: var(--link);
   text-decoration: none;
 }
-a:hover {
-  text-decoration: underline;
+/*
+  マウスを乗せたときの見た目は、マウスのある端末（hover: hover）だけに出す。スマホで押したあとに下線などが残らないようにする（2026-11-11）
+*/
+@media (hover: hover) {
+  a:hover {
+    text-decoration: underline;
+  }
 }
 
 h1,
@@ -331,12 +336,16 @@ main.container {
   padding: 0.45rem 0;
   color: var(--fg);
 }
-.ix a:hover {
-  text-decoration: none;
-}
-.ix a:hover .ix-name,
 .ix a:focus-visible .ix-name {
   text-decoration: underline;
+}
+@media (hover: hover) {
+  .ix a:hover {
+    text-decoration: none;
+  }
+  .ix a:hover .ix-name {
+    text-decoration: underline;
+  }
 }
 .ix-no {
   font-family: var(--font-mono);
@@ -372,9 +381,11 @@ main.container {
   line-height: 1.5;
   color: var(--fg-muted);
 }
-.cover-down:hover {
-  text-decoration: none;
-  color: var(--fg);
+@media (hover: hover) {
+  .cover-down:hover {
+    text-decoration: none;
+    color: var(--fg);
+  }
 }
 /* 表紙の直後に置く、About の外部リンクのカード */
 .about-links {
@@ -478,10 +489,15 @@ main.container {
     opacity: 0;
     transform: translateX(-4px);
   }
-  .ix a:hover .ix-go,
   .ix a:focus-visible .ix-go {
     opacity: 1;
     transform: none;
+  }
+  @media (hover: hover) {
+    .ix a:hover .ix-go {
+      opacity: 1;
+      transform: none;
+    }
   }
 }
 /*
@@ -667,11 +683,13 @@ main.container {
   align-items: baseline;
   column-gap: 0.6rem;
 }
-.link-card:hover {
-  text-decoration: none;
-}
-.link-card:hover .link-label {
-  text-decoration: underline;
+@media (hover: hover) {
+  .link-card:hover {
+    text-decoration: none;
+  }
+  .link-card:hover .link-label {
+    text-decoration: underline;
+  }
 }
 .link-card .icon {
   width: 1.4rem;
@@ -961,8 +979,10 @@ h1 .badge {
   color: var(--link);
   width: fit-content;
 }
-.more > summary:hover {
-  text-decoration: underline;
+@media (hover: hover) {
+  .more > summary:hover {
+    text-decoration: underline;
+  }
 }
 .more[open] > summary {
   margin-bottom: 1rem;
@@ -999,9 +1019,11 @@ h1 .badge {
   cursor: pointer;
   text-decoration: none;
 }
-.button:hover {
-  text-decoration: none;
-  border-color: var(--fg);
+@media (hover: hover) {
+  .button:hover {
+    text-decoration: none;
+    border-color: var(--fg);
+  }
 }
 .button-primary {
   background: var(--fg);
@@ -1009,8 +1031,10 @@ h1 .badge {
   color: var(--bg);
   font-weight: 600;
 }
-.button-primary:hover {
-  text-decoration: underline;
+@media (hover: hover) {
+  .button-primary:hover {
+    text-decoration: underline;
+  }
 }
 
 /*
@@ -1037,8 +1061,10 @@ h1 .badge {
   line-height: 1.5;
   white-space: nowrap;
 }
-.ask-fab:hover {
-  text-decoration: underline;
+@media (hover: hover) {
+  .ask-fab:hover {
+    text-decoration: underline;
+  }
 }
 
 /*
@@ -1209,5 +1235,59 @@ h1 .badge {
   }
   h2 {
     font-size: 1.25rem;
+  }
+}
+
+/*
+  スマホ（指で押す端末。pointer: coarse）では、押せる範囲を上下 44px に広げる（2026-11-11 ユーザーが比較ページを見て OK。TODO.md W2）。
+  文字の外側に見えない面（::after）を足すだけなので、文字の大きさと並びは変わらない。隣どうしの面が重ならないよう、
+  折り返す行の間と、上部の目次の上下だけを広げる。文の途中のリンクは行の間が崩れるので広げない（WCAG 2.5.8 でも対象外）
+*/
+@media (pointer: coarse) {
+  .side .brand,
+  .side nav a,
+  .side-links a,
+  .card h3 a,
+  .card-links a,
+  .more-link a,
+  .meta a,
+  .entry-links a,
+  .inline-links a,
+  .more > summary {
+    position: relative;
+  }
+  .side .brand::after,
+  .side nav a::after,
+  .side-links a::after,
+  .card h3 a::after,
+  .card-links a::after,
+  .more-link a::after,
+  .meta a::after,
+  .entry-links a::after,
+  .inline-links a::after,
+  .more > summary::after {
+    content: '';
+    position: absolute;
+    left: -6px;
+    right: -6px;
+    top: 50%;
+    height: 44px;
+    translate: 0 -50%;
+  }
+  .side nav,
+  .side-links,
+  .card-links,
+  .entry-links,
+  .inline-links {
+    row-gap: 1.25rem;
+  }
+  /* 上部に横並びで畳んだ目次（64rem 未満）だけ、名前・目次・GitHub の行の間を広げる */
+  @media (max-width: 63.99rem) {
+    .side nav {
+      margin-top: 1rem;
+    }
+    .side-links {
+      margin-top: 1.4rem;
+    }
   }
 }

@@ -12,6 +12,12 @@
 
 ---
 
+### 2026-11-11：スマホの押せる範囲は padding ではなく見えない面（::after）で広げた（Claude が選んだ）
+
+padding で 44px にすると、カードのリンクや目次の行の高さそのものが変わり、見た目が大きく変わる。本人に見せた案は「見た目はほぼそのまま」なので、
+リンクに `position: relative` を付け、`::after` を上下 44px・左右 6px 外へはみ出させて押せる面にした。隣の面と重なると押し間違えるので、
+折り返す行の間（`row-gap: 1.25rem`。行の高さ 25px のリンクで面が重ならない最小が約 19px）と、上部の目次の名前・目次・GitHub の間だけを広げた。`pointer: coarse` の中に書いたので PC の見た目は変わらない。
+
 ### 2026-10-28：Vercel のデプロイの記録は、GitHub の deployments ではなくコミットの状態に付く
 
 T13 で `gh api repos/{owner}/{repo}/deployments` を見ると 0 件だった。Vercel は main の先端のコミットに `vercel[bot]` の状態（context `Vercel`、success）を付けていて、記録はそちらにある。

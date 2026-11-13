@@ -32,7 +32,7 @@
 
 - フェーズ：**公開済み（2026-10-28）。今は「公開後の改善」**。フェーズ3 まで全部終わった。仕様は `SPEC.md`、判断は `logs/decisions.md`（前身から引き継いだ判断も末尾に要約済み）
 - CI は `dist/` 全体の禁止語も見る（`npm run check:dist`）。手で回す検算は `check:articles`・`check:repos`（README「開発」）
-- サイトの名前は「works」、表紙は名前・持ち主の行（Naoki Yoshida / n-yoshida-dev）・目次だけ（`logs/decisions.md` 2026-10-22・23）
+- サイトの名前は「works」、表紙は名前・持ち主の行（Naoki Yoshida / n-yoshida-dev）・目次だけ（`logs/decisions.md` 2026-10-22・23）。表紙の目次は About を除く 5 項目（2026-11-13）
 - トップの節は About / Projects / Tools / Systems / Writing / Ask AI。Projects は 9 件（AI Study Coach は 2026-10-28 に外した。`logs/decisions.md`）、Tools は 3 件（claude-code-toolkit・claude-plugins・app-template）
 - 見た目の決まりは `DESIGN.md`。画面を触る前に読む
 - 計画の全体は ops の `業務/成果物公開/docs/2026-10-20-制作活動ハブとキャリアプロフィールの分離計画.md` 4 節。このリポジトリの分（T6〜T15）は済んだ。T16（旧 Vercel を works へ転送）は 2026-10-29 にやめた（本人の判断。旧サイトはまだ誰にも見られていないので転送は要らない）。

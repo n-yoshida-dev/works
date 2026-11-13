@@ -48,6 +48,9 @@ const coverCounts: Partial<Record<string, { n: number; unit: string }>> = {
   systems: { n: systems.length, unit: '件' },
   writing: { n: articles.length, unit: '本' },
 };
+
+/** 表紙の目次に並べる節。表紙そのものである About を除く */
+const coverSections = SECTIONS.filter((s) => s.id !== 'about');
 ---
 
 <Base description={profile.data.description} markdownHref="/profile.md">
@@ -63,8 +66,9 @@ const coverCounts: Partial<Record<string, { n: number; unit: string }>> = {
         </div>
       </HomeSection>
       <nav class="cover-nav" aria-label="目次">
+        {/* About は表紙そのものなので表紙の目次に出さない（押しても動かないため。2026-11-13 ユーザー。左の目次には残す） */}
         <ol class="ix">
-          {SECTIONS.map((s, i) => {
+          {coverSections.map((s, i) => {
             const count = coverCounts[s.id];
             return (
               <li>

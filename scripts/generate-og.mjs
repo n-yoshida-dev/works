@@ -17,7 +17,8 @@ const line1 = 'Personal apps, tools for AI-assisted development,';
 const line2 = 'and the systems behind them.';
 const line3 = 'Projects · Tools · Systems · Writing · Ask AI';
 
-// 1200×630 は OGP の標準サイズ。装飾は付けず、文字と 1 本の線だけ
+// 1200×630 は OGP の標準サイズ。装飾は付けず、文字と 1 本の線だけ。
+// 文字の色は黒と薄い文字色だけ（青はリンクだけに使う決まりで、画像の中の文字は押せないため。2026-11-13 ユーザーが案 B を選択）
 const svg = `
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <rect width="1200" height="630" fill="#ffffff"/>
@@ -26,7 +27,7 @@ const svg = `
   <text x="120" y="270" font-family="Helvetica, Arial, sans-serif" font-size="28" fill="#59636e">${owner}</text>
   <text x="120" y="350" font-family="Helvetica, Arial, sans-serif" font-size="36" fill="#59636e">${line1}</text>
   <text x="120" y="400" font-family="Helvetica, Arial, sans-serif" font-size="36" fill="#59636e">${line2}</text>
-  <text x="120" y="500" font-family="Menlo, Consolas, monospace" font-size="28" fill="#0969da">${line3}</text>
+  <text x="120" y="500" font-family="Menlo, Consolas, monospace" font-size="28" fill="#59636e">${line3}</text>
 </svg>`;
 
 const png = await sharp(Buffer.from(svg)).png().toBuffer();

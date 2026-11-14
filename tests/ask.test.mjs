@@ -51,6 +51,8 @@ describe('Ask AI の各 AI へのリンク', () => {
     expect(prompt).toContain('give 3 short example questions');
     expect(prompt).toContain('Do not guess how it is written in Japanese.');
     expect(prompt).toContain('Do not infer anything that is not stated');
+    expect(prompt).toContain('Do not use anything you remember from earlier conversations');
+    expect(prompt).toContain('Mention only works described in those sources');
     expect(prompt).toContain('Cite the sources');
     expect(prompt).toContain('Answer in Japanese, including headings.');
   });

@@ -2,6 +2,7 @@
 // 「このサイトに無いもの」をわざわざ書かない（2026-10-22 ユーザー。無ければよい。logs/decisions.md）。
 // 最初の答えは短い概要と次の質問の候補だけにさせる（長文は読まれないため。2026-10-05 ユーザーの提案）。
 // 2026-10-06 に本番の 3 つの AI の答えを見たユーザーの感想を受け、概要に具体的な事実を入れさせ、質問を自然な一文で促す形にした（直し方は Claude の解釈。SPEC.md §3）
+// 2026-11-13、前の会話の記憶を使わせず、作品は出典にある名前で挙げさせる文を足した（Gemini が過去のテストの記憶から、サイトに無い言い方で作品を挙げたため。logs/decisions.md）
 import { SITE } from '../site';
 
 /** URL を渡せない AI（Gemini）に、プロンプトと一緒に貼り付けるサイトの全文 */
@@ -19,6 +20,8 @@ Give details only when I ask a follow-up question.
 
 Write the name as "Naoki Yoshida". Do not guess how it is written in Japanese.
 Do not infer anything that is not stated in those sources.
+Do not use anything you remember from earlier conversations with me.
+Mention only works described in those sources, by the names used there.
 
 Cite the sources you relied on (links only).
 

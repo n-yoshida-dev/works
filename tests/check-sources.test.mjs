@@ -33,7 +33,21 @@ describe('記事の突き合わせ（check:articles）', () => {
 
   it('全部載っていれば両方とも空', () => {
     const site = qiita.map((i) => ({ title: i.title, url: i.url, platform: 'qiita' }));
-    expect(compareArticles(qiita, site)).toEqual({ missing: [], gone: [] });
+    expect(compareArticles(qiita, site)).toEqual({
+      missing: [],
+      gone: [],
+      since: undefined,
+      skipped: 0,
+    });
+  });
+
+  it('サイトの最も古い記事より前に書いた記事は、未掲載に数えず本数だけ返す', () => {
+    // サイトの最も古い記事は 2026-02-01 の C。それより前の A は数えず、後の B だけを未掲載に出す
+    const site = [{ title: 'C', url: qiita[2].url, platform: 'qiita', publishedAt: '2026-02-01' }];
+    const { missing, since, skipped } = compareArticles(qiita, site);
+    expect(missing.map((a) => a.title)).toEqual(['B']);
+    expect(since).toBe('2026-02-01');
+    expect(skipped).toBe(1);
   });
 
   it('Qiita のユーザー名は profile.md のリンクから取り、無ければ止まる', async () => {

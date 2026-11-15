@@ -149,8 +149,12 @@ const coverSections = SECTIONS.filter((s) => s.id !== 'about');
       <div class="series-row series-head" aria-hidden="true">
         <span></span>
         <span></span>
-        {calendar.months.map((m) => (
-          <span class="m-label">{m}</span>
+        {/* 月の見出しは 2 段。上の段の年は最初の月と 1 月にだけ置き、下の段は月の数字だけ（月が増えても列が狭くならず折れないため。2026-11-15） */}
+        {calendar.months.map((m, i) => (
+          <span class="m-label">
+            <span class="m-y">{i === 0 || m.endsWith('-01') ? m.slice(0, 4) : ''}</span>
+            {m.slice(5)}
+          </span>
         ))}
       </div>
       <ol class="series-list">

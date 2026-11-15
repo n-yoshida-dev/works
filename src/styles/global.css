@@ -775,6 +775,12 @@ main.container {
   color: var(--fg-muted);
   border-left: 1px dashed var(--line);
 }
+/* 月の見出しの上の段（年）。年を書かない月も 1 行分の高さを取り、月の数字の高さをそろえる */
+.m-y {
+  display: block;
+  min-height: 1.5em;
+  white-space: nowrap;
+}
 .latest {
   display: flex;
   flex-wrap: wrap;

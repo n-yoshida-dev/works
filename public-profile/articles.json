@@ -190,5 +190,35 @@
     "publishedAt": "2026-06-25",
     "tags": ["Java", "Stream", "ラムダ式"],
     "series": "マルチテナント"
+  },
+  {
+    "id": "gmail-ai-triage-todoist",
+    "title": "Gmail の新着メールを毎朝 AI に仕分けさせて、Todoist とスマホで受け取る",
+    "url": "https://qiita.com/n-yoshida-dev/items/5582e55143ee9bb57934",
+    "platform": "qiita",
+    "publishedAt": "2026-10-23",
+    "tags": ["Gmail", "Todoist", "ChatGPT", "自動化", "生成AI"],
+    "series": "毎日の作業を AI に任せる",
+    "summary": "Gmail の新着メールを毎朝 ChatGPT に仕分けさせ、対応が要るものを Todoist のタスクにしてスマホに通知する仕組み"
+  },
+  {
+    "id": "todoist-inbox-chatgpt-daily",
+    "title": "Todoist の Inbox を毎朝 ChatGPT に整理させて、上から片付けるだけにする",
+    "url": "https://qiita.com/n-yoshida-dev/items/f21e12f36b31f094dbd1",
+    "platform": "qiita",
+    "publishedAt": "2026-11-08",
+    "tags": ["Todoist", "ChatGPT", "タスク管理", "自動化", "生成AI"],
+    "series": "毎日の作業を AI に任せる",
+    "summary": "Todoist の Inbox に溜まったタスクを毎朝 ChatGPT に分類させ、今日やるタスクを選ばせる仕組み"
+  },
+  {
+    "id": "claude-code-todo-progress-plugin",
+    "title": "Claude Code がセッションの最初に TODO.md の進捗を表で返すプラグイン",
+    "url": "https://qiita.com/n-yoshida-dev/items/d77465a0c4217871f8b7",
+    "platform": "qiita",
+    "publishedAt": "2026-11-13",
+    "tags": ["ClaudeCode", "Claude", "個人開発", "タスク管理", "生成AI"],
+    "series": "AI と進める個人開発",
+    "summary": "TODO.md のチェックボックスを見出しごとに数えて進捗表にし、セッションの最初に Claude が見せるプラグイン todo-progress"
   }
 ]

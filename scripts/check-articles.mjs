@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 // Qiita の記事一覧と public-profile/articles.json を突き合わせ、サイトに載っていない記事と、Qiita から消えた記事を一覧で出す。
 // 目的：記事を書いたのに Writing に足し忘れる事故を拾う。載せるかどうかは人間が決めるので、未掲載があっても失敗にはしない。
+// サイトに載せた最も古い記事より前に書いた記事は、載せるか決め済みとみなして未掲載に数えない（わざと載せていない古い記事が毎回出て、
+// 足し忘れが埋もれるため。除く記事の題名をこの公開リポジトリに書かずに済む。2026-11-15。KNOWLEDGE.md）
 // CI には入れない（外部 API に依存し、記事を書いた直後は未掲載が正しい状態のため）。月 1 回などに手で回す。
 // 使い方：node scripts/check-articles.mjs   取得や読み込みに失敗したときだけ exit 1
 import { readFile } from 'node:fs/promises';
@@ -32,19 +34,26 @@ function normalizeUrl(url) {
 
 /**
  * Qiita の記事とサイトの記事を突き合わせる。
- * missing は Qiita にあってサイトに無い記事（新しい順）、gone はサイトにあって Qiita に無い記事（platform が qiita のものだけ）
+ * missing は Qiita にあってサイトに無い記事（新しい順）、gone はサイトにあって Qiita に無い記事（platform が qiita のものだけ）。
+ * サイトの最も古い記事（publishedAt）より前に書いた Qiita の記事は missing に入れず、その日付（since）と本数（skipped）だけを返す
  */
 export function compareArticles(qiitaItems, siteArticles) {
   const siteUrls = new Set(siteArticles.map((a) => normalizeUrl(a.url)));
   const qiitaUrls = new Set(qiitaItems.map((i) => normalizeUrl(i.url)));
-  const missing = qiitaItems
+  const since = siteArticles
+    .map((a) => a.publishedAt)
+    .filter(Boolean)
+    .sort()[0];
+  const unlisted = qiitaItems
     .filter((i) => !siteUrls.has(normalizeUrl(i.url)))
-    .map((i) => ({ title: i.title, url: i.url, createdAt: i.created_at.slice(0, 10) }))
+    .map((i) => ({ title: i.title, url: i.url, createdAt: i.created_at.slice(0, 10) }));
+  const missing = unlisted
+    .filter((a) => !since || a.createdAt >= since)
     .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
   const gone = siteArticles
     .filter((a) => a.platform === 'qiita' && !qiitaUrls.has(normalizeUrl(a.url)))
     .map((a) => ({ title: a.title, url: a.url }));
-  return { missing, gone };
+  return { missing, gone, since, skipped: unlisted.length - missing.length };
 }
 
 /** Qiita のユーザーの記事を、ページをめくって全部取る */
@@ -69,13 +78,17 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
     );
     const user = qiitaUserFromProfile(profile);
     const items = await fetchQiitaItems(user);
-    const { missing, gone } = compareArticles(items, site);
+    const { missing, gone, since, skipped } = compareArticles(items, site);
 
     console.log(
       `Qiita（${user}）の記事 ${items.length} 本、articles.json の記事 ${site.length} 本`,
     );
     console.log(`\nQiita にあってサイトに無い記事：${missing.length} 本（載せるかは人が決める）`);
     for (const a of missing) console.log(`  ${a.createdAt}  ${a.title}\n              ${a.url}`);
+    if (skipped > 0)
+      console.log(
+        `  （サイトの最も古い記事 ${since} より前に書いた ${skipped} 本は、決め済みとして数えていない）`,
+      );
     console.log(`\nサイトにあって Qiita に無い記事：${gone.length} 本（消した・URL が変わった）`);
     for (const a of gone) console.log(`  ${a.title}\n              ${a.url}`);
   } catch (error) {
